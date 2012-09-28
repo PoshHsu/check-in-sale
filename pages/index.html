@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="author" content="">
+<meta name="created" content="2012-09-13">
+<meta name="modified" content="">
+<title> Prototype</title>
+<style type="text/css">
+h1{
+color:white;
+margin:0px;
+}
+body{
+background: #E7EBF2;
+margin:0px;
+}
+hr{
+}
+.top{
+background-color: #3B5998;
+margin:0px;
+padding:0px;
+display:block;
+height:55px;
+border: solid 0.5px #cccccc;
+}
+.brand{
+padding: 5px 20px 0px;
+font-family: "arial", georgia, serif;
+font-style: italic;
+font-size: 32px;
+-webkit-mask-image: -webkit-gradient(linear, left top, left bottom, from(rgba(0,0,0,0.6)), to(#000));
+text-shadow: 0 1px 0 black, 0 2px 0 black;
+}
+</style>
+</head>
+<body>
+    <div id="fb-root"></div>
+    <script>
+    window.fbAsyncInit = function() {
+        FB.init({
+         appId  : "306278899480204",
+         status : true, // check login status
+         cookie : true, // enable cookies to allow the server to  access the session
+         xfbml  : true, // parse XFBML
+         channelUrl :'http://silencer.4add.tw/channel.html', // channel.html file
+         oauth  : true // enable OAuth 2.0
+        });
+        // Additional initialization code here
+    };
+
+// Load the SDK Asynchronously
+(function(d){
+ var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+ if (d.getElementById(id)) {return;}
+ js = d.createElement('script'); js.id = id; js.async = true;
+ js.src = "//connect.facebook.net/en_US/all.js";
+ ref.parentNode.insertBefore(js, ref);
+ }(document));
+</script>
+<div class="top">
+<h1 class="brand">Facebook Notifycation Silencer</h1>
+</div>
+<div class="main">
+<div id ="btn-login">login</div>
+<a href="https://www.facebook.com/dialog/oauth?client_id=306278899480204&redirect_uri=http://silencer.4add.tw&scope=manage_notifications">login</a>
+</div>
+
+</body>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<script src="http://ajax.cdnjs.com/ajax/libs/underscore.js/1.1.4/underscore-min.js"></script>
+<script src="http://ajax.cdnjs.com/ajax/libs/backbone.js/0.3.3/backbone-min.js"></script>
+<script>
+    var loginSuccess = function(){
+        $("#btn-login").html("logout")
+    }
+    var loginFail = function(){
+        $("#btn-login").html("login")
+    }
+    var premision = {scope:'manage_notifications'};
+    var loginFB = function(successs, fail, p){
+        FB.login(function(response) {
+            if (response.authResponse) {
+                FB.getLoginStatus(function(response){
+                    if (response.authResponse) {
+                       success();
+                    }
+                    else {
+                       fail();
+                    }
+                });
+            }
+            else {
+                fail();
+                console.log('User cancelled login or  did not fully authorize.');
+            }
+        }, {scope:'manage_notifications,publish_stream'});
+    }
+    $("#btn-login").click(function(){
+            loginFB(loginSuccess, loginFail, premision);
+            });
+</script>
+
+</html>

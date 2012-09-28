@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="author" content="">
+<meta name="created" content="">
+<meta name="modified" content="">
+<title> Prototype</title>
+<style type="text/css">
+body{
+  background: #E7EBF2;
+}
+#main{
+  margin:100px auto 0px auto;
+  width:480px;
+  height:300px;
+}
+#top{
+  width:128px;
+  margin: 0px auto 0px auto;
+}
+#logo{
+  background-image: url(image/logo.png);
+  width:128px;
+  height:128px;
+}
+#content{
+  margin: 0px auto 0px auto;
+  width:480px;
+  height:200px;
+  background: rgba(255, 255, 255, 0.45);
+  border: 1px solid #C7C7C7;
+}
+#content-top{
+  width:420px;
+  height:40px;
+  margin: 10px auto 0px auto;
+  background-color:#3B5998;
+  text-align:center;
+}
+.radius{
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  border-radius: 6px;
+}
+h2{
+color:white;
+}
+</style>
+</head>
+<body>
+    <div id="main">
+        <div id="top">
+            <div id="logo"></div>
+        </div>
+        <div id="content" class="radius">
+            <div id="content-top" class="radius">
+                <h2>Facebook Single Friends</h2>
+            </div>
+            <div id="content-main">
+            </div>
+            <div id="content-footer">
+            </div>
+        </div>
+    </div>
+    <script>
+    </script>
+
+</body>
+<scriptsrc="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<scriptsrc="http://ajax.cdnjs.com/ajax/libs/underscore.js/1.1.4/underscore-min.js"></script>
+<scriptsrc="http://ajax.cdnjs.com/ajax/libs/backbone.js/0.3.3/backbone-min.js"></script>
+</html>
