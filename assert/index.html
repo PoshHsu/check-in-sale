@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="author" content="">
 <meta name="created" content="2012-09-13">
-<meta name="modified" content="2012年09月29日 (週六) 02時54分29秒">
+<meta name="modified" content="2012年09月29日 (週六) 03時25分41秒">
 <title> Prototype</title>
 <style type="text/css">
 h1{
@@ -65,7 +65,7 @@ text-shadow: 0 1px 0 black, 0 2px 0 black;
 <div class="main">
 <div id ="btn-login">login</div>
 <a href="https://www.facebook.com/dialog/oauth?client_id=280399495394196&redirect_uri=http://carpo.terrence-tang.com&scope=user_status,user_checkins,read_stream,user_birthday">login</a>
-<a href="https://www.facebook.com/dialog/oauth?client_id=280399495394196&redirect_uri=http://carpo.terrence-tang.com&scope=publish_stream,user_status,user_checkins,read_stream,user_birthday">login</a>
+<a href="https://www.facebook.com/dialog/oauth?client_id=280399495394196&redirect_uri=http://carpo.terrence-tang.com&scope=publish_checkins,publish_stream,user_status,user_checkins,read_stream,user_birthday">login</a>
 </div>
 
 </body>
@@ -102,6 +102,9 @@ text-shadow: 0 1px 0 black, 0 2px 0 black;
     $("#btn-login").click(function(){
             loginFB(loginSuccess, loginFail, premision);
             });
+
+   //FB.api("/search?type=place&center=25.013682,121.3039054&distance=1000", function(res){console.log(res)})
+   //http://blog.978.tw/2011/04/geolocation.html
 </script>
 
 </html>
