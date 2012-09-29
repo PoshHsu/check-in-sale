@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="author" content="">
 <meta name="created" content="2012-09-13">
-<meta name="modified" content="2012年09月29日 (週六) 03時25分41秒">
+<meta name="modified" content="2012年09月29日 (週六) 11時39分27秒">
 <title> Prototype</title>
 <style type="text/css">
 h1{
@@ -55,7 +55,8 @@ text-shadow: 0 1px 0 black, 0 2px 0 black;
  var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
  if (d.getElementById(id)) {return;}
  js = d.createElement('script'); js.id = id; js.async = true;
- js.src = "//connect.facebook.net/en_US/all.js";
+ //js.src = "//connect.facebook.net/en_US/all.js";
+ js.src = "//connect.facebook.net/zh_TW/all.js";
  ref.parentNode.insertBefore(js, ref);
  }(document));
 </script>
@@ -105,6 +106,11 @@ text-shadow: 0 1px 0 black, 0 2px 0 black;
 
    //FB.api("/search?type=place&center=25.013682,121.3039054&distance=1000", function(res){console.log(res)})
    //http://blog.978.tw/2011/04/geolocation.html
+//FB.api("me/checkin","post",{from:"terrence",place:{name:"place name",latitude:1000,longitude:20000},message:"this is message"},function(res){ console.log(res)})
+//FB.api("me/checkins",
+
+//FB.api("me/checkins","post",{coordinates:{latitude:"25.013682",longitude:"121.3039054"},message:"test",place:142800992448822},function(res){ console.log(res)})
+//http://facebook.stackoverflow.com/questions/4697603/cant-checkin-to-facebook-places-by-post-to-api
 </script>
 
 </html>
