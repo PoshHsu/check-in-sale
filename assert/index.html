@@ -68,12 +68,42 @@ text-shadow: 0 1px 0 black, 0 2px 0 black;
 <a href="https://www.facebook.com/dialog/oauth?client_id=280399495394196&redirect_uri=http://carpo.terrence-tang.com&scope=user_status,user_checkins,read_stream,user_birthday">login</a>
 <a href="https://www.facebook.com/dialog/oauth?client_id=280399495394196&redirect_uri=http://carpo.terrence-tang.com&scope=publish_checkins,publish_stream,user_status,user_checkins,read_stream,user_birthday">login</a>
 </div>
-
+<div id="qrcode">
+    <img id="qrcode-img"></img>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <img id="qrcode-img2"></img>
+    <br>
+    <br>
+    <input type="button" id="btn_chinkin" value="chenkin"></input>
+</div>
 </body>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 <script src="http://ajax.cdnjs.com/ajax/libs/underscore.js/1.1.4/underscore-min.js"></script>
 <script src="http://ajax.cdnjs.com/ajax/libs/backbone.js/0.3.3/backbone-min.js"></script>
 <script>
+    //init qr code
+      $("document").ready(function(){
+          var qr_link =11;
+          $("#qrcode-img").attr("src",getQRCode("146918241993836", 150, 150));
+         $("#qrcode-img2").attr("src",getQRCode("fb://1236238160/checkins", 150, 150));
+
+      })
+    //end
+
+   //init chinkin but
+   var FBPlugs ={};
+   FBPlugs.prototype.checkin = function(pid,message,callback){
+      FB.api("me/checkins","post",{coordinates:{latitude:"25.013682",longitude:"121.3039054"},message:"at&t park",place:116440731717551},function(res){ console.log(res)})
+   }
+   $("#btn-chinkin").click(function(){
+     FBPlugs.checkin();
+   })
+
     var loginSuccess = function(){
         $("#btn-login").html("logout")
     }
@@ -111,6 +141,15 @@ text-shadow: 0 1px 0 black, 0 2px 0 black;
 
 //FB.api("me/checkins","post",{coordinates:{latitude:"25.013682",longitude:"121.3039054"},message:"test",place:142800992448822},function(res){ console.log(res)})
 //http://facebook.stackoverflow.com/questions/4697603/cant-checkin-to-facebook-places-by-post-to-api
+function getQRCode(content, width, height){
+    // 預設寬高為 120x120
+    width = !!width ? width : 120 ;
+    height = !!height ? height : 120;
+    // 編碼
+    content = encodeURIComponent(content);
+    return 'http://chart.apis.google.com/chart?cht=qr&chl=' + content + '&chs=' + width + 'x' + height;
+}
+
 </script>
 
 </html>
