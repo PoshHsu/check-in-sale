@@ -97,7 +97,7 @@ text-shadow: 0 1px 0 black, 0 2px 0 black;
 
    //init chinkin but
    var FBPlugs ={};
-   FBPlugs.prototype.checkin = function(pid,message,callback){
+   FBPlugs.checkin = function(pid,message,callback){
       FB.api("me/checkins","post",{coordinates:{latitude:"25.013682",longitude:"121.3039054"},message:"at&t park",place:116440731717551},function(res){ console.log(res)})
    }
    $("#btn-chinkin").click(function(){
