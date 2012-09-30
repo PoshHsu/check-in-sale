@@ -5,7 +5,8 @@ var DB_URL = "mongodb://heroku_app7984633:ljtiqmuc5so4cvc057vf98vvcq@ds039007.mo
 mongoose.connect(DB_URL);
 
 exports.insertQRCode = function(qrcode){
-     mongoose.connection.db.collection(QRCode_TABLE, function(err, collection) {
+     mongoose.connection.db.collection(QRCODE_TABLE, function(err, collection) {
+       console.log(err);
        collection.insert(qrcode);
      });
 };
