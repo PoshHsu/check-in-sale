@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="author" content="">
 <meta name="created" content="">
-<meta name="modified" content="2012年10月01日 (週一) 03時55分28秒">
+<meta name="modified" content="2012年10月01日 (週一) 03時59分44秒">
 <title> Prototype</title>
 <style type="text/css">
 body{
@@ -189,15 +189,13 @@ h3{
 
     };
     var checks = {};
-var temp;
     $("#btn-load-place").click(function(){
         FBPlugs.getCheckins(function(res){
             _.each(res.data, function(val){
-                temp = val;
               var pid  = val.place.id,
                   name = val.place.name,
                   lat  = val.place.location.latitude,
-                  long = val.place.location.longitude;
+                  long = val.place.location.longitude,
                   check= {
                             pid:pid,
                             name:name,
@@ -205,17 +203,22 @@ var temp;
                             long:long
                           };
               checks[pid] = check;
+
               $("#checkin-list").append(
                   _.template($("#qrcode-view-template").html(),
                   check));
-            });
+              });
 
-            $(".btn-store-place").click(function(){
+              $(".btn-store-place").click(function(){
                 console.log(this.id);
                 insertQRCode(checks[this.id]);
-            });
+              });
 
-                });
+              $(".btn-query-qrcode").click(function(){
+                    queryQRCode(this.id);
+              });
+            });
+    });
 
 
 </script>
