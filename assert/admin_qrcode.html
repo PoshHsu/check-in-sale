@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="author" content="">
 <meta name="created" content="">
-<meta name="modified" content="2012年10月01日 (週一) 03時48分56秒">
+<meta name="modified" content="2012年10月01日 (週一) 03時50分48秒">
 <title> Prototype</title>
 <style type="text/css">
 body{
@@ -148,6 +148,7 @@ h3{
        <div>pid :<%= pid %></div>
        <div>name:<%= name %></div>
        <input type="button" value="Store Place" id="<%= pid %>" class="btn-store-place"></input>
+       <input type="button" value="Create QRCode" id="<%= pid %>" class="btn-create-qrcode"></input>
    </div>
    </script>
 </body>
@@ -156,68 +157,6 @@ h3{
 <script src="http://ajax.cdnjs.com/ajax/libs/backbone.js/0.3.3/backbone-min.js"></script>
 <script src="../js/FBPlugs.js"></script>
 <script>
-    $("document").ready(function(){
-        FBPlugs.login(function(){console.log("success"), function(){console.log("fail")}});
-        console.log("ready");
-    });
-
-    var insertQRCode = function(check){
-      console.log(check);
-      $.ajax({
-          type:"post",
-          url:"http://carpo.terrence-tang.com/db/insert/qrcode",
-          data:check,
-          dataType:"json",
-          timeout:5000
-      }).done(function(){
-
-      });
-    };
-
-    var queryQRCode = function(pid){
-       $.ajax({
-          type:"post",
-          url:"http://carpo.terrence-tang.com/db/query/qrcode",
-          data:{pid:pid},
-          dataType:"json",
-          timeout:5000
-      }).done(function(){
-
-      });
-
-    };
-    var checks = {};
-var temp;
-    $("#btn-load-place").click(function(){
-        FBPlugs.getCheckins(function(res){
-            _.each(res.data, function(val){
-                temp = val;
-              var pid  = val.place.id,
-                  name = val.place.name,
-                  lat  = val.place.location.latitude,
-                  long = val.place.location.longitude;
-                  check= {
-                            pid:pid,
-                            name:name,
-                            lat:lat,
-                            long:long
-                          };
-              checks[pid] = check;
-              $("#checkin-list").append(
-                  _.template($("#qrcode-view-template").html(),
-                  check));
-            });
-
-            $(".btn-store-place").click(function(){
-                console.log(this.id);
-                insertQRCode(checks[this.id]);
-            });
-
-            $(".btn-query-qrcode").click(function(){
-                    queryQRCode(this.id);
-        });
-    });
-
 
 </script>
 
