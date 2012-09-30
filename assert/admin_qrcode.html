@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="author" content="">
 <meta name="created" content="">
-<meta name="modified" content="2012年10月01日 (週一) 00時52分40秒">
+<meta name="modified" content="2012年10月01日 (週一) 00時55分09秒">
 <title> Prototype</title>
 <style type="text/css">
 body{
@@ -110,6 +110,31 @@ h3{
 </style>
 </head>
 <body>
+   <div id="fb-root"></div>
+   <script>
+   window.fbAsyncInit = function() {
+        FB.init({
+         appId  : "280399495394196",
+         status : true, // check login status
+         cookie : true, // enable cookies to allow the server to  access the session
+         xfbml  : true, // parse XFBML
+         channelUrl :'http://carpo.terrence-tang.com/channel.html', // channel.html file
+         oauth  : true // enable OAuth 2.0
+        });
+        // Additional initialization code here
+    };
+
+    // Load the SDK Asynchronously
+    (function(d){
+         var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+         if (d.getElementById(id)) {return;}
+             js = d.createElement('script'); js.id = id; js.async = true;
+             //js.src = "//connect.facebook.net/en_US/all.js";
+             js.src = "//connect.facebook.net/zh_TW/all.js";
+             ref.parentNode.insertBefore(js, ref);
+     }(document));
+</script>
+
    <div id="top-line"></div>
    <div id="nav">
       <input type="button" value="Check-In Report" id="btn-link1"></input>
