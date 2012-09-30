@@ -1,5 +1,10 @@
 var express  = require('express'),
-    app = express.createServer(express.logger());
+    app = express.createServer(express.logger()),
+    DB_URL = "mongodb://heroku_app7984633:ljtiqmuc5so4cvc057vf98vvcq@ds039007.mongolab.com:39007/heroku_app7984633",
+    mongoose = require("mongoose"),
+    QRCODE_TABLE = "qrcode";
+
+mongoose.connect(DB_URL);
 
 app.use(express.static(__dirname + "/assert"));
 app.use(express.bodyParser());
@@ -35,11 +40,20 @@ app.post('/db/insert/qrcode', function(request, response) {
 
 app.post('/db/query/qrcode', function(request, response) {
     console.log("==1==");
-    var place = require("./db.js").queryQRCode(request.body);
+    //var place = require("./db.js").queryQRCode(request.body);
     console.log("==2==");
     console.log(place);
     console.log("==3==");
     response.send(place);
+    console.log("==4==");
+     mongoose.connection.db.collection(QRCODE_TABLE, function(err, collection) {
+       //console.log(err);
+         console.log(request.body.pid);
+       collection.findOne({pid:qrcode.pid}, function(err,data){
+         console.log(data);
+         response.send(data);
+       });
+
     console.log("==4==");
 });
 
