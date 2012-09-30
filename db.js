@@ -16,7 +16,9 @@ exports.insertQRCode = function(qrcode){
 exports.queryQRCode = function(qrcode){
      mongoose.connection.db.collection(QRCODE_TABLE, function(err, collection) {
        //console.log(err);
-       var cursor = collection.findOne({pid:qrcode.pid});
+       collection.findOne({pid:qrcode.pid}).toArray(function(err,data){
+         console.log(data);
+       });
        console.log(cursor);
        return cursor;
      });
