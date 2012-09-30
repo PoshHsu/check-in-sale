@@ -8,7 +8,7 @@ exports.insertQRCode = function(qrcode){
     console.log("insertQRCode : " + qrcode);
 
      mongoose.connection.db.collection(QRCODE_TABLE, function(err, collection) {
-       console.log(err);
+       //console.log(err);
        collection.insert(qrcode);
      });
 };
