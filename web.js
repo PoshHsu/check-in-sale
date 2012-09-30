@@ -34,9 +34,13 @@ app.post('/db/insert/qrcode', function(request, response) {
 });
 
 app.post('/db/query/qrcode', function(request, response) {
+    console.log("==1==");
     var place = require("./db.js").queryQRCode(request.body);
+    console.log("==2==");
     console.log(place);
+    console.log("==3==");
     response.send(place);
+    console.log("==4==");
 });
 
 app.get('/channel.html', function(request, response) {
