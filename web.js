@@ -19,6 +19,10 @@ app.get('/index', function(request, response) {
       response.sendfile(__dirname+'/pages/index.html');
 });
 
+app.get('/admin/qrcode', function(request, response) {
+      response.sendfile(__dirname+'/assert/admin_qrcode.html');
+});
+
 app.get('/channel.html', function(request, response) {
       response.sendfile(__dirname+'/pages/channel.html');
 });

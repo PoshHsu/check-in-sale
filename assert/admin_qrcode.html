@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="author" content="">
 <meta name="created" content="">
-<meta name="modified" content="2012年10月01日 (週一) 00時41分12秒">
+<meta name="modified" content="2012年10月01日 (週一) 00時50分29秒">
 <title> Prototype</title>
 <style type="text/css">
 body{
@@ -123,7 +123,6 @@ h3{
        <div>name:<%= name %></div>
        <input type="button" value="Create QR-Code" val="<%= pid %>"></input>
    </div>
-   <input class="edit" type="text" value="<%= title %>" />
    </script>
 </body>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
@@ -146,7 +145,9 @@ h3{
                             long:long
                           };
               checks.push(check);
-              $("#checkin-list").append(_.template($("#qrcode-view-template").html(),check));
+              $("#checkin-list").append(
+                  _.template($("#qrcode-view-template").html(),
+                  check));
             });
 
         };)
