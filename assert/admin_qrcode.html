@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="author" content="">
 <meta name="created" content="">
-<meta name="modified" content="2012年10月01日 (週一) 04時26分07秒">
+<meta name="modified" content="2012年10月01日 (週一) 04時28分41秒">
 <title> Prototype</title>
 <style type="text/css">
 body{
@@ -198,7 +198,7 @@ h3{
     var MOBILE_URL = "http://carpo.terrence-tang.com/mobile/"
     var createQRCode = function(pid){
        var img = $("<img>").attr("src",getQRCode(MOBILE_URL+pid));
-       $("#qrcode-list").append(img +"<br><br><br>");
+       $("#qrcode-list").append(img);
        $("#qrcode-list").append("<br><br><br>");
     };
     var checks = {};
