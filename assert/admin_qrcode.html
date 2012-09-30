@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="author" content="">
 <meta name="created" content="">
-<meta name="modified" content="2012年10月01日 (週一) 02時44分46秒">
+<meta name="modified" content="2012年10月01日 (週一) 02時47分31秒">
 <title> Prototype</title>
 <style type="text/css">
 body{
@@ -180,8 +180,8 @@ var temp;
                 temp = val;
               var pid  = val.place.id,
                   name = val.place.name,
-                  lat  = val["location"].latitude,
-                  long = val["location"].longitude;
+                  lat  = val.place.location.latitude,
+                  long = val.place.location.longitude;
                   check= {
                             pid:pid,
                             name:name,
