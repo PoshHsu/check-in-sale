@@ -2,7 +2,7 @@ var express  = require('express'),
     app = express.createServer(express.logger());
 
 app.use(express.static(__dirname + "/assert"));
-
+app.use(express.bodyParser());
 app.get('/admin/parse', function(request, response) {
       require("./parse.js").run();
       response.send('Hello World!');
