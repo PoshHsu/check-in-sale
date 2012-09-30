@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="author" content="">
 <meta name="created" content="">
-<meta name="modified" content="2012年10月01日 (週一) 01時14分10秒">
+<meta name="modified" content="2012年10月01日 (週一) 01時23分51秒">
 <title> Prototype</title>
 <style type="text/css">
 body{
@@ -141,6 +141,7 @@ h3{
       <input type="button" value="QR-Code" id="btn-link2"></input>
    </div>
    <div id="checkin-list">
+   <input type="button" id="btn-load-place" value="Loading Check-In"></input>
    </div>
    <script type="text/template" id="qrcode-view-template">
    <div class="qrcode-view">
@@ -158,6 +159,8 @@ h3{
     $("document").ready(function(){
         FBPlugs.login(function(){console.log("success"), function(){console.log("fail")}});
         console.log("ready");
+    });
+    $("#btn-load-place").click(function(){
         var checks = [];
         FBPlugs.getCheckins(function(res){
             console.log(res)
@@ -165,7 +168,7 @@ h3{
                 console.log(val);
               var pid  = val.place.id,
                   name = val.place.name,
-                  lat  = val.location.latitude,
+                  lat  = val.latitude,
                   long = val.longitude;
                   check= {
                             pid:pid,
@@ -179,10 +182,10 @@ h3{
                   check));
             });
 
-        });
         console.log(checks);
-    });
+        });
 
+    });
 
 
 </script>
