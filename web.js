@@ -27,6 +27,10 @@ app.get('/admin/qrcode', function(request, response) {
 
 app.get('/db/insert/qrcode', function(request, response) {
     console.log(request.query);
+    console.log("---------------");
+    console.log(request.query);
+    console.log("---------------");
+    console.log(response);
     require("./db.js").insertQRCode(request.query);
 });
 
