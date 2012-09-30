@@ -35,11 +35,8 @@ app.get('/db/insert/qrcode', function(request, response) {
 });
 
 app.post('/db/insert/qrcode', function(request, response) {
-    console.log(request.body.query);
+    console.log(request.body);
     console.log("---------------");
-    console.log(request.body.query);
-    console.log("---------------");
-    console.log(response);
     require("./db.js").insertQRCode(request.body);
 });
 
