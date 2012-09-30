@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="author" content="">
 <meta name="created" content="">
-<meta name="modified" content="2012年10月01日 (週一) 03時00分07秒">
+<meta name="modified" content="2012年10月01日 (週一) 03時33分51秒">
 <title> Prototype</title>
 <style type="text/css">
 body{
@@ -147,7 +147,8 @@ h3{
    <div class="qrcode-view">
        <div>pid :<%= pid %></div>
        <div>name:<%= name %></div>
-       <input type="button" value="Create QR-Code" id="<%= pid %>" class="btn-create-qrcode"></input>
+       <input type="button" value="Store Place" id="<%= pid %>" class="btn-store-place"></input>
+       <input type="button" value="Create QRCode" id="<%= pid %>" class="btn-create-qrcode"></input>
    </div>
    </script>
 </body>
@@ -173,6 +174,19 @@ h3{
 
       });
     };
+
+    var createQRCode = function(pid){
+       $.ajax({
+          type:"post",
+          url:"http://carpo.terrence-tang.com/db/query/qrcode",
+          data:{pid:pid},
+          dataType:"json",
+          timeout:5000
+      }).done(function(){
+
+      });
+
+    };
     var checks = {};
 var temp;
     $("#btn-load-place").click(function(){
@@ -195,11 +209,12 @@ var temp;
                   check));
             });
 
-            $(".btn-create-qrcode").click(function(){
+            $(".btn-store-place").click(function(){
                 console.log(this.id);
                 insertQRCode(checks[this.id]);
             });
 
+            $(".btn-create-qrcode").click(function(){
         });
     });
 

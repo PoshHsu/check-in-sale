@@ -26,22 +26,17 @@ app.get('/admin/qrcode', function(request, response) {
 });
 
 app.get('/db/insert/qrcode', function(request, response) {
-    console.log(request.query);
-    console.log("---------------");
-    console.log(request.query);
-    console.log("---------------");
-    console.log(response);
     require("./db.js").insertQRCode(request.query);
 });
 
 app.post('/db/insert/qrcode', function(request, response) {
-    console.log(request.body);
-    console.log(request.body.pid);
-    console.log("---------------");
-    //console.log(request);
     require("./db.js").insertQRCode(request.body);
 });
 
+app.post('/db/query/qrcode', function(request, response) {
+    var place = require("./db.js").queryQRCode(request.body);
+    response.send(place);
+});
 
 app.get('/channel.html', function(request, response) {
       response.sendfile(__dirname+'/pages/channel.html');

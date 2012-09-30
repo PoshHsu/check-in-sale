@@ -12,3 +12,10 @@ exports.insertQRCode = function(qrcode){
        collection.insert(qrcode);
      });
 };
+
+exports.queryQRCode = function(qrcode){
+     mongoose.connection.db.collection(QRCODE_TABLE, function(err, collection) {
+       //console.log(err);
+       return collection.findOne({pid:qrcode.pid});
+     });
+};
