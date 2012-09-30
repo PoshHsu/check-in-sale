@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="author" content="">
 <meta name="created" content="">
-<meta name="modified" content="2012年10月01日 (週一) 03時42分41秒">
+<meta name="modified" content="2012年10月01日 (週一) 03時46分05秒">
 <title> Prototype</title>
 <style type="text/css">
 body{
@@ -214,7 +214,8 @@ var temp;
                 insertQRCode(checks[this.id]);
             });
 
-            $(".btn-create-qrcode").click(function(){
+            $(".btn-query-qrcode").click(function(){
+                    queryQRCode(this.id);
         });
     });
 
