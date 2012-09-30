@@ -2,7 +2,9 @@
     "name": "carpo",
     "version": "0.0.1",
     "dependencies": {
-        "express": "2.5.11"
+        "express": "2.5.11",
+        "mongodb": "latest",
+        "mongoose": "latest"
     },
     "engines": {
         "node": "0.8.6",

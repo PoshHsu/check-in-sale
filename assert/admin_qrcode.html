@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="author" content="">
 <meta name="created" content="">
-<meta name="modified" content="2012年10月01日 (週一) 01時32分08秒">
+<meta name="modified" content="2012年10月01日 (週一) 01時36分29秒">
 <title> Prototype</title>
 <style type="text/css">
 body{
@@ -163,6 +163,14 @@ h3{
 
     var insertQRCode = function(check){
       console.log(check);
+      $.ajax({
+          type:"post",
+          url:"http://carpo.terrence-tang.com/db/insert/checkin",
+          data:check,
+          dataType:"json"
+      }).done(function(){
+
+      });
     };
     var checks = {};
     $("#btn-load-place").click(function(){

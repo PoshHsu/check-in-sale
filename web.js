@@ -20,8 +20,16 @@ app.get('/index', function(request, response) {
 });
 
 app.get('/admin/qrcode', function(request, response) {
+      console.log(response);
+      console.log(request);
       response.sendfile(__dirname+'/assert/admin_qrcode.html');
 });
+
+app.get('/db/insert/qrcode', function(request, response) {
+    console.log(request.query);
+    require("./db.js").insert(request.query);
+});
+
 
 app.get('/channel.html', function(request, response) {
       response.sendfile(__dirname+'/pages/channel.html');
