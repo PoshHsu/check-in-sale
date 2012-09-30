@@ -15,7 +15,7 @@ app.get('/', function(request, response) {
       response.sendfile(__dirname+'/pages/index.html');
 });
 
-app.get('/mobile/:id', function(request, response) {
+app.get('/mobile/*', function(request, response) {
       response.sendfile(__dirname+'/assert/mobile_index.html');
 });
 
