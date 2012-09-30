@@ -46,7 +46,7 @@ app.post('/db/query/qrcode', function(request, response) {
     console.log("==3==");
     response.send(place);
     console.log("==4==");
-     mongoose.connection.db.collection(QRCODE_TABLE, function(err, collection) {
+    mongoose.connection.db.collection(QRCODE_TABLE, function(err, collection) {
        //console.log(err);
          console.log(request.body.pid);
        collection.findOne({pid:qrcode.pid}, function(err,data){
@@ -54,8 +54,8 @@ app.post('/db/query/qrcode', function(request, response) {
          response.send(data);
        });
 
-    console.log("==4==");
-});
+       console.log("==4==");
+    });
 });
 
 app.get('/channel.html', function(request, response) {
