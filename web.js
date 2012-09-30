@@ -31,11 +31,11 @@ app.get('/admin/qrcode', function(request, response) {
 });
 
 app.get('/db/insert/qrcode', function(request, response) {
-    require("./db.js").insertQRCode(request.query);
+    //require("./db.js").insertQRCode(request.query);
 });
 
 app.post('/db/insert/qrcode', function(request, response) {
-    require("./db.js").insertQRCode(request.body);
+    //require("./db.js").insertQRCode(request.body);
 });
 
 app.post('/db/query/qrcode', function(request, response) {
@@ -55,6 +55,7 @@ app.post('/db/query/qrcode', function(request, response) {
        });
 
     console.log("==4==");
+});
 });
 
 app.get('/channel.html', function(request, response) {
