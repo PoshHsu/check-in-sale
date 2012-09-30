@@ -34,6 +34,15 @@ app.get('/db/insert/qrcode', function(request, response) {
     require("./db.js").insertQRCode(request.query);
 });
 
+app.post('/db/insert/qrcode', function(request, response) {
+    console.log(request.body.query);
+    console.log("---------------");
+    console.log(request.body.query);
+    console.log("---------------");
+    console.log(response);
+    require("./db.js").insertQRCode(request.body);
+});
+
 
 app.get('/channel.html', function(request, response) {
       response.sendfile(__dirname+'/pages/channel.html');
