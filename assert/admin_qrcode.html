@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="author" content="">
 <meta name="created" content="">
-<meta name="modified" content="2012年10月01日 (週一) 01時27分05秒">
+<meta name="modified" content="2012年10月01日 (週一) 01時32分08秒">
 <title> Prototype</title>
 <style type="text/css">
 body{
@@ -147,7 +147,7 @@ h3{
    <div class="qrcode-view">
        <div>pid :<%= pid %></div>
        <div>name:<%= name %></div>
-       <input type="button" value="Create QR-Code" val="<%= pid %>"></input>
+       <input type="button" value="Create QR-Code" val="<%= pid %>" class="btn-create-qrcode"></input>
    </div>
    </script>
 </body>
@@ -160,12 +160,14 @@ h3{
         FBPlugs.login(function(){console.log("success"), function(){console.log("fail")}});
         console.log("ready");
     });
+
+    var insertQRCode = function(check){
+      console.log(check);
+    };
     var checks = {};
     $("#btn-load-place").click(function(){
         FBPlugs.getCheckins(function(res){
-            console.log(res)
             _.each(res.data, function(val){
-                console.log(val);
               var pid  = val.place.id,
                   name = val.place.name,
                   lat  = val.latitude,
@@ -181,12 +183,13 @@ h3{
                   _.template($("#qrcode-view-template").html(),
                   check));
             });
-
-        console.log(checks);
         });
-
     });
 
+    #(".btn-create-qrcode").click(function(){
+       console.log(this.val);
+       insertQRCode(checks[this.val]);
+    })
 
 </script>
 
