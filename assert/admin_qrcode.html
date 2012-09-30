@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="author" content="">
 <meta name="created" content="">
-<meta name="modified" content="2012年10月01日 (週一) 02時41分32秒">
+<meta name="modified" content="2012年10月01日 (週一) 02時44分46秒">
 <title> Prototype</title>
 <style type="text/css">
 body{
@@ -173,9 +173,11 @@ h3{
       });
     };
     var checks = {};
+var temp;
     $("#btn-load-place").click(function(){
         FBPlugs.getCheckins(function(res){
             _.each(res.data, function(val){
+                temp = val;
               var pid  = val.place.id,
                   name = val.place.name,
                   lat  = val["location"].latitude,
