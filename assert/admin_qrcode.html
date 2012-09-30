@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="author" content="">
 <meta name="created" content="">
-<meta name="modified" content="2012年10月01日 (週一) 04時02分17秒">
+<meta name="modified" content="2012年10月01日 (週一) 04時12分57秒">
 <title> Prototype</title>
 <style type="text/css">
 body{
@@ -150,12 +150,16 @@ h3{
        <input type="button" value="Store Place" id="<%= pid %>" class="btn-store-place"></input>
        <input type="button" value="Create QRCode" id="<%= pid %>" class="btn-create-qrcode"></input>
    </div>
+
+   <div id="qrcode-list">
+   </div>
    </script>
 </body>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 <script src="http://ajax.cdnjs.com/ajax/libs/underscore.js/1.1.4/underscore-min.js"></script>
 <script src="http://ajax.cdnjs.com/ajax/libs/backbone.js/0.3.3/backbone-min.js"></script>
 <script src="../js/FBPlugs.js"></script>
+<script src="../js/all.js"></script>
 <script>
     $("document").ready(function(){
         FBPlugs.login(function(){console.log("success"), function(){console.log("fail")}});
@@ -188,6 +192,12 @@ h3{
       });
 
     };
+
+    var MOBILE_URL = "http://carpo.terrence-tang.com/mobile/"
+    var createQRCode = function(pid){
+       var img = $.create("img").attr("src",getQRCode(MOBILE_URL+pid));
+       $("#qrcode-list").append(img +"<br><br><br>");
+    };
     var checks = {};
     $("#btn-load-place").click(function(){
         FBPlugs.getCheckins(function(res){
@@ -214,8 +224,9 @@ h3{
                 insertQRCode(checks[this.id]);
               });
 
-              $(".btn-query-qrcode").click(function(){
+              $(".btn-create-qrcode").click(function(){
                     queryQRCode(this.id);
+                    createQRCode(this.id);
               });
             });
     });

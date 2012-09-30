@@ -15,8 +15,8 @@ app.get('/', function(request, response) {
       response.sendfile(__dirname+'/pages/index.html');
 });
 
-app.get('/index', function(request, response) {
-      response.sendfile(__dirname+'/pages/index.html');
+app.get('/mobile/:id', function(request, response) {
+      response.sendfile(__dirname+'/assert/mobile_index.html');
 });
 
 app.get('/admin/qrcode', function(request, response) {
