@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="author" content="">
 <meta name="created" content="">
-<meta name="modified" content="2012年10月01日 (週一) 02時37分05秒">
+<meta name="modified" content="2012年10月01日 (週一) 02時41分32秒">
 <title> Prototype</title>
 <style type="text/css">
 body{
@@ -178,8 +178,8 @@ h3{
             _.each(res.data, function(val){
               var pid  = val.place.id,
                   name = val.place.name,
-                  lat  = val.latitude,
-                  long = val.longitude;
+                  lat  = val["location"].latitude,
+                  long = val["location"].longitude;
                   check= {
                             pid:pid,
                             name:name,
