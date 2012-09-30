@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="author" content="">
 <meta name="created" content="">
-<meta name="modified" content="2012年10月01日 (週一) 03時59分44秒">
+<meta name="modified" content="2012年10月01日 (週一) 04時02分17秒">
 <title> Prototype</title>
 <style type="text/css">
 body{
@@ -183,8 +183,8 @@ h3{
           data:{pid:pid},
           dataType:"json",
           timeout:5000
-      }).done(function(){
-
+      }).done(function(res){
+         console.log(res);
       });
 
     };
