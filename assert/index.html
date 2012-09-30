@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="author" content="">
 <meta name="created" content="2012-09-13">
-<meta name="modified" content="2012年09月29日 (週六) 11時39分27秒">
+<meta name="modified" content="2012年09月30日 (週日) 23時32分25秒">
 <title> Prototype</title>
 <style type="text/css">
 h1{
@@ -85,6 +85,7 @@ text-shadow: 0 1px 0 black, 0 2px 0 black;
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 <script src="http://ajax.cdnjs.com/ajax/libs/underscore.js/1.1.4/underscore-min.js"></script>
 <script src="http://ajax.cdnjs.com/ajax/libs/backbone.js/0.3.3/backbone-min.js"></script>
+<script src="js/FBPlugs.js"></script>
 <script>
     //init qr code
       $("document").ready(function(){
@@ -95,11 +96,7 @@ text-shadow: 0 1px 0 black, 0 2px 0 black;
       })
     //end
 
-   //init chinkin but
-   var FBPlugs ={};
-   FBPlugs.checkin = function(pid,message,callback){
-      FB.api("me/checkins","post",{coordinates:{latitude:"25.013682",longitude:"121.3039054"},message:"at&t park",place:116440731717551},function(res){ console.log(res)})
-   }
+
    $("#btn-chinkin").click(function(){
      FBPlugs.checkin();
    })

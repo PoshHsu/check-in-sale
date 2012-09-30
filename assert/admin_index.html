@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="author" content="">
+<meta name="created" content="">
+<meta name="modified" content="2012年10月01日 (週一) 00時21分34秒">
+<title> Prototype</title>
+<style type="text/css">
+body{
+  background: #E7EBF2;
+  margin:0px;
+}
+#top-line {
+  width: 1024px;
+  height: 10px;
+  background-color: #3A7AA6;
+  margin:0px auto 0px auto;
+}
+#top{
+  width:1024px;
+  background-color:#3B5998;
+  margin: 0px;
+  padding: 0px;
+  display: block;
+  height: 15px;
+  border: solid 0.5px #CCC;
+  margin:0px auto 0px auto;
+}
+
+
+#main{
+  margin:100px auto 0px auto;
+  width:520px;
+}
+#logo{
+  background-image: url(image/logo.png);
+  width:128px;
+  height:128px;
+}
+#content{
+  margin: 0px auto 0px auto;
+  width:520px;
+  background: rgba(255, 255, 255, 0.45);
+  border: 1px solid #C7C7C7;
+}
+#content-top{
+  width:420px;
+  height:40px;
+  margin: 10px auto 20px auto;
+  background-color:#3B5998;
+  text-align:center;
+}
+#content-main{
+  font-size:18px;
+  padding-top:5px;
+  margin: 0px auto 0px auto;
+  width:420px;
+}
+#content-footer{
+  margin: 10px auto 10px auto;
+  width:180px;
+  text-align:center;
+}
+#login-pic{
+  background-image: url(image/FBlogin.png);
+  width:179px;
+  height:27px;
+  cursor:pointer;
+}
+#friend{
+  margin: 10px auto 0px auto;
+  width:520px;
+  background: rgba(255, 255, 255, 0.45);
+  border: 1px solid #C7C7C7;
+  height:auto;
+}
+#friend-left{
+  float:left;
+  width:250px;
+  padding:5px 5px 5px 5px;
+  border-right: 2px solid #c2c2c2 ;
+}
+#friend-area{
+  text-shadow: 0 1px 0 #c2c2c2, 0 1px 0 #c2c2c2;
+  color:#c2c2c2;
+}
+#friend-right{
+  padding:5px 5px 5px 5px;
+  margin-left:105px;
+}
+.friend-top{
+  text-align:center;
+  color:#333;
+}
+.radius{
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  border-radius: 6px;
+}
+h2{
+  padding-top:8px;
+  color:white;
+  text-shadow: 0 1px 0 #c2c2c2, 0 1px 0 #c2c2c2;
+}
+h3{
+  padding-top:3px;
+}
+
+</style>
+</head>
+<body>
+   <div id="top-line"></div>
+   <div id="nav">
+      <input type="button" value="Check-In Report" id="btn-link1"></input>
+      <input type="button" value="QR-Code" id="btn-link2"></input>
+   </div>
+   <div id="Checkin-list">
+   </div>
+</body>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<script src="http://ajax.cdnjs.com/ajax/libs/underscore.js/1.1.4/underscore-min.js"></script>
+<script src="http://ajax.cdnjs.com/ajax/libs/backbone.js/0.3.3/backbone-min.js"></script>
+<script src="js/FBPlugs.js"></script>
+<script>
+    var checkins = [
+                     {id:1,name:"terrence",genter:"man",brithday:"1984/08/10",ctime:"09/28 13:51"},
+                     {id:2,name:"terrence",genter:"man",brithday:"1984/08/10",ctime:"09/28 13:51"},
+                     {id:3,name:"terrence",genter:"man",brithday:"1984/08/10",ctime:"09/28 13:51"},
+                   ]
+</script>
+
+
+</html>
