@@ -18,8 +18,7 @@ exports.queryQRCode = function(qrcode){
        //console.log(err);
        collection.findOne({pid:qrcode.pid}, function(err,data){
          console.log(data);
+         return data;
        });
-       console.log(cursor);
-       return cursor;
      });
 };
