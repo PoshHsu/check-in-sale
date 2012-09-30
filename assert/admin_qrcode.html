@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="author" content="">
 <meta name="created" content="">
-<meta name="modified" content="2012年10月01日 (週一) 01時25分27秒">
+<meta name="modified" content="2012年10月01日 (週一) 01時26分12秒">
 <title> Prototype</title>
 <style type="text/css">
 body{
@@ -160,8 +160,8 @@ h3{
         FBPlugs.login(function(){console.log("success"), function(){console.log("fail")}});
         console.log("ready");
     });
+    var checks = [];
     $("#btn-load-place").click(function(){
-        var checks = [];
         FBPlugs.getCheckins(function(res){
             console.log(res)
             _.each(res.data, function(val){
