@@ -1,5 +1,24 @@
 //init chinkin but
 var FBPlugs ={};
+
+FBPlugs.login = function(success_callback, fail_callback){
+    FB.login(function(response) {
+        if (response.authResponse) {
+           FB.getLoginStatus(function(response){
+               if (response.authResponse) {
+                       success_callback();
+                    }
+                    else {
+                       fail_callback();
+                    }
+                });
+            }
+            else {
+                fail_callback();
+            }
+        }, {scope:'manage_notifications,publish_stream'});
+
+};
 /**
  * make check-in
  * pid : place id
@@ -8,10 +27,11 @@ var FBPlugs ={};
  * message : the user's message
  * callback : callback function
  */
-FBPlugs.checkin = function(pid, lat, long, message, callback){
+FBPlugs.checkin = function(pid, lat, long, message, callback,token){
     FB.api("me/checkins",
             "post",
             {
+                access_token:token,
                 coordinates:
                 {
                     latitude:lat,
