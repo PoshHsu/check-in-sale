@@ -6,18 +6,17 @@ FBPlugs.login = function(success_callback, fail_callback){
         if (response.authResponse) {
            FB.getLoginStatus(function(response){
                if (response.authResponse) {
-                       success_callback();
-                    }
-                    else {
-                       fail_callback();
-                    }
-                });
-            }
-            else {
-                fail_callback();
-            }
-        });
-
+                  success_callback();
+               }
+               else {
+                  fail_callback();
+               }
+           });
+        }
+        else {
+           fail_callback();
+        }
+    });
 };
 /**
  * make check-in
