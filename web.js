@@ -42,7 +42,6 @@ app.post('/db/insert/qrcode', function(request, response) {
        collection.insert(request.body);
        response.send(1);
      });
-
 });
 
 app.post('/db/query/qrcode', function(request, response) {

@@ -54,7 +54,7 @@
                         <label for="textinput1">
                             Message
                         </label>
-                        <input name="" id="message" placeholder="" value="" type="text" />
+                        <input id="message" placeholder="" value="" type="text" />
                     </fieldset>
                 </div>
                 <a id="btn-checkin" data-role="button" data-theme="b" href="#page1">
@@ -79,7 +79,7 @@
 
             });
             $("#btn-checkin").click(function(){
-               var message = $("#message").html();
+               var message = $("#message").val();
                FBPlugs.checkin(place.pid,
                                place.lat,
                                place.long,
