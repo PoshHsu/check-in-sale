@@ -20,7 +20,7 @@ var queryQRCode = function(pid, success_callback, fail_callback){
     });
 };
 
-var writeUserIntoDb = function(){
+var writeUserIntoDb = function(result){
     FBPlugs.getUser(function(res){
         var user = {
             qid:null,
@@ -30,7 +30,7 @@ var writeUserIntoDb = function(){
             gender:res.gender,
             birthday:res.birthday,
             like:[],
-            pid:null,
+            page_id:result.id,
             ctime:new Date().getTime()
         };
 

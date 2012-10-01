@@ -36,34 +36,34 @@
         });
         // Additional initialization code here
             var place = null;
-                var pid = location.pathname.substr(8);
-                FBPlugs.login(
-                    function(){
-                        $("#page1").css("display","block");
-                        console.log("success login");
-                        queryQRCode(pid, function(res){
-                            place = res;
-                            $("#place").html(place.name)
+            var pid = location.pathname.substr(8);
+            FBPlugs.login(
+                function(){
+                    $("#page1").css("display","block");
+                    console.log("success login");
+                    queryQRCode(pid, function(res){
+                        place = res;
+                        $("#place").html(place.name)
                         });
 
-                        $("#btn-checkin").click(function(){
-                            var message = $("#message").val();
-                            FBPlugs.checkin(place.pid,
-                                place.lat,
-                                place.long,
-                                message,
-                                function(res){
-                                    console.log(res);
-                                    alert("ok");
-                                });
+                    $("#btn-checkin").click(function(){
+                        var message = $("#message").val();
+                        FBPlugs.checkin(place.pid,
+                            place.lat,
+                            place.long,
+                            message,
+                            function(res){
+                            console.log(res);
+                            alert("ok");
+                            });
                         });
                     },
-                    function(){
-                        $("#main").css("display","block");
-                        console.log("fail login")
-                    });
+                function(){
+                    $("#main").css("display","block");
+                    console.log("fail login")
+                });
 
-            });
+   }
 
     // Load the SDK Asynchronously
     (function(d){
