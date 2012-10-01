@@ -39,7 +39,7 @@ app.get('/db/insert/qrcode', function(request, response) {
 
 app.post('/db/insert/qrcode', function(request, response) {
      mongoose.connection.db.collection(QRCODE_TABLE, function(err, collection) {
-       collection.insert(qrcode);
+       collection.insert(request.body);
        response.send(1);
      });
 
