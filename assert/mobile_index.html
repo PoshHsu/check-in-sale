@@ -15,6 +15,31 @@
         </script>
     </head>
     <body>
+   <div id="fb-root"></div>
+   <script>
+   window.fbAsyncInit = function() {
+        FB.init({
+         appId  : "280399495394196",
+         status : true, // check login status
+         cookie : true, // enable cookies to allow the server to  access the session
+         xfbml  : true, // parse XFBML
+         channelUrl :'http://carpo.terrence-tang.com/channel.html', // channel.html file
+         oauth  : true // enable OAuth 2.0
+        });
+        // Additional initialization code here
+    };
+
+    // Load the SDK Asynchronously
+    (function(d){
+         var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+         if (d.getElementById(id)) {return;}
+             js = d.createElement('script'); js.id = id; js.async = true;
+             //js.src = "//connect.facebook.net/en_US/all.js";
+             js.src = "//connect.facebook.net/zh_TW/all.js";
+             ref.parentNode.insertBefore(js, ref);
+     }(document));
+</script>
+
         <!-- Home -->
         <div data-role="page" id="page1">
             <div data-theme="b" data-role="header">
