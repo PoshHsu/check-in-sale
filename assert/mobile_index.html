@@ -23,13 +23,13 @@
                 </h5>
             </div>
             <div data-role="content">
-                <h2>地點:<span id="place"></span></h2>
+                <h2><span id="place"></span></h2>
                 <div data-role="fieldcontain">
                     <fieldset data-role="controlgroup">
                         <label for="textinput1">
                             Message
                         </label>
-                        <input name="" id="textinput1" placeholder="" value="" type="text" />
+                        <input name="" id="message" placeholder="" value="" type="text" />
                     </fieldset>
                 </div>
                 <a id="btn-checkin" data-role="button" data-theme="b" href="#page1">
@@ -43,15 +43,22 @@
     </body>
     <script src="../js/all.js"></script>
         <script>
+            var place = null;
             $("document").ready(function(){
                 var pid = location.pathname.substr(8);
-                var place = null;
                 queryQRCode(pid, function(res){
                   place = res;
                   $("#place").html(place.name)
                 })
 
             });
+            $("btn-checkin").click(function(){
+               var message = $("#message").html();
+               FBPlugs.checkin(place.pid,
+                               place.lat,
+                               place.long,
+                               message,function(){alert("ok");})
+            })
         </script>
 
 </html>
