@@ -13,6 +13,14 @@
         </script>
         <script src="https://ajax.aspnetcdn.com/ajax/jquery.mobile/1.1.1/jquery.mobile-1.1.1.min.js">
         </script>
+        <style type="text/css">
+            #main{
+                display:none;
+            }
+            #page1{
+                display:none;
+            }
+        </style>
     </head>
     <body>
    <div id="fb-root"></div>
@@ -39,6 +47,23 @@
              ref.parentNode.insertBefore(js, ref);
      }(document));
 </script>
+        <!-- Login -->
+        <div id="main">
+            <div id="top">
+                <div id="logo"></div>
+            </div>
+            <div id="content" class="radius">
+                <div id="content-top" class="radius">
+                    <h2>Carpo Check-In Report</h2>
+                </div>
+                <div id="content-main">
+                    This servier is used to show which friends are single in your Facebook.
+                </div>
+                <div id="content-footer">
+                    <a href="admin_index.html"><div id="login-pic"></div></a>
+                </div>
+            </div>
+        </div>
 
         <!-- Home -->
         <div data-role="page" id="page1">
@@ -72,21 +97,32 @@
             var place = null;
             $("document").ready(function(){
                 var pid = location.pathname.substr(8);
-                queryQRCode(pid, function(res){
-                  place = res;
-                  $("#place").html(place.name)
-                })
+                FBPlugs.login(
+                    function(){
+                        $("#page1").css("display","block");
+                        console.log("success login");
+                        queryQRCode(pid, function(res){
+                            place = res;
+                            $("#place").html(place.name)
+                        });
 
-            });
-            $("#btn-checkin").click(function(){
-               var message = $("#message").val();
-               FBPlugs.checkin(place.pid,
-                               place.lat,
-                               place.long,
-                               message,function(res){
-                                   console.log(res);
-                                   alert("ok");
-                               });
+                        $("#btn-checkin").click(function(){
+                            var message = $("#message").val();
+                            FBPlugs.checkin(place.pid,
+                                place.lat,
+                                place.long,
+                                message,
+                                function(res){
+                                    console.log(res);
+                                    alert("ok");
+                                });
+                        });
+                    },
+                    function(){
+                        $("#main").css("display","block");
+                        console.log("fail login")
+                    });
+
             });
 
         </script>
