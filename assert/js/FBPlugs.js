@@ -4,16 +4,20 @@ var FBPlugs ={};
 FBPlugs.login = function(success_callback, fail_callback){
     FB.login(function(response) {
         if (response.authResponse) {
+console.log("authresponse");
            FB.getLoginStatus(function(response){
                if (response.authResponse) {
+console.log("authresponse true");
                   success_callback();
                }
                else {
+console.log("authresponse fail");
                   fail_callback();
                }
            });
         }
         else {
+console.log("authresponse fail");
            fail_callback();
         }
     });
