@@ -16,7 +16,7 @@ FBPlugs.login = function(success_callback, fail_callback){
             else {
                 fail_callback();
             }
-        }, {scope:'manage_notifications,publish_stream'});
+        });
 
 };
 /**
