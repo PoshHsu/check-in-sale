@@ -39,20 +39,10 @@ app.post('/db/insert/qrcode', function(request, response) {
 });
 
 app.post('/db/query/qrcode', function(request, response) {
-    console.log("==1==");
-    //var place = require("./db.js").queryQRCode(request.body);
-    console.log("==2==");
-    console.log("==3==");
-    console.log("==4==");
     mongoose.connection.db.collection(QRCODE_TABLE, function(err, collection) {
-       //console.log(err);
-         console.log(request.body.pid);
        collection.findOne({pid:request.body.pid}, function(err,data){
-         console.log(data);
          response.send(data);
        });
-
-       console.log("==4==");
     });
 });
 

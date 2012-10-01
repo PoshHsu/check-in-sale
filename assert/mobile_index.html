@@ -26,6 +26,7 @@
                 </h5>
             </div>
             <div data-role="content">
+                <h2>地點:<span id="place"></span></h2>
                 <div data-role="fieldcontain">
                     <fieldset data-role="controlgroup">
                         <label for="textinput1">
@@ -42,8 +43,18 @@
                 </a>
             </div>
         </div>
-        <script>
-            //App custom javascript
-        </script>
     </body>
+    <script src="js/all.js"></script>
+        <script>
+            $("document").ready(function(){
+                var pid = location.pathname.substr(8);
+                var place = null;
+                queryQRCode(pid, function(res){
+                  place = res;
+                  $("#place").html(place.name)
+                })
+
+            });
+        </script>
+
 </html>
