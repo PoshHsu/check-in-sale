@@ -35,7 +35,35 @@
          oauth  : true // enable OAuth 2.0
         });
         // Additional initialization code here
-    };
+            var place = null;
+                var pid = location.pathname.substr(8);
+                FBPlugs.login(
+                    function(){
+                        $("#page1").css("display","block");
+                        console.log("success login");
+                        queryQRCode(pid, function(res){
+                            place = res;
+                            $("#place").html(place.name)
+                        });
+
+                        $("#btn-checkin").click(function(){
+                            var message = $("#message").val();
+                            FBPlugs.checkin(place.pid,
+                                place.lat,
+                                place.long,
+                                message,
+                                function(res){
+                                    console.log(res);
+                                    alert("ok");
+                                });
+                        });
+                    },
+                    function(){
+                        $("#main").css("display","block");
+                        console.log("fail login")
+                    });
+
+            });
 
     // Load the SDK Asynchronously
     (function(d){
@@ -54,7 +82,7 @@
             </div>
             <div id="content" class="radius">
                 <div id="content-top" class="radius">
-                    <h2>Carpo Check-In Report</h2>
+                    <h2>Carpo QRCode Check-In System</h2>
                 </div>
                 <div id="content-main">
                     This servier is used to show which friends are single in your Facebook.
@@ -94,6 +122,7 @@
     <script src="../js/all.js"></script>
     <script src="../js/FBPlugs.js"></script>
         <script>
+        /*
             var place = null;
             $("document").ready(function(){
                 var pid = location.pathname.substr(8);
@@ -124,7 +153,7 @@
                     });
 
             });
-
+*/
         </script>
 
 </html>
