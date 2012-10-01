@@ -83,8 +83,12 @@
                FBPlugs.checkin(place.pid,
                                place.lat,
                                place.long,
-                               message,function(){alert("ok");})
-            })
+                               message,function(res){
+                                   console.log(res);
+                                   alert("ok");
+                               });
+            });
+
         </script>
 
 </html>
