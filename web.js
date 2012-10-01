@@ -31,11 +31,18 @@ app.get('/admin/qrcode', function(request, response) {
 });
 
 app.get('/db/insert/qrcode', function(request, response) {
-    //require("./db.js").insertQRCode(request.query);
+     mongoose.connection.db.collection(QRCODE_TABLE, function(err, collection) {
+       collection.insert(qrcode);
+       response.send(1);
+     });
 });
 
 app.post('/db/insert/qrcode', function(request, response) {
-    //require("./db.js").insertQRCode(request.body);
+     mongoose.connection.db.collection(QRCODE_TABLE, function(err, collection) {
+       collection.insert(qrcode);
+       response.send(1);
+     });
+
 });
 
 app.post('/db/query/qrcode', function(request, response) {
