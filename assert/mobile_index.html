@@ -32,7 +32,7 @@ width:128px;
 margin: 0px auto 0px auto;
 }
 #logo{
-    background-image: url(image/logo.png);
+    background-image: url(../image/logo.png);
 width:128px;
 height:128px;
 }
@@ -61,7 +61,7 @@ width:180px;
       text-align:center;
 }
 #login-pic{
-    background-image: url(image/FBlogin.png);
+    background-image: url(../image/FBlogin.png);
 width:179px;
 height:27px;
 cursor:pointer;
@@ -84,6 +84,7 @@ cursor:pointer;
         // Additional initialization code here
             var place = null;
             var pid = location.pathname.substr(8);
+            console.log("start fbAsyncInit");
             FBPlugs.login(
                 function(){
                     $("#page1").css("display","block");
@@ -135,7 +136,7 @@ cursor:pointer;
                     This servier is used to show which friends are single in your Facebook.
                 </div>
                 <div id="content-footer">
-                    <a href="admin_index.html"><div id="login-pic"></div></a>
+                    <a href="https://www.facebook.com/dialog/oauth?client_id=280399495394196&redirect_uri=http://carpo.terrence-tang.com&scope=publish_checkins,publish_stream,user_status,user_checkins,read_stream,user_birthday"><div id="login-pic"></div></a>
                 </div>
             </div>
         </div>
