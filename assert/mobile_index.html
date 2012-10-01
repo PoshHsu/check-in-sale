@@ -93,17 +93,19 @@ h2{
          oauth  : true // enable OAuth 2.0
         });
         // Additional initialization code here
+        FB.getLoginStatus(function(response) {
+            console.log(response);
             var place = null;
             var pid = location.pathname.substr(8);
-            console.log("start fbAsyncInit");
-            FBPlugs.login(
-                function(){
-                    $("#page1").css("display","block");
+            if (response.status === 'connected') {
+                var uid = response.authResponse.userID;
+                var accessToken = response.authResponse.accessToken;
+                $("#page1").css("display","block");
                     console.log("success login");
                     queryQRCode(pid, function(res){
                         place = res;
                         $("#place").html(place.name)
-                        });
+                    });
 
                     $("#btn-checkin").click(function(){
                         var message = $("#message").val();
@@ -115,12 +117,26 @@ h2{
                             console.log(res);
                             alert("ok");
                             });
-                        });
-                    },
+                    });
+
+            } else if (response.status === 'not_authorized') {
+            // the user is logged in to Facebook,
+            // but has not authenticated your app
+                 $("#main").css("display","block");
+                 console.log("fail login")
+
+            } else {
+                 $("#main").css("display","block");
+                 console.log("fail login")
+            // the user isn't logged in to Facebook.
+            }
+        });
+           console.log("start fbAsyncInit");
+            FBPlugs.login(
                 function(){
-                    $("#main").css("display","block");
-                    console.log("fail login")
-                });
+                                        },
+                function(){
+                                    });
 
    };
 
