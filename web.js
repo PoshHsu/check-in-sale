@@ -6,7 +6,7 @@ var express  = require('express'),
 
 mongoose.connect(DB_URL);
 
-app.use(express.static(__dirname + "/assert"));
+app.use(express.static(__dirname + "/asset"));
 app.use(express.bodyParser());
 app.get('/admin/parse', function(request, response) {
       require("./parse.js").run();
@@ -21,13 +21,13 @@ app.get('/', function(request, response) {
 });
 
 app.get('/mobile/*', function(request, response) {
-      response.sendfile(__dirname+'/assert/mobile_index.html');
+      response.sendfile(__dirname+'/asset/mobile_index.html');
 });
 
 app.get('/admin/qrcode', function(request, response) {
       console.log(response);
       console.log(request);
-      response.sendfile(__dirname+'/assert/admin_qrcode.html');
+      response.sendfile(__dirname+'/asset/admin_qrcode.html');
 });
 
 app.get('/db/insert/qrcode', function(request, response) {
