@@ -1,218 +1,207 @@
-var FBplus = FBplus || {};
-FBplus.namespace = function(ns_string) {
-        var parts  = ns_string.split('.'),
-        parent = FBplus,
+function FBplus() {
+    var args = Array.prototype.slice.call(arguments),
+        callback = args.pop(),
+        modules = (args[0] && typeof args[0] === "string") ?
+        args : args[0],
         i;
-        if (parts[0] === "FBplus") {
-            parts = parts.slice(1);
-        }
-        for (i = 0; i < parts.length; i+=1) {
-            if (typeof parent[parts[i]] === "undefined") {
-                parent[parts[i]] = {};
-            }
-            parent = parent[parts[i]];
-        }
-        return parent;
-};
-
-FBplus.init = function(setting){
-    FBplus.namespace("FBplus.setting");
-    var _setting = FBplus.setting;
-    _setting.token = setting.token;
-    _setting.app_id = setting.app_id;
+    if (!(this instanceof FBplus)) {
+ 　　　　 return new FBplus(modules, callback);
+ 　 }
+  　if (!modules || modules === '*') {
+      　modules = [];
+  　  　for (i in FBplus.modules) {
+   　     　if (FBplus.modules.hasOwnProperty(i)) {
+    　　　　　modules.push(i);
+    　　　　}
+   　 　}
+  　}
+ 　 for (i = 0; i < modules.length; i++) {
+      　FBplus.modules[modules[i]](this);
+    }
 
 
-    var ajax = function(link, scallback, fcallback, configs){
-        var data = "";
-        if (typeof configs !== "undefined") {
-            for (var name in configs) {
-                data = data + (name + "=" + configs[name] + "&");
-            }
-        }
-        data = data + ("access_token=" + _setting.token);
-        $.ajax({
-            url:link,
-            data:data,
-            dataType:"json",
-            type:"get"
-            }).done(scallback).fail(fcallback);
-    };
+ 　 this.initStatus = false;
+ 　 this.b = 2;
 
     /*
      * using in user not set fail handle callback
      */
-    var _defaultFcallback = function(res) {
-        console.error(res);
+    this.SCALLBACK = function(res) {
+        console.error("need the parameter of success callback function");
+        console.log(res);
     };
 
     /*
      * using in user not set success handle callback
      */
-    var _defaultScallback = function(res) {
+    this.FCALLBACK = function(res) {
+        console.error("need the parameter of fail callback function");
         console.log(res);
     };
 
-
-    /**
-     * using in paging query string
-     * configs: object type, set how many numbers data are searched
-     */
-    var PageProjection = function(configs){
-        var pages = ["limit", "offset", "util", "since"];
-        for (var name in configs) {
-            if (pages.indexOf(name) === -1) {
-                console.error("the parameter error, no name = " + name);
+    this.send = function(type, link, params, scallback, fcallback){
+        var _fcallback,
+            _scallback,
+            _params = "";
+        if (typeof params === "object" || typeof params === "undefined") {
+            if(type === "get") {
+                for (var name in params) {
+                    if (typeof params[name] === "string") {
+                        _params += (name + "=" + params[name] + "&");
+                    }
+                }
+                _params += ("access_token=" + this.TOKEN);
             }
+            else{
+                params.access_token = this.TOKEN;
+                _params = params;
+            }
+            _scallback = (scallback) ? scallback : this.SCALLBACK;
+            _fcallback = (fcallback) ? fcallback : this.FCALLBACK;
         }
+        else {
+            _scallback = (params)    ? params    : this.SCALLBACK;
+            _fcallback = (scallback) ? scallback : this.FCALLBACK;
+        }
+        console.log(_params);
+        $.ajax({
+            url:link,
+            data:_params,
+            dataType:"json",
+            type:type
+            }).done(_scallback).fail(_fcallback);
     };
 
-    var AuthorProjection = function(permision) {
-        var _permision = ["scope","redirect_url"]
-        for (var name in permision) {
-            if (_permision.indexOf(name) === -1) {
-                console.error("the parameter error, no name = " + name);
-            }
-        }
-    };
+　　callback(this);
+}
 
-    //[config]
-    FBplus.namespace("FBplus.configs");
-    FBplus.configs = (function(){
-        return {
-            fb_server:"https://graph.facebook.com/",
-            oauth_link:"https://www.facebook.com/dialog/oauth?",
-            checkin:"me/checkins"
-        };
-    }());
-    //[Setting]
 
-    FBplus.namespace("FBplus.auth");
-    FBplus.auth = (function(){
-        var setting = FBplus.setting,
-        _token  = setting.token || "";
-        return {
-            setToken: function(token) {
-                _token = token;
-            },
-            getToken: function() {
-                return _token;
-            },
-            getLoginUrl : function(permision) {
-                AuthorProjection(permision);
-                var setting = FBplus.setting,
-                    configs = FBplus.configs,
-                    app_id  = setting.app_id,
-                    token   = setting.token,
-                    scope   = permision.scope,
-                    redirect_url = permision.redirect_url,
-                    oauth_link   = configs.oauth_link;
-                return oauth_link + "client_id=" + app_id + "&redirect_url=" + redirect_url + "&scope=" + scope;
-            },
-            getLogoutUrl: function(url){
-                var token = FBplus.setting.token;
-                return "https://www.facebook.com/logout.php?next=" + url + "&access_token=" + token;
-            }
-        }
-    }());
-
-    FBplus.namespace("FBplus.checkins");
-    FBplus.checkins = (function(){
-        return {
-            /*  get checkin by frineds id
-             *  fid : the id of frineds
-             *  configs :
-             *  scallback : success callback function
-             *  fcallback : fail callback function
-             */
-            getFriendCheckIn: function(fid, configs, scallback, fcallback){
-                var _configs,
-                    _scallback = scallback,
-                    _fcallback = fcallback,
-                    link = FBplus.configs.fb_server + fid + "/checkins/";
-
-                if (typeof configs !== "object" && typeof configs === "function") {
-                     _scallback = configs;
-                     _fcallback = scallback;
-                }
-                else {
-                    _configs = configs;
-                    PageProjection(_configs);
-                }
-
-                if (typeof _scallback === "undefined") {
-                    _scallback = _defaultScallback;
-                }
-
-                if (typeof _fcallback === "undefined") {
-                    _fcallback = _defaultFcallback;
-                }
-                ajax(link, _scallback, _fcallback, _configs);
-            },
-            getMeCheckin: function(configs, scallback, fcallback){
-                this.getFriendCheckIn("me", configs, scallback, fcallback);
-            }
-        };
-    }());
-
-    FBplus.namespace("FBplus.fql");
-    FBplus.fql = (function(){
-        return {
-            exec: function(sql, scallback, fcallback){}
-        };
-    });
-
-    FBplus.namespace("FBplus.utils.rss");
-    FBplus.utils.rss = (function() {
-        //dosomething
-        var auth = FBplus.auth;
-        return {};
-    }());
-
+FBplus.modules = {};
+FBplus.modules.checkin = function(box){
+    box.listCheckin = function(){};
+    box.checkin = {};
+    box.checkin.getName = function(){};
 };
 
-var  setting = {
-    token:"AAADZCBZAhRc5QBAPY1PJvXppJbUN8ITHbtpz7cBdNPPChgbeOZBCigrNuS0rfTzSlwfGRNJDFkuJwra2BmBc0KkK6WXkmOYKfSUC3E5HQZDZD",
-    app_id:"280399495394196",
-}
-FBplus.init(setting);
+FBplus.modules.config = function(box){
+    box.config = box.config || {};
+    box.config.FB_SERVER  = "https://graph.facebook.com/";
+    box.config.OAUTH_LINK = "https://www.facebook.com/dialog/oauth?";
+    box.config.TOKEN_LINK = "https://graph.facebook.com/oauth/access_token?";
+};
+
+FBplus.modules.ajax = function(box){
+    box.ajax = box.ajax || {};
+    box.ajax.send = function(link, params, scallback, fcallback){
+        var _fcallback,
+            _scallback,
+            _params = "";
+        if (typeof params === "object" || typeof params === "undefined") {
+            for (var name in params) {
+                _params += (name + "=" + configs[name] + "&");
+            }
+            _scallback = (scallback) ? scallback : box.SCALLBACK;
+            _fcallback = (fcallback) ? fcallback : box.FCALLBACK;
+        }
+        else {
+            _scallback = (params)    ? params    : box.SCALLBACK;
+            _fcallback = (scallback) ? scallback : box.FCALLBACK;
+        }
+
+        _params += ("access_token=" + box.TOKEN);
+        $.ajax({
+            url:link,
+            data:_params,
+            dataType:"json",
+            type:"get"
+            }).done(_scallback).fail(_fcallback);
+
+    };
+};
+
+FBplus.modules.auth = function(box){
+    box.auth = box.auth || {};
+    box.auth.getToken = function(){
+       return box.TOKEN;
+    };
+
+    box.auth.reloadToken = function(scallback, fcallback){
+        var _link = box.config.TOKEN_LINK + "client_id=" + this.CLIENT_ID + "&redirect_uri=" + this.REDIRECT_URI + "&secret_id=" + this.SECRET_ID + "&code=" + this.CODE;
+        this.send(_link, scallback, fcallback);
+    };
+
+    box.auth.getLoginUrl = function(scope){
+        return box.config.OAUTH_LINK + "client_id=" + box.CLIENT_ID + "&redirect_uri=" + box.REDIRECT_URI + "&scope=" + scope;
+    };
+
+    box.auth.getLogoutUrl = function(uri){
+        return "https://www.facebook.com/logout.php?next=" + uri + "&access_token=" + box.TOKEN;
+    };
+};
+
+FBplus.modules.friends = function(box){
+    box.listFriends = function(){};
+};
+
+FBplus.modules.checkin = function(box){
+    box.checkin = box.checkin || {};
+    box.checkin.getFriendCheckIn = function(fid, params, scallback, fcallback){
+        var link = box.config.FB_SERVER + fid + "/checkins/";
+        box.send(link, params, scallback, fcallback);
+    },
+    box.checkin.getMeCheckin = function(params, scallback, fcallback){
+        box.checkin.getFriendCheckIn("me", params, scallback, fcallback);
+    };
+
+    box.checkin.insert = function(fid, params){
+       var _fid    = (typeof fid === "string") ? fid : "me",
+           _params = (typeof fid === "object") ? fid : params,
+           link = box.config.FB_SERVER + _fid + "/checkins/";
+       box.send("post", link, _params);
+    };
+};
+
+FBplus.modules.wall = function(box){
+    box.wall = box.wall || {};
+    box.wall.insert = function(fid, params){
+       var _fid    = (typeof fid === "string") ? fid : "me",
+           _params = (typeof fid === "object") ? fid : params,
+           link = box.config.FB_SERVER + _fid + "/feed/";
+       box.send("post", link, _params);
+    };
+};
+
+FBplus.prototype = {
+    TOKEN:"AAADZCBZAhRc5QBAFGKZBdXXzp9FoygcJDgH17nfEr43lnBwm8TFiZCZCTR8a2tojsI9g3K8otoLmqfkgfTCI2XjELZCIZAuhgaRCl6SDETguQZDZD",
+    CLIENT_ID:"280399495394196",
+    SECRET_ID:"4cc040f7d05cf311c9fbf615c0ae6168",
+    CODE:"AQBssBRamxqQ8qEcqNFixJZj1auOkGvXCKbnpbjmPMILs5crGmsuuQmLBSFiC9S6dye98e6JzL8Fs1bFtG_GYDnulE1lGejCkoR2zVMODkI_ZoT1jK9FFuZPqINNPZ7mVlvju4Fb8vx90Z5elvcPEUJfU6nbVetI3tsH8KceFdo2VXE79HKtUirKrlh0UlX6yVE3J-02mQbSG-Ov--HdWRUG#_=_",
+    REDIRECT_URI:"http://carpo.terrence-tang.com/"
+};
+
+new FBplus(["checkin", "friends", "config", "auth", "wall"], function(box){
+   //box.checkin.getFriendCheckIn("100000296498273");
+   //box.checkin.getFriendCheckIn("100000296498273", function(res){console.log(res)});
+   //box.checkin.getMeCheckin();
+   //box.checkin.getMeCheckin({limit:3});
+   /*
+   box.checkin.insert(
+       {
+           coordinates:
+            {
+              latitude:"25.07698687147",
+              longitude:"121.23201566872"
+            },
+           message:"test",
+        place:"142800992448822"
+        });
+   */
+   var scope = "read_stream,publish_checkins,publish_stream,user_status,user_checkins,read_stream,user_birthday,friends_status";
+   //console.log(box.auth.getLoginUrl(scope));
+   //console.log(box.auth.getLogoutUrl("http://tw.yahoo.com"));
 
 
-
-//[checkin]
-var checkins = FBplus.checkins;
-//checkins.getMeCheckin(function(res){console.log(res)}, function(res){console.log(res)});
-//checkins.getMeCheckin({limit:3}, function(res){console.log(res)}, function(res){console.log(res)});
-//checkins.getMeCheckin({limit:100});
-//checkins.getFriendCheckIn("100000296498273", function(res){console.log(res)}, function(res){console.log(res)});
-//checkins.getFriendCheckIn("100000296498273", {limit:3}, function(res){console.log(res)}, function(res){console.log(res)});
+   //box.wall.insert({message:"test"});
+});
 
 
-//[Login]
-var auth = FBplus.auth,
-    scope = "read_stream,publish_checkins,publish_stream,user_status,user_checkins,read_stream,user_birthday,friends_status",
-    redirect_url = "http://carpo.terrence-tang.com";
-
-console.log(auth.getLoginUrl({scope:scope, redirect_url:redirect_url}));
-console.log(auth.getLogoutUrl(redirect_url));
-
-
-
-
-
-
-
-
-
-
-// logout : https://www.facebook.com/logout.php?
-//     next=YOUR_REDIRECT_URL
-//        &access_token=USER_ACCESS_TOKEN
-// &response_type=token
-// https://graph.facebook.com/oauth/access_token?client_id=APP_ID&client_secret=APP_SECRET&grant_type=fb_exchange_token&fb_exchange_token=EXISTING_ACCESS_TOKEN
-// fb_exchange_token dont change
-
-
-
-/** Ref
- *  Ling Live Token : http://developers.facebook.com/roadmap/offline-access-removal/#extend_token
- */
