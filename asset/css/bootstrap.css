@@ -4981,3 +4981,10 @@ a.badge:hover {
 .invisible {
   visibility: hidden;
 }
+
+.home{
+	background: url('../image/home-bg-lib.jpeg') center 0px no-repeat;
+  	padding-top: 55px;
+  	color: #ffffff; 
+}
+
