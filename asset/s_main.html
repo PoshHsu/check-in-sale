@@ -6,14 +6,17 @@
 
 <!-- include bootstrap library -->
 <script src="js/bootstrap.min.js"></script>
+<script src="js/bootstrap-datepicker.js"></script>
 <link href="css/bootstrap.css" rel="stylesheet">
 <link href="css/bootstrap-responsive.min.css" rel="stylesheet">
+<link href="css/datepicker.css" rel="stylesheet">
     
 <style type="text/css">
 body {
     padding-top: 60px;
     padding-bottom: 40px;
 }
+
 
 </style>
 
@@ -27,6 +30,12 @@ $(document).ready(function(){
   		//console.log($(this).tab('show'));
   		$(this).tab('show');
 	});
+	
+	$('.datepicker').datepicker({
+		formar:'mm/dd/yyyy'	
+	});
+
+
 });
 </script>
 </head>
@@ -122,25 +131,35 @@ $(document).ready(function(){
 				  	</div>
 				
 					<div class="control-group">
-				    	<label class="control-label" for="solgon">活動口號</label>
+				    	<label class="control-label" for="solgon">活動標語</label>
 						<div class="controls">
-				      		<input type="text" class="input-large" placeholder="請輸入活動口號，例：我愛薑母鴨">
+				      		<input type="text" class="input-large" placeholder="請輸入活動標語，例：我愛薑母鴨">
 				    	</div>
 				  	</div>
 				  	
 				  	<div class="control-group">
 				    	<label class="control-label" for="session">活動期間</label>
 						<div class="controls">
-				      		<input type="text" id="start_date" placeholder="開始時間">~<input type="text" id="end_date" placeholder="結束時間">
+				      		<input type="text" class="datepicker" id="start_date" placeholder="開始時間">~<input type="text" class="datepicker" id="end_date" placeholder="結束時間">
 				    	</div>
 				  	</div>
 				
 					<div class="control-group">
+				    	<label class="control-label" for="session">活動照片</label>
+						<div class="controls">
+							<form method="post" enctype="multipart/form-data" action="/fileUpload">
+         						<input type="file" name="uploadingFile">         						 
+    						</form>				      		
+				    	</div>
+				  	</div>
+				  	
+					<div class="control-group">
+						
 						<div class="controls">
 						<button type="submit" class="btn btn-primary">新增</button>  						
   						</div>
 					</div>
-				
+				</form>
 			</div>	
 					
 		</div>	
