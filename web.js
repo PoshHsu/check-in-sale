@@ -25,9 +25,11 @@ app.get('/upload', function(req, res) {
 
 var fs = require('fs');
 app.post('/fileUpload', function(req, res) {
-
+	console.log('start fileUpload function');
     var uploadedFile = req.files.uploadingFile;
+    console.log('uploadFile:'+uploadedFile);
         var tmpPath = uploadedFile.path;
+    console.log('tmpPath:'+tmpPath);    
         var targetPath = './' + uploadedFile.name;
 
         fs.rename(tmpPath, targetPath, function(err) {
