@@ -161,6 +161,7 @@ FBplus.modules.wall = function(box){
     };
 };
 
+/*
 FBplus.prototype.config = {
     TOKEN:"AAADZCBZAhRc5QBAFGKZBdXXzp9FoygcJDgH17nfEr43lnBwm8TFiZCZCTR8a2tojsI9g3K8otoLmqfkgfTCI2XjELZCIZAuhgaRCl6SDETguQZDZD",
     CLIENT_ID:"280399495394196",
@@ -168,7 +169,7 @@ FBplus.prototype.config = {
     CODE:"AQBssBRamxqQ8qEcqNFixJZj1auOkGvXCKbnpbjmPMILs5crGmsuuQmLBSFiC9S6dye98e6JzL8Fs1bFtG_GYDnulE1lGejCkoR2zVMODkI_ZoT1jK9FFuZPqINNPZ7mVlvju4Fb8vx90Z5elvcPEUJfU6nbVetI3tsH8KceFdo2VXE79HKtUirKrlh0UlX6yVE3J-02mQbSG-Ov--HdWRUG#_=_",
     REDIRECT_URI:"http://carpo.terrence-tang.com/"
 };
-
+*/
 new FBplus(["checkin", "friends", "config", "auth", "wall"], function(box){
    //box.checkin.getFriendCheckIn("100000296498273");
    //box.checkin.getFriendCheckIn("100000296498273", function(res){console.log(res)});
