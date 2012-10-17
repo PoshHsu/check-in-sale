@@ -120,7 +120,7 @@
 var initEvent = function(event_data){
     $("#btn-checkin").click(function(){
             var message = $("#message").val();
-            new FBplus(["checkin"], function(plus){
+            new FBplus(["checkin","config"], function(plus){
                 var _data = {
 coordinates:{
 latitude:event_data.place.lat,
