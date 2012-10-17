@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html>
+
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <title>
-        </title>
-        <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/jquery.mobile/1.1.1/jquery.mobile-1.1.1.min.css" />
+        <title></title>
+        <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/jquery.mobile/1.1.1/jquery.mobile-1.1.1.min.css"
+        />
         <style>
             /* App custom styles */
         </style>
@@ -14,145 +15,189 @@
         <script src="https://ajax.aspnetcdn.com/ajax/jquery.mobile/1.1.1/jquery.mobile-1.1.1.min.js">
         </script>
         <style type="text/css">
-body{
-  background: #E7EBF2;
-}
+            body{
+                background: #E7EBF2;
+            }
 
-#main{
-display:none;
-margin:100px auto 0px auto;
-width:480px;
+            #main{
+                display:none;
+                margin:100px auto 0px auto;
+                width:480px;
 
-}
-#page1{
-display:block;
-}
-#main{
-}
-#top{
-width:128px;
-margin: 0px auto 0px auto;
-}
-#logo{
-    background-image: url(../image/logo.png);
-width:128px;
-height:128px;
-}
-#content{
-margin: 0px auto 0px auto;
-width:480px;
-background: rgba(255, 255, 255, 0.45);
-border: 1px solid #C7C7C7;
-}
-#content-top{
-width:420px;
-height:40px;
-margin: 10px auto 20px auto;
-        background-color:#3B5998;
-        text-align:center;
-}
-#content-main{
-    font-size:18px;
-    padding-top:5px;
-margin: 0px auto 0px auto;
-width:420px;
-}
-#content-footer{
-margin: 10px auto 10px auto;
-width:180px;
-      text-align:center;
-}
-#login-pic{
-    background-image: url(../image/FBlogin.png);
-width:179px;
-height:27px;
-cursor:pointer;
-}
-.radius{
-  -webkit-border-radius: 6px;
-  -moz-border-radius: 6px;
-  border-radius: 6px;
-}
+            }
+            #page1{
+                display:block;
+            }
+            #main{
+            }
+            #top{
+                width:128px;
+                margin: 0px auto 0px auto;
+            }
+            #logo{
+                background-image: url(../image/logo.png);
+                width:128px;
+                height:128px;
+            }
+            #content{
+                margin: 0px auto 0px auto;
+                width:480px;
+                background: rgba(255, 255, 255, 0.45);
+                border: 1px solid #C7C7C7;
+            }
+            #content-top{
+                width:420px;
+                height:40px;
+                margin: 10px auto 20px auto;
+                background-color:#3B5998;
+                text-align:center;
+            }
+            #content-main{
+                font-size:18px;
+                padding-top:5px;
+                margin: 0px auto 0px auto;
+                width:420px;
+            }
+            #content-footer{
+                margin: 10px auto 10px auto;
+                width:180px;
+                text-align:center;
+            }
+            #login-pic{
+                background-image: url(../image/FBlogin.png);
+                width:179px;
+                height:27px;
+                cursor:pointer;
+            }
+            .radius{
+                -webkit-border-radius: 6px;
+                -moz-border-radius: 6px;
+                border-radius: 6px;
+            }
 
-h4{
-  padding-top:8px;
-  color:white;
-  text-shadow: 0 1px 0 #c2c2c2, 0 1px 0 #c2c2c2;
-}
-
+            h4{
+                padding-top:8px;
+                color:white;
+                text-shadow: 0 1px 0 #c2c2c2, 0 1px 0 #c2c2c2;
+            }
         </style>
     </head>
+
     <body>
-   <div id="fb-root"></div>
-   <script>
-   window.fbAsyncInit = function() {
-        FB.init({
-         appId  : "280399495394196",
-         status : true, // check login status
-         cookie : true, // enable cookies to allow the server to  access the session
-         xfbml  : true, // parse XFBML
-         channelUrl :'http://carpo.terrence-tang.com/channel.html', // channel.html file
-         oauth  : true // enable OAuth 2.0
-        });
-        /*
-        // Additional initialization code here
-        FB.getLoginStatus(function(response) {
-            console.log(response);
-            var place = null;
-            var pid = location.pathname.substr(8);
-            if (response.status === 'connected') {
-                var uid = response.authResponse.userID;
-                var accessToken = response.authResponse.accessToken;
+        <div id="fb-root"></div>
+        <script>
+            /*
+               window.fbAsyncInit = function() {
+               FB.init({
+               appId  : "280399495394196",
+               status : true, // check login status
+               cookie : true, // enable cookies to allow the server to  access the session
+               xfbml  : true, // parse XFBML
+               channelUrl :'http://carpo.terrence-tang.com/channel.html', // channel.html file
+               oauth  : true // enable OAuth 2.0
+               });
+             */
+
+        var initLayout = function(layout_data){
+            var _logined    = layout_data.login_status ||  false,
+                _place_name = layout_data.place_name || "",
+                _slogan     = layout_data.slogan || "";
+
+
+            //do login pic
+            if (_logined) {
                 $("#page1").css("display","block");
-                    console.log("success login");
-                    queryQRCode(pid, function(res){
-                        place = res;
-                        $("#place").html(place.name)
-                    });
-
-                    $("#btn-checkin").click(function(){
-                        var message = $("#message").val();
-                        FBPlugs.checkin(place.pid,
-                            place.lat,
-                            place.long,
-                            message,
-                            function(res){
-                            console.log(res);
-                            alert("ok");
-                            });
-                    });
-
-            } else if (response.status === 'not_authorized') {
-            // the user is logged in to Facebook,
-            // but has not authenticated your app
-                 $("#main").css("display","block");
-                 console.log("fail login")
-            } else {
-                 $("#main").css("display","block");
-                 console.log("fail login")
-            // the user isn't logged in to Facebook.
             }
-        });
-           console.log("start fbAsyncInit");
-            FBPlugs.login(
-                function(){
-                                        },
-                function(){
-                                    });
-                                    */
+            else {
 
-   };
+            }
 
-    // Load the SDK Asynchronously
-    (function(d){
-         var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
-         if (d.getElementById(id)) {return;}
-             js = d.createElement('script'); js.id = id; js.async = true;
-             //js.src = "//connect.facebook.net/en_US/all.js";
-             js.src = "//connect.facebook.net/zh_TW/all.js";
-             ref.parentNode.insertBefore(js, ref);
-     }(document));
-</script>
+            $("#place").html(_place_name)
+                $("#slogan").html(_slogan)
+
+        };
+
+var initEvent = function(event_data){
+    $("#btn-checkin").click(function(){
+            var message = $("#message").val();
+            new FBplus(["checkin","config"], function(plus){
+                var _data = {
+coordinates:{
+latitude:event_data.place.lat,
+longitude:event_data.place.long
+},
+message:message,
+place:event_data.place.pid
+};
+
+plus.checkin.insert(_data, function(){alert(123)});
+});
+
+            });
+};
+
+
+var initIndex = function(uid, access_token){
+    var _place = null,
+        _pid   = location.pathname.substr(16),
+        _uid   = uid,
+        _token = access_token;
+
+    FBplus.prototype.config = {
+CLIENT_ID:"280399495394196",
+          TOKEN:_token
+    };
+
+
+    queryQRcode(_pid, function(res){
+            console.log("in query qrcode");
+            var _place = res,
+            layout_data ={},
+            event_data = {};
+
+            layout_data.place_name = _place.name;
+            layout_data.slogan     = _place.slogan;
+            layout_data.login_status = true;
+
+            event_data.place = place;
+            initLayout(layout_data);
+            initEvent(event_data);
+            });
+
+};
+/*
+   FB.getLoginStatus(function(response) {
+   console.log(response);
+   if (response.status === 'connected') {
+   var uid = response.authResponse.userID,
+   accessToken = response.authResponse.accessToken;
+   initIndex(uid,access_token);
+
+   } else if (response.status === 'not_authorized') {
+// the user is logged in to Facebook,
+// but has not authenticated your app
+$("#main").css("display","block");
+console.log("fail login")
+} else {
+$("#main").css("display","block");
+console.log("fail login")
+// the user isn't logged in to Facebook.
+}
+});
+};
+ */
+/*
+// Load the SDK Asynchronously
+(function(d){
+var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+if (d.getElementById(id)) {return;}
+js = d.createElement('script'); js.id = id; js.async = true;
+//js.src = "//connect.facebook.net/en_US/all.js";
+js.src = "//connect.facebook.net/zh_TW/all.js";
+ref.parentNode.insertBefore(js, ref);
+}(document));
+ */
+        </script>
         <!-- Login -->
         <div id="main">
             <div id="top">
@@ -162,29 +207,29 @@ h4{
                 <div id="content-top" class="radius">
                     <h2>Carpo QRCode Check-In System</h2>
                 </div>
-                <div id="content-main">
-                    This servier is used to show which friends are single in your Facebook.
-                </div>
-                <div id="content-footer">
+                <div id="content-main">This servier is used to show which friends are single in your Facebook.</div>
+                <div
+                    id="content-footer">
                     <a href="https://www.facebook.com/dialog/oauth?client_id=280399495394196&redirect_uri=http://carpo.terrence-tang.com&scope=publish_checkins,publish_stream,user_status,user_checkins,read_stream,user_birthday"><div id="login-pic"></div></a>
                 </div>
             </div>
         </div>
-
         <!-- Home -->
         <div data-role="page" id="page1">
             <div data-theme="b" data-role="header">
-                <h5>
-                    Carpo
-                </h5>
+                <h5>Carpo</h5>
             </div>
             <div data-role="content">
-                <h2><span id="place"></span></h2>
+                <h3>
+                    打卡地點：<span id="place"></span>
+                </h3>
+                <h3>
+                    活動名稱：<span id="slogan"></span>
+                </h3>
+
                 <div data-role="fieldcontain">
                     <fieldset data-role="controlgroup">
-                        <label for="textinput1">
-                            Message
-                        </label>
+                        <label for="textinput1">Message</label>
                         <input id="message" placeholder="" value="" type="text" />
                     </fieldset>
                 </div>
@@ -197,41 +242,9 @@ h4{
             </div>
         </div>
     </body>
-    <script src="../js/all.js"></script>
-        <script src="../js/FBPlugs.js"></script>
-
-
-        <script>
-            var place = null;
-            $("document").ready(function(){
-                var pid = location.pathname.substr(8);
-                FBPlugs.login(
-                    function(){
-                        $("#page1").css("display","block");
-                        console.log("success login");
-                        queryQRCode(pid, function(res){
-                            place = res;
-                            $("#place").html(place.name)
-                        });
-
-                        $("#btn-checkin").click(function(){
-                            var message = $("#message").val();
-                            FBPlugs.checkin(place.pid,
-                                place.lat,
-                                place.long,
-                                message,
-                                function(res){
-                                    console.log(res);
-                                    alert("ok");
-                                });
-                        });
-                    },
-                    function(){
-                        $("#main").css("display","block");
-                        console.log("fail login")
-                    });
-
-            });
-        </script>
+    <script src="../../js/mobile_all.js"></script>
+    <script src="../../js/FBplus.js"></script>
+    <script>
+    </script>
 
 </html>

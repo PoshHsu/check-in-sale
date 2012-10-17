@@ -49,7 +49,7 @@ app.get('/', function(request, response) {
       response.sendfile(__dirname+'/pages/index.html');
 });
 
-app.get('/mobile/*', function(request, response) {
+app.get('/mobile/checkin/*', function(request, response) {
       response.sendfile(__dirname+'/asset/mobile_index.html');
 });
 
@@ -79,6 +79,17 @@ app.post('/db/query/qrcode', function(request, response) {
          response.send(data);
        });
     });
+});
+
+app.get('/db/query/activity/*', function(request, response) {
+    var _data = { pid:142800992448822,
+    lat:"25.07698687147",
+    long:"121.23201566872",
+    name:"桃園機場",
+    pic_link:"http://farm4.static.flickr.com/3063/2598835973_7b2e14133e_o.jpg",
+    slogan:"台北飛日本機票雄獅半價起"
+};
+response.send(_data);
 });
 
 app.get('/channel.html', function(request, response) {

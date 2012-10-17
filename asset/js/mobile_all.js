@@ -6,8 +6,22 @@ function getQRCode(content, width, height){
     content = encodeURIComponent(content);
     return 'http://chart.apis.google.com/chart?cht=qr&chl=' + content + '&chs=' + width + 'x' + height;
 }
+var queryQRcode = function(pid, scallback, fcallback){
+    //var  _host = "http://checkinsale.com",
+    var _host = "http://checkinsale.com",
+    //var _host = "http://localhost:5000",
+    _query = "/db/query/activity/",
+    _config = {
+        url:_host + _query,
+        data:pid,
+        dataType:"json",
+        type:"get"
+    };
+    $.ajax(_config).done(scallback).fail(fcallback);
+};
 
-var queryQRCode = function(pid, success_callback, fail_callback){
+
+var wait_to_delete_queryQRCode = function(pid, success_callback, fail_callback){
     var data = {pid:pid};
     $.ajax({
         type:"post",
