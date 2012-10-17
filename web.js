@@ -13,6 +13,16 @@ app.get('/admin/parse', function(request, response) {
       response.send('Hello World!');
 });
 
+//add by squall
+//upload test start
+app.get('/upload', function(req, res) {
+	res.write('<html><body><form method="post" enctype="multipart/form-data" action="/fileUpload">'
+	+'<input type="file" name="uploadingFile"><br>'
+	+'<input type="submit">'
+	+'</form></body></html>');
+	res.end();
+});
+/* add by squall end */
 
 
 app.get('/', function(request, response) {
