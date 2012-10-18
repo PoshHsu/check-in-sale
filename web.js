@@ -16,26 +16,26 @@ app.get('/admin/parse', function(request, response) {
 //add by squall
 //upload test start
 app.get('/upload', function(req, res) {
-	res.write('<html><body><form method="post" enctype="multipart/form-data" action="/fileUpload">'
-	+'<input type="file" name="uploadingFile"><br>'
-	+'<input type="submit">'
-	+'</form></body></html>');
-	res.end();
+        res.write('<html><body><form method="post" enctype="multipart/form-data" action="/fileUpload">'
+        +'<input type="file" name="uploadingFile"><br>'
+        +'<input type="submit">'
+        +'</form></body></html>');
+        res.end();
 });
 
 var fs = require('fs');
 app.post('/fileUpload', function(req, res) {
-	console.log('start fileUpload function');
+        console.log('start fileUpload function');
     var uploadedFile = req.files.uploadingFile;
     console.log('uploadFile:'+uploadedFile);
         var tmpPath = uploadedFile.path;
-    console.log('tmpPath:'+tmpPath);    
+    console.log('tmpPath:'+tmpPath);
         var targetPath = './' + uploadedFile.name;
 
         fs.rename(tmpPath, targetPath, function(err) {
             if (err) throw err;
                fs.unlink(tmpPath, function() {
-                   
+
                    console.log('File Uploaded to ' + targetPath + ' - ' + uploadedFile.size + ' bytes');
             });
         });
@@ -87,9 +87,11 @@ app.get('/db/query/activity/*', function(request, response) {
     var _data = { pid:142800992448822,
     lat:"25.07698687147",
     long:"121.23201566872",
-    name:"桃園機場",
+    name:"臺灣桃園國際機場-第二航廈",
     pic_link:"http://farm4.static.flickr.com/3063/2598835973_7b2e14133e_o.jpg",
-    slogan:"台北飛日本機票雄獅半價起"
+    slogan:"台北飛日本機票雄獅半價起",
+    web_link:"tw.yahoo.com",
+    link_name:"中正機場"
 };
 response.send(_data);
 });

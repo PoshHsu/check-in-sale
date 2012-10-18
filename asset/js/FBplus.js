@@ -42,14 +42,17 @@ function FBplus() {
                 params.access_token = this.config.TOKEN;
                 _params = params;
             }
-            _scallback = (scallback) ? scallback : this.SCALLBACK;
-            _fcallback = (fcallback) ? fcallback : this.FCALLBACK;
+            console.log(scallback);
+            _scallback = (scallback || typeof scallback == "function") ? scallback : this.SCALLBACK;
+            _fcallback = (fcallback || typeof fcallback == "function") ? fcallback : this.FCALLBACK;
         }
         else {
-            _scallback = (params)    ? params    : this.SCALLBACK;
-            _fcallback = (scallback) ? scallback : this.FCALLBACK;
+            _scallback = (params || typeof params == "function")    ? params    : this.SCALLBACK;
+            _fcallback = (scallback || typeof scallback == "function") ? scallback : this.FCALLBACK;
             _params += ("access_token=" + this.config.TOKEN);
         }
+        console.log("params",_params);
+        console.log(link)
         if(isJquery) {
             $.ajax({
                 url:link,
@@ -109,7 +112,6 @@ FBplus.modules.auth = function(box){
 
     box.auth.reloadToken = function(scallback, fcallback){
         var _link = box.LINK.TOKEN_LINK + "client_id=" + box.config.CLIENT_ID + "&redirect_uri=" + box.config.REDIRECT_URI + "&client_secret=" + box.config.SECRET_ID + "&code=" + box.config.CODE;
-        console.log(_link);
         box.send("get", _link, scallback, fcallback);
     };
 
@@ -134,7 +136,8 @@ FBplus.modules.friends = function(box){
         box.send("get", link, params);
     };
     box.friends.getFriendInfo = function(fid, params, scallback, fcallback){
-         var link = box.LINK.FB_SERVER + fid;
+         var _fid  = fid || "me",
+             link = box.LINK.FB_SERVER + _fid;
         box.send("get",link, params, scallback, fcallback);
     }
 };
