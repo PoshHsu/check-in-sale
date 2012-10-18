@@ -99,7 +99,6 @@ FB.getLoginStatus(function(response) {
         if (response.status === 'connected') {
         if(location.search !== "") {
         console.log("start checkin");
-        console.log(PLUS_CONFIG);
         var _href = location.href,
         _code = _href.substr(_href.indexOf("?")+6);
         FBplus.prototype.config.CODE = _code;
