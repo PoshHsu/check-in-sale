@@ -101,14 +101,6 @@ FBplus.prototype.LINK = {
 };
 
 FBplus.modules = {};
-/*
-FBplus.modules.config = function(box){
-    box.config = box.config || {};
-    box.config.FB_SERVER  = "https://graph.facebook.com/";
-    box.config.OAUTH_LINK = "https://www.facebook.com/dialog/oauth?";
-    box.config.TOKEN_LINK = "https://graph.facebook.com/oauth/access_token?";
-};
-*/
 FBplus.modules.auth = function(box){
     box.auth = box.auth || {};
     box.auth.getToken = function(){

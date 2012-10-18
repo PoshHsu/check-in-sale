@@ -22,6 +22,27 @@ app.get('/upload', function(req, res) {
 	+'</form></body></html>');
 	res.end();
 });
+
+var fs = require('fs');
+app.post('/fileUpload', function(req, res) {
+	console.log('start fileUpload function');
+    var uploadedFile = req.files.uploadingFile;
+    console.log('uploadFile:'+uploadedFile);
+        var tmpPath = uploadedFile.path;
+    console.log('tmpPath:'+tmpPath);    
+        var targetPath = './' + uploadedFile.name;
+
+        fs.rename(tmpPath, targetPath, function(err) {
+            if (err) throw err;
+               fs.unlink(tmpPath, function() {
+                   
+                   console.log('File Uploaded to ' + targetPath + ' - ' + uploadedFile.size + ' bytes');
+            });
+        });
+    res.send('file upload is done.');
+    res.end();
+});
+
 /* add by squall end */
 
 
