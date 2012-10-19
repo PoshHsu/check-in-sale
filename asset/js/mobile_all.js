@@ -1,5 +1,5 @@
 var getAid = function(){
- var temp = (location.href).substr((location.href).indexOf("checkin") + 8),
+ var temp = (location.href).substr((location.href).indexOf("checkin/") + 8),
          aid  = temp.substr(0,temp.lastIndexOf("?"));
 return aid;
 };

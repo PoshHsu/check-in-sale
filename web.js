@@ -84,14 +84,14 @@ app.post('/db/query/qrcode', function(request, response) {
 });
 
 app.get('/db/query/activity/*', function(request, response) {
-    var _data = { pid:142800992448822,
+    var _data = { pid:354651051295822,
     lat:"25.07698687147",
     long:"121.23201566872",
-    name:"臺灣桃園國際機場-第二航廈",
-    pic_link:"http://farm4.static.flickr.com/3063/2598835973_7b2e14133e_o.jpg",
-    slogan:"台北飛日本機票雄獅半價起",
-    web_link:"tw.yahoo.com",
-    link_name:"中正機場"
+    name:"2012 Yahoo! Taiwan Open Hack ",
+    pic_link:"http://www.bnext.com.tw/edm/2012hackday/info.html",
+    slogan:"Yahoo Open Hack 號召絕頂高手，一戰成名",
+    web_link:"http://www.bnext.com.tw/edm/2012hackday/info.html",
+    link_name:"Yahoo Open Hack官方網站"
 };
 response.send(_data);
 });
