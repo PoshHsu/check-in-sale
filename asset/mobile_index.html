@@ -143,7 +143,7 @@ FB.getLoginStatus(function(response) {
         <!-- Home -->
         <div data-role="page" id="page1">
             <div data-theme="b" data-role="header">
-                <h5>輕髮打</h5>
+                <h5>輕鬆打</h5>
             </div>
             <div data-role="content">
                 <h3>打卡地點：
@@ -174,7 +174,7 @@ FB.getLoginStatus(function(response) {
 
 
                 var PLUS_CONFIG = {
-CLIENT_ID:"CLIENT_ID445111025530197",
+CLIENT_ID:"445111025530197",
 SECRET_ID:"d530cadfb49b87c1aae50e1f3c7db506",
 REDIRECT_URI:"http://checkinsale.com/mobile/checkin/" + getAid(),
 TOKEN:"AAADZCBZAhRc5QBAFGKZBdXXzp9FoygcJDgH17nfEr43lnBwm8TFiZCZCTR8a2tojsI9g3K8otoLmqfkgfTCI2XjELZCIZAuhgaRCl6SDETguQZDZD"
@@ -183,7 +183,7 @@ FBplus.prototype.config = PLUS_CONFIG;
 
 var scope = "read_stream,publish_checkins,publish_stream,user_status,user_checkins,read_stream,user_birthday,friends_status";
 FBplus(["auth"], function(plus){
-    var link = "<a href='" + plus.auth.getLoginUrl(scope) + "'>login</a>";
+    var link = "<a href='" + plus.auth.getLoginUrl(scope) + "'><img src='http://checkinsale.com/image/FBlogin.png'></img></a>";
     $("#login").append(link);
     });
 //$("#login").append
