@@ -88,7 +88,7 @@ app.get('/db/query/activity/*', function(request, response) {
     lat:"25.07698687147",
     long:"121.23201566872",
     name:"2012 Yahoo! Taiwan Open Hack ",
-    pic_link:"http://www.bnext.com.tw/edm/2012hackday/info.html",
+    pic_link:"http://checkinsale.com/image/yahoo_dm.png",
     slogan:"Yahoo Open Hack 號召絕頂高手，一戰成名",
     web_link:"http://www.bnext.com.tw/edm/2012hackday/info.html",
     link_name:"Yahoo Open Hack官方網站"
