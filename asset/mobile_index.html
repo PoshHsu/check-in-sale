@@ -1,92 +1,89 @@
 <!DOCTYPE html>
 <html>
 
-<head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title></title>
-<link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/jquery.mobile/1.1.1/jquery.mobile-1.1.1.min.css"
-/>
-<style>
-/* App custom styles */
-</style>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js">
-</script>
-<script src="https://ajax.aspnetcdn.com/ajax/jquery.mobile/1.1.1/jquery.mobile-1.1.1.min.js">
-</script>
-<style type="text/css">
-body{
-background: #E7EBF2;
-}
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title></title>
+        <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/jquery.mobile/1.1.1/jquery.mobile-1.1.1.min.css"></link>
+        <style>
+            /* App custom styles */
+        </style>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+        <script src="https://ajax.aspnetcdn.com/ajax/jquery.mobile/1.1.1/jquery.mobile-1.1.1.min.js"></script>
+        <style type="text/css">
+            body{
+                background: #E7EBF2;
+            }
 
-#main{
-display:block;
-margin:100px auto 0px auto;
-width:480px;
+            #main{
+                display:block;
+                margin:100px auto 0px auto;
+                width:480px;
 
-}
-#page1{
-display:none;
-}
-#top{
-width:128px;
-margin: 0px auto 0px auto;
-}
-#logo{
-    background-image: url(../image/logo.png);
-width:128px;
-height:128px;
-}
-#content{
-margin: 0px auto 0px auto;
-width:480px;
-background: rgba(255, 255, 255, 0.45);
-border: 1px solid #C7C7C7;
-}
-#content-top{
-width:420px;
-height:40px;
-margin: 10px auto 20px auto;
-        background-color:#3B5998;
-        text-align:center;
-}
-#content-main{
-    font-size:18px;
-    padding-top:5px;
-margin: 0px auto 0px auto;
-width:420px;
-}
-#content-footer{
-margin: 10px auto 10px auto;
-width:180px;
-      text-align:center;
-}
-#login-pic{
-    background-image: url(../image/FBlogin.png);
-width:179px;
-height:27px;
-cursor:pointer;
-}
-.radius{
-    -webkit-border-radius: 6px;
-    -moz-border-radius: 6px;
-    border-radius: 6px;
-}
+            }
+            #page1{
+                display:none;
+            }
+            #top{
+                width:128px;
+                margin: 0px auto 0px auto;
+            }
+            #logo{
+                background-image: url(../image/logo.png);
+                width:128px;
+                height:128px;
+            }
+            #content{
+                margin: 0px auto 0px auto;
+                width:480px;
+                background: rgba(255, 255, 255, 0.45);
+                border: 1px solid #C7C7C7;
+            }
+            #content-top{
+                width:420px;
+                height:40px;
+                margin: 10px auto 20px auto;
+                background-color:#3B5998;
+                text-align:center;
+            }
+            #content-main{
+                font-size:18px;
+                padding-top:5px;
+                margin: 0px auto 0px auto;
+                width:420px;
+            }
+            #content-footer{
+                margin: 10px auto 10px auto;
+                width:180px;
+                text-align:center;
+            }
+            #login-pic{
+                background-image: url(../image/FBlogin.png);
+                width:179px;
+                height:27px;
+                cursor:pointer;
+            }
+            .radius{
+                -webkit-border-radius: 6px;
+                -moz-border-radius: 6px;
+                border-radius: 6px;
+            }
 
-h4{
-    padding-top:8px;
-color:white;
-      text-shadow: 0 1px 0 #c2c2c2, 0 1px 0 #c2c2c2;
-}
-</style>
-</head>
+            h4{
+                padding-top:8px;
+                color:white;
+                text-shadow: 0 1px 0 #c2c2c2, 0 1px 0 #c2c2c2;
+            }
+        </style>
+    </head>
 
-<body>
-<div id="fb-root"></div>
-<script>
-window.fbAsyncInit = function() {
-    FB.init({
-appId  : "280399495394196",
+    <body>
+        <div id="fb-root"></div>
+        <script>
+            window.fbAsyncInit = function() {
+                FB.init({
+appId  : "445111025530197",
 status : true, // check login status
 cookie : true, // enable cookies to allow the server to  access the session
 xfbml  : true, // parse XFBML
@@ -123,11 +120,11 @@ FB.getLoginStatus(function(response) {
 
 
         } else if (response.status === 'not_authorized') {
-        // the user is logged in to Facebook,
-        // but has not authenticated your app
-        // the user isn't logged in to Facebook.
+            // the user is logged in to Facebook,
+            // but has not authenticated your app
+            // the user isn't logged in to Facebook.
         }
-        });
+});
 };
 // Load the SDK Asynchronously
 (function(d){
@@ -138,69 +135,64 @@ FB.getLoginStatus(function(response) {
  js.src = "//connect.facebook.net/zh_TW/all.js";
  ref.parentNode.insertBefore(js, ref);
  }(document));
-</script>
-<!-- Login -->
-<div id="main">
-<div id="login"></div>
-</div>
+        </script>
+        <!-- Login -->
+        <div id="main">
+            <div id="login"></div>
+        </div>
+        <!-- Home -->
+        <div data-role="page" id="page1">
+            <div data-theme="b" data-role="header">
+                <h5>輕髮打</h5>
+            </div>
+            <div data-role="content">
+                <h3>打卡地點：
+                    <span id="place"></span>
+                </h3>
+                <h3>活動名稱：
+                    <span id="slogan"></span>
+                </h3>
+                <div data-role="fieldcontain">
+                    <fieldset data-role="controlgroup">
+                        <label for="textinput1">Message</label>
+                        <input id="message" placeholder="" value="" type="text" />
+                    </fieldset>
+                </div>
+                <a id="btn-checkin" data-role="button" data-theme="b" href="#page1">
+                    Chenk-In
+                </a>
+                <a id="btn-friends" data-role="button" data-theme="b" href="#page1">
+                    Friends
+                </a>
+            </div>
+        </div>
+    </body>
+    <script src="../../js/mobile_all.js"></script>
+    <script src="../../js/FBplus.js"></script>
+    <script>
+        $(document).ready(function(){
 
 
-<!-- Home -->
-<div data-role="page" id="page1">
-<div data-theme="b" data-role="header">
-<h5>輕髮打</h5>
-</div>
-<div data-role="content">
-<h3>
-打卡地點：<span id="place"></span>
-</h3>
-<h3>
-活動名稱：<span id="slogan"></span>
-</h3>
+                var PLUS_CONFIG = {
+CLIENT_ID:"CLIENT_ID445111025530197",
+SECRET_ID:"d530cadfb49b87c1aae50e1f3c7db506",
+REDIRECT_URI:"http://checkinsale.com/mobile/checkin/" + getAid(),
+TOKEN:"AAADZCBZAhRc5QBAFGKZBdXXzp9FoygcJDgH17nfEr43lnBwm8TFiZCZCTR8a2tojsI9g3K8otoLmqfkgfTCI2XjELZCIZAuhgaRCl6SDETguQZDZD"
+};
+FBplus.prototype.config = PLUS_CONFIG;
 
-<div data-role="fieldcontain">
-<fieldset data-role="controlgroup">
-<label for="textinput1">Message</label>
-<input id="message" placeholder="" value="" type="text" />
-</fieldset>
-</div>
-<a id="btn-checkin" data-role="button" data-theme="b" href="#page1">
-Chenk-In
-</a>
-<a id="btn-friends" data-role="button" data-theme="b" href="#page1">
-Friends
-</a>
-</div>
-</div>
-</body>
-<script src="../../js/mobile_all.js"></script>
-<script src="../../js/FBplus.js"></script>
-<script>
-
- $(document).ready(function(){
-
-
- var PLUS_CONFIG = {
-     CLIENT_ID:"280399495394196",
-     SECRET_ID:"4cc040f7d05cf311c9fbf615c0ae6168",
-     REDIRECT_URI:"http://checkinsale.com/mobile/checkin/" + getAid(),
-     TOKEN:"AAADZCBZAhRc5QBAFGKZBdXXzp9FoygcJDgH17nfEr43lnBwm8TFiZCZCTR8a2tojsI9g3K8otoLmqfkgfTCI2XjELZCIZAuhgaRCl6SDETguQZDZD"
- };
- FBplus.prototype.config = PLUS_CONFIG;
-
-     var scope = "read_stream,publish_checkins,publish_stream,user_status,user_checkins,read_stream,user_birthday,friends_status";
-     FBplus(["auth"], function(plus){
-         var link = "<a href='" + plus.auth.getLoginUrl(scope) + "'>login</a>";
-         $("#login").append(link);
-     });
-     //$("#login").append
-     console.log("ready");
-     //initIndex(123,"AAADZCBZAhRc5QBAIAfOKkVK0lf7Hha7pGroAFMnXJTPJj2szOgFaoPhUwfS6rIZArpib992mXj5MCKTxMsA2dsZBPKs0xZA4C1LX1ZARgYtvIq9J0MPSCY");
+var scope = "read_stream,publish_checkins,publish_stream,user_status,user_checkins,read_stream,user_birthday,friends_status";
+FBplus(["auth"], function(plus){
+    var link = "<a href='" + plus.auth.getLoginUrl(scope) + "'>login</a>";
+    $("#login").append(link);
+    });
+//$("#login").append
+console.log("ready");
+//initIndex(123,"AAADZCBZAhRc5QBAIAfOKkVK0lf7Hha7pGroAFMnXJTPJj2szOgFaoPhUwfS6rIZArpib992mXj5MCKTxMsA2dsZBPKs0xZA4C1LX1ZARgYtvIq9J0MPSCY");
 
 
 
- });
-
-</script>
+        });
+    </script>
 
 </html>

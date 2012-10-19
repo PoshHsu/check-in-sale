@@ -1,7 +1,7 @@
 var getAid = function(){
- var temp = (location.href).substr((location.href).indexOf("checkin/") + 8),
-         aid  = temp.substr(0,temp.lastIndexOf("?"));
-return aid;
+    var temp = (location.href).substr((location.href).indexOf("checkin/") + 8),
+    aid  = temp.substr(0,temp.lastIndexOf("?"));
+    return aid;
 };
 
 function getQRCode(content, width, height){
@@ -30,8 +30,8 @@ var queryQRcode = function(pid, scallback, fcallback){
 
 var initLayout = function(layout_data){
     var _logined    = layout_data.login_status ||  false,
-        _place_name = layout_data.place_name || "",
-        _slogan     = layout_data.slogan || "";
+    _place_name = layout_data.place_name || "",
+    _slogan     = layout_data.slogan || "";
 
 
     //do login pic
@@ -52,52 +52,52 @@ var initEvent = function(event_data){
     $("#btn-checkin").click(function(){
         var _message = $("#message").val();
         /*
-        FBplus(["checkin","config"], function(plus){
+         FBplus(["checkin","config"], function(plus){
+             var _data = {
+                 coordinates:{
+                     latitude:event_data.place.lat,
+                     longitude:event_data.place.long
+                 },
+                 message:message,
+                 place:event_data.place.pid
+             };
+             console.log("data", _data);
+             plus.checkin.insert(_data, function(){alert(123);});
+         });
+         */
+        FBplus(["wall"], function(plus){
+            var privacy = {} ;
+            //privacy.value ='CUSTOM' ;
+            //privacy.friends='SOME_FRIENDS';
+            //privacy.allow ="1524376598";
+            privacy.value = 'ALL_FRIENDS' ;
+            console.log(event_data.place)
+            var _place= event_data.place.pid;
             var _data = {
-                    coordinates:{
-                        latitude:event_data.place.lat,
-                        longitude:event_data.place.long
-                    },
-                    message:message,
-                    place:event_data.place.pid
-            };
-            console.log("data", _data);
-            plus.checkin.insert(_data, function(){alert(123);});
+                message:_message,
+                place:_place,
+                picture:event_data.place.pic_link,
+                description:event_data.place.slogan,
+                name:event_data.place.link_name,
+                link:event_data.place.web_link,
+                tags:[]
+                };
+
+                console.log(_data);
+                plus.wall.insert(_data);
+
+            });
         });
-        */
-       FBplus(["wall"], function(plus){
-           var privacy = {} ;
-           //privacy.value ='CUSTOM' ;
-           //privacy.friends='SOME_FRIENDS';
-           //privacy.allow ="1524376598";
-           privacy.value = 'ALL_FRIENDS' ;
-           console.log(event_data.place)
-           var _place= event_data.place.pid;
-           var _data = {
-               message:_message,
-               place:_place,
-               picture:event_data.place.pic_link,
-                          description:event_data.place.slogan,
-                          name:event_data.place.link_name,
-                          link:event_data.place.web_link,
-               tags:[]
-           };
-
-           console.log(_data);
-           plus.wall.insert(_data);
-
-       });
-    });
-};
+    };
 
 
-var initIndex = function(){
-    console.log(11);
-    var _place = null,
+    var initIndex = function(){
+        console.log(11);
+        var _place = null,
         _pid   = location.pathname.substr(16);
 
 
-    queryQRcode(_pid, function(res){
+        queryQRcode(_pid, function(res){
             console.log("in query qrcode", res);
             var _place = res,
             layout_data ={},
@@ -112,18 +112,18 @@ var initIndex = function(){
 
             initLayout(layout_data);
             initEvent(event_data);
-    });
-};
+        });
+    };
 
 
-var wait_to_delete_queryQRCode = function(pid, success_callback, fail_callback){
+    var wait_to_delete_queryQRCode = function(pid, success_callback, fail_callback){
     var data = {pid:pid};
     $.ajax({
         type:"post",
         url:"http://carpo.terrence-tang.com/db/query/qrcode",
-        data:{pid:pid},
-        dataType:"json",
-        timeout:5000
+    data:{pid:pid},
+    dataType:"json",
+    timeout:5000
     }).done(function(res){
         success_callback(res);
     });
@@ -147,12 +147,12 @@ var writeUserIntoDb = function(result){
         $.ajax({
             type:"post",
             url:"http://carpo.terrence-tang.com/db/insert/checkin",
-            data:{pid:pid},
-            dataType:"json",
-            timeout:5000
-            }).done(function(res){
-                success_callback(res);
-            });
+        data:{pid:pid},
+        dataType:"json",
+        timeout:5000
+        }).done(function(res){
+            success_callback(res);
+        });
     });
 };
 
