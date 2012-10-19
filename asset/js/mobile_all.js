@@ -16,8 +16,8 @@ function getQRCode(content, width, height){
 
 var queryQRcode = function(pid, scallback, fcallback){
     console.log(11);
-    //var _host = "http://checkinsale.com",
-    var _host = "http://localhost:5000",
+    var _host = "http://checkinsale.com",
+    //var _host = "http://localhost:5000",
     _query = "/db/query/activity/",
     _config = {
         url:_host + _query,
