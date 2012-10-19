@@ -70,6 +70,7 @@ app.get('/db/insert/qrcode', function(request, response) {
 
 
 app.get('/website/yahoo', function(request, response) {
+      response.sendfile(__dirname+'/asset/admin_qrcode.html');
       response.sendfile(__dirname+'/asset/redirect.html');
 });
 
