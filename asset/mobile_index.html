@@ -101,12 +101,9 @@ FB.getLoginStatus(function(response) {
         FBplus.prototype.config.CODE = _code;
 
         FBplus(["auth"], function(plus){
-            plus.auth.reloadToken(function(data){
-                console.log(data, function(res){console.log(res.responseText)});
-
-                }, function(res){
+            plus.auth.reloadToken(function(res){
                 var _data = res.responseText;
-                console.log(_data);
+                console.log("auth =", _data);
                 FBplus.prototype.config.TOKEN = _data.substr(13, (_data.lastIndexOf("&") -13));
                 console.log("init",FBplus.prototype.config);
                 initIndex();
