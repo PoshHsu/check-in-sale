@@ -58,8 +58,7 @@ app.get('/mobile/checkin/*', function(request, response) {
 app.get('/admin/qrcode', function(request, response) {
       console.log(response);
       console.log(request);
-      response.sendfile(__dirname+'/asset/redir.html');
-      //response.sendfile(__dirname+'/asset/admin_qrcode.html');
+      response.sendfile(__dirname+'/asset/admin_qrcode.html');
 });
 
 app.get('/db/insert/qrcode', function(request, response) {
