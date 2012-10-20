@@ -23,7 +23,8 @@ body {
 
 <script>
 
-var tmp;
+var tmp,
+	myFBID;
 
 $(document).ready(function(){
 	//show all tooltip by bootstrap
@@ -45,7 +46,8 @@ $(document).ready(function(){
 		CLIENT_ID:"445111025530197",
 		SECRET_ID:"d530cadfb49b87c1aae50e1f3c7db506",
 		REDIRECT_URI:"http://checkinsale.com/s_main.html",
-		TOKEN:"AAAGU03yP9VUBAPs9iZAiEp5GF7rIz4vpzGuZAUGIWs9PGor5K8AIFGZCE8TR1uISQVG6JlAkZCODittwBubH8Ui7ZAxCxCq5bpwk5iVcT73Tdfnfp1AUR"
+		TOKEN:"AAAGU03yP9VUBAPvL87WiTUFQfVCWcSqpt8WYgZAxrusG8BylyP0Tcd3OTh5ZBeMX5KYieOmTXsZB3oRJhuApZBpWZByIZA4BrZBFIsCNQvYQHxh5xHjTMUZA"
+		
 	};
 	
 	FBplus.prototype.config = PLUS_CONFIG;
@@ -62,8 +64,15 @@ $(document).ready(function(){
 
 	
 	//get checkin list
-	FBplus(["checkin"], function(plus){
+	FBplus(["checkin","friends"], function(plus){
+		
+		plus.friends.getFriendInfo(function(data,e){
+			myFBID = data.id;	
+		});
+		
+		
 		plus.checkin.getMeCheckin(function(data){
+			
 			$("#place").html("<p>近期的打卡點,請勾選屬於您的打卡點</p>");
 			for(var i=0,len=data.data.length;i<len;i++){				
 				var cb = '<label class="checkbox"><input type="checkbox" value="'+data.data[i].place.id+'">'+data.data[i].place.name+'</label>';
@@ -73,14 +82,23 @@ $(document).ready(function(){
 	});
 
 
-	//add checkin list data
-	$("#addCheckinList").click(function() {
-		var checkinlist = {
-                  "fb-user-id": 12345678,
-                  "check-in-points": [
-                    { "name": "烏來台車瀑布站", "fb-place-id": 197693926925582 },
-                    { "name": "彰化大戲院", "fb-place-id": 105749586166940 }
-                  ],
+	var checkinpoints = [];
+	//var checklist = {};
+	
+	//checkinpoints.push({ "name": "彰化大戲院", "fb-place-id": 105749586166940 });
+	
+	//console.log(checkinlist);
+	
+	//add checkin list data	
+		$("#addCheckinList").click(function() {
+			
+		$('.checkbox :checked').each(function() {		   	
+			checkinpoints.push({ "name": $(this).parent().text(), "fb-place-id": $(this).val() });
+		});
+	 	
+		checkinlist = {
+                  "fb-user-id": myFBID,
+                  "check-in-points": checkinpoints,
                   "joined-at": [2012, 10, 20]
                 };
 		
@@ -93,10 +111,25 @@ $(document).ready(function(){
                 	console.log(data);                     
                 }
         });
-
+		
 	});
-
-
+	
+	/*
+	$(".checkbox").live('click', function(event) {
+				
+		var id=event.srcElement.defaultValue,
+			name=event.srcElement.nextSibling.data;
+			
+		if(event.target.checked){
+			checkinpoints.push({ "name": name, "fb-place-id": id });
+		}
+		//
+		        
+		
+		//alert($(".checkbox").attr('checked'));
+		
+	});
+*/
 
 });
 </script>
@@ -178,7 +211,7 @@ $(document).ready(function(){
   <head>
     <!--Load the AJAX API-->
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
-    <script type="text/javascript">
+    <!--script type="text/javascript">
 
       // Load the Visualization API and the piechart package.
       google.load('visualization', '1.0', {'packages':['corechart']});
@@ -212,7 +245,7 @@ $(document).ready(function(){
         var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
         chart.draw(data, options);
       }
-    </script>
+    </script-->
   </head>
 
   <body>
