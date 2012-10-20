@@ -33,7 +33,7 @@ oauth  : true // enable OAuth 2.0
 FB.getLoginStatus(function(response) {
         console.log(response);
         if (response.status === 'connected') {
-            //init();
+            init();
         } else if (response.status === 'not_authorized') {
             // the user is logged in to Facebook,
             // but has not authenticated your app
