@@ -1,6 +1,7 @@
 var getAid = function(){
     var temp = (location.href).substr((location.href).indexOf("checkin/") + 8),
-    aid  = temp.substr(0,temp.lastIndexOf("?"));
+        len  = temp.lastIndexOf("?"),
+        aid  = temp.substr(0, (len != -1) ? len : temp.length);
     return aid;
 };
 
@@ -15,16 +16,15 @@ function getQRCode(content, width, height){
 
 
 var queryQRcode = function(pid, scallback, fcallback){
-    console.log(11);
-    var _host = "http://checkinsale.com",
-    //var _host = "http://localhost:5000",
-    _query = "/db/query/activity/",
-    _config = {
-        url:_host + _query,
-        data:pid,
-        dataType:"json",
-        type:"get"
-    };
+    var _host = (location.hostname != 'localhost') ? "http://checkinsale.com" : "http://localhost:5000",
+        _query = "/db/query/activity/",
+        _config = {
+            url:_host + _query,
+            data:pid,
+            dataType:"json",
+            type:"get"
+        };
+        console.log("host name : ", _host);
     $.ajax(_config).done(scallback).fail(fcallback);
 };
 
@@ -127,6 +127,36 @@ var initEvent = function(event_data){
     }).done(function(res){
         success_callback(res);
     });
+};
+
+var initLoginPage = function(){
+     var scope = "read_stream,publish_checkins,publish_stream,user_status,user_checkins,read_stream,user_birthday,friends_status";
+    FBplus(["auth"], function(plus){
+        var link = "<a href='" + plus.auth.getLoginUrl(scope) + "'><img src='http://checkinsale.com/image/FBlogin.png'></img></a>";
+        $("#login").append(link);
+    });
+}
+
+var init = function(res) {
+    if(FB.getAccessToken()){
+        FBplus.prototype.config.TOKEN = FB.getAccessToken();
+    }
+    else if(location.search !== "") {
+        var _href = location.href,
+            _code = _href.substr(_href.indexOf("?")+6);
+        FBplus.prototype.config.CODE = _code;
+        FBplus(["auth"], function(plus){
+            plus.auth.getLongLiveToken(function(res){
+                var _data = res.responseText,
+                    _token = _data.substr(13, (_data.lastIndexOf("&") -13));
+                console.log("auth =", _data);
+                console.log("tokin query by code", _token);
+                FBplus.prototype.config.TOKEN = _token;
+                console.log("init FBplus.prototype.config : ", FBplus.prototype.config);
+            });
+        });
+    }
+    initIndex();
 };
 
 var writeUserIntoDb = function(result){
