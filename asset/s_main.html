@@ -90,7 +90,14 @@ $(document).ready(function(){
 	//console.log(checkinlist);
 	
 	//add checkin list data	
-	$("#addCheckinList").click(function() {
+		$("#addCheckinList").click(function() {
+			
+		$('.checkbox :checked').each(function() {		   	
+			checkinpoints.push({ "name": $(this).parent().text(), "fb-place-id": $(this).val() });
+		});
+	 
+		
+		
 		console.log(checkinpoints);
 		
 		checkinlist = {
@@ -98,7 +105,7 @@ $(document).ready(function(){
                   "check-in-points": checkinpoints,
                   "joined-at": [2012, 10, 20]
                 };
-		console.log(checkinlist);
+		
 		  $.ajax({
                 url: "users/add",
                 type: "POST",
@@ -108,17 +115,19 @@ $(document).ready(function(){
                 	console.log(data);                     
                 }
         });
-
+		
 	});
 
-	$(".checkbox").live('click', function(event) {		
+	$(".checkbox").live('click', function(event) {
+				
 		var id=event.srcElement.defaultValue,
 			name=event.srcElement.nextSibling.data;
 			
 		if(event.target.checked){
 			checkinpoints.push({ "name": name, "fb-place-id": id });
 		}
-
+		//
+		        
 		
 		//alert($(".checkbox").attr('checked'));
 		
@@ -205,7 +214,7 @@ $(document).ready(function(){
   <head>
     <!--Load the AJAX API-->
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
-    <script type="text/javascript">
+    <!--script type="text/javascript">
 
       // Load the Visualization API and the piechart package.
       google.load('visualization', '1.0', {'packages':['corechart']});
@@ -239,7 +248,7 @@ $(document).ready(function(){
         var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
         chart.draw(data, options);
       }
-    </script>
+    </script-->
   </head>
 
   <body>
