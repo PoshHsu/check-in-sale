@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>Canvas Example</title>
+<script src="js/jquery-1.8.2.min.js"></script>
+<script>
+window.onload = function() {
+    var canvas = document.getElementById("myCanvas");
+    var context = canvas.getContext("2d");
+};
+
+var edge = 6,
+	edge2 = Math.sqrt((edge-2)*(edge-2)); 
+
+$(document).ready(function(){
+	
+	for(var i = 0;i<edge*edge;i++){
+		if((i%edge)<=edge2 && (i)%edge>0 && i>edge && i<edge*(edge-1)){
+			$("#gifts").append('<img src="http://farm5.staticflickr.com/4114/4892837745_d08c1de0cc_s.jpg">');
+		}else{		
+			$("#gifts").append('<img src="http://farm6.staticflickr.com/5291/5437866454_84a29f7343_s.jpg">');
+		}
+	}
+
+	$("#gifts").width(edge*80);
+});
+</script>
+<style>
+#gifts{
+	position: absolute;
+	word-wrap:break-word;
+	width:400px;
+	overflow:auto;
+}
+</style>
+    </head>
+    <body>
+        <canvas id="myCanvas" width="450" height="457" style="position: absolute;z-index:10"></canvas>
+        <div id="gifts">
+        	
+        </div>
+    </body>
+</html>
+
+<script>
+window.requestAnimFrame = (function(callback) {
+    return window.requestAnimationFrame || 
+           window.webkitRequestAnimationFrame || 
+           window.mozRequestAnimationFrame || 
+           window.oRequestAnimationFrame || 
+           window.msRequestAnimationFrame ||
+           function(callback) {
+               window.setTimeout(callback, 1000);
+           };
+})();
+
+window.onload = function() {
+    init();
+    loop();
+};
+
+var canvas, context;
+var lastTime;
+var x, y;
+var rW, rH;
+var speed;
+var flag = 0;
+//初始化
+function init() {
+   canvas = document.getElementById("myCanvas");
+   context = canvas.getContext("2d");
+
+   x = 0;
+   y = 0;
+   rW = 75;
+   rH = 75;
+   speed = 5;
+   lastTime = new Date().getTime();
+}
+
+//時間迴圈
+function loop() {
+    requestAnimFrame(loop);
+    update();
+    draw();
+}
+
+//執行繪圖
+function draw() {
+    //清除整個畫布
+    context.clearRect(0, 0, canvas.width, canvas.height);
+
+    context.fillStyle = "rgba(255, 0, 0, 0.5)";
+    context.beginPath();
+    context.fillRect(x, y, rW, rH);
+    context.closePath();
+    context.fill();
+}
+
+//計算
+function update(){
+    var time = new Date().getTime();
+    var diff = time - lastTime;
+    //var distFrame = speed * diff / 1000;
+    
+    //console.log("X:"+x+"y:"+y);
+    
+    if(y==0 && x<375){
+    	x += speed;
+    	
+    }else if(y>=0 && y<=(canvas.height - rH) && x!=0){
+    	
+    	y +=speed;
+    	
+    }else if(y >= (canvas.height - rH) && x<=375 && x>0){
+    	
+    	x-=speed;
+    	
+    }else if(y >= 0 && x==0){    	
+    	y-=speed;    	
+    }   	
+    
+    lastTime = time;
+}
+</script>
+
