@@ -132,7 +132,7 @@ var initEvent = function(event_data){
 var initLoginPage = function(){
      var scope = "read_stream,publish_checkins,publish_stream,user_status,user_checkins,read_stream,user_birthday,friends_status";
     FBplus(["auth"], function(plus){
-        var link = "<a href='" + plus.auth.getLoginUrl(scope) + "'><img src='http://checkinsale.com/image/FBlogin.png'></img></a>";
+        var link = plus.auth.getLoginUrl(scope);
         $("#login").append(link);
     });
 }

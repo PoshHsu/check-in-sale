@@ -12,69 +12,6 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
         <script src="https://ajax.aspnetcdn.com/ajax/jquery.mobile/1.1.1/jquery.mobile-1.1.1.min.js"></script>
         <style type="text/css">
-            body{
-                background: #E7EBF2;
-            }
-
-            #main{
-                display:block;
-                margin:100px auto 0px auto;
-                width:480px;
-
-            }
-            #page1{
-                display:none;
-            }
-            #top{
-                width:128px;
-                margin: 0px auto 0px auto;
-            }
-            #logo{
-                background-image: url(../image/logo.png);
-                width:128px;
-                height:128px;
-            }
-            #content{
-                margin: 0px auto 0px auto;
-                width:480px;
-                background: rgba(255, 255, 255, 0.45);
-                border: 1px solid #C7C7C7;
-            }
-            #content-top{
-                width:420px;
-                height:40px;
-                margin: 10px auto 20px auto;
-                background-color:#3B5998;
-                text-align:center;
-            }
-            #content-main{
-                font-size:18px;
-                padding-top:5px;
-                margin: 0px auto 0px auto;
-                width:420px;
-            }
-            #content-footer{
-                margin: 10px auto 10px auto;
-                width:180px;
-                text-align:center;
-            }
-            #login-pic{
-                background-image: url(../image/FBlogin.png);
-                width:179px;
-                height:27px;
-                cursor:pointer;
-            }
-            .radius{
-                -webkit-border-radius: 6px;
-                -moz-border-radius: 6px;
-                border-radius: 6px;
-            }
-
-            h4{
-                padding-top:8px;
-                color:white;
-                text-shadow: 0 1px 0 #c2c2c2, 0 1px 0 #c2c2c2;
-            }
         </style>
     </head>
 
@@ -96,7 +33,7 @@ oauth  : true // enable OAuth 2.0
 FB.getLoginStatus(function(response) {
         console.log(response);
         if (response.status === 'connected') {
-            init();
+            //init();
         } else if (response.status === 'not_authorized') {
             // the user is logged in to Facebook,
             // but has not authenticated your app
@@ -121,6 +58,20 @@ FB.getLoginStatus(function(response) {
         <!-- Login -->
         <div id="main">
             <div id="login"></div>
+        </div>
+
+        <div data-role="page" id="loing">
+            <div data-theme="b" data-role="header">
+                <h5>Login</h5>
+            </div>
+            <div data-role="content">
+                <div style=" text-align:center">
+                    <img src="../../image/128_128_logo.png" ></img>
+                </div>
+                <div style=" text-align:center">
+                    <a href='' id="login"><img src='http://checkinsale.com/image/FBlogin.png'></img></a>;
+                </div>
+            </div>
         </div>
         <!-- Home -->
         <div data-role="page" id="page1">
