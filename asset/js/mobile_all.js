@@ -61,7 +61,7 @@ var closeLoding = function(){
 
 var initEvent = function(event_data){
     console.log("event data",event_data);
-    #("#btn-close").bind("click", function(event, ui){
+    $("#btn-close").bind("click", function(event, ui){
         window.close();
     });
     $("#btn-checkin").click(function(){
