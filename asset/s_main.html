@@ -95,11 +95,7 @@ $(document).ready(function(){
 		$('.checkbox :checked').each(function() {		   	
 			checkinpoints.push({ "name": $(this).parent().text(), "fb-place-id": $(this).val() });
 		});
-	 
-		
-		
-		console.log(checkinpoints);
-		
+	 	
 		checkinlist = {
                   "fb-user-id": myFBID,
                   "check-in-points": checkinpoints,
@@ -117,7 +113,8 @@ $(document).ready(function(){
         });
 		
 	});
-
+	
+	/*
 	$(".checkbox").live('click', function(event) {
 				
 		var id=event.srcElement.defaultValue,
@@ -132,7 +129,7 @@ $(document).ready(function(){
 		//alert($(".checkbox").attr('checked'));
 		
 	});
-
+*/
 
 });
 </script>
