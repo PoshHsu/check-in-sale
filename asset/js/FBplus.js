@@ -143,7 +143,7 @@ FBplus.modules.friends = function(box){
              _scallback = scallback;
              _fcallback = fcallback;
          }
-        box.send("get", link, params, scallback, fcallback);
+        box.send("get", link, params, _scallback, _fcallback);
     };
     box.friends.getFriendInfo = function(fid, params, scallback, fcallback){
          var _fid  = (typeof fid == "string") ? fid :  "me",
@@ -164,7 +164,7 @@ FBplus.modules.friends = function(box){
                  _fcallback = fcallback;
              }
              link = box.LINK.FB_SERVER + _fid;
-        box.send("get",link, params, scallback, fcallback);
+        box.send("get",link, params, _scallback, _fcallback);
     }
 };
 
