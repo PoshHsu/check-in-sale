@@ -69,6 +69,15 @@ $(document).ready(function(){
 			myFBID = data.id;	
 		});
 		
+		//query checkin list
+		$.ajax({
+			url: "users/" + myFBID,
+			type: "GET",	
+			dataType: "json",
+		        success:function(data){
+		        	console.dir("query checkin list:"+data);                     
+		        }
+		});
 		
 		plus.checkin.getMeCheckin(function(data){
 			
@@ -108,15 +117,7 @@ $(document).ready(function(){
 		
 	});
 
-	//query checkin list
-	$.ajax({
-		url: "users/" + myFBID,
-		type: "GET",	
-		dataType: "json",
-	        success:function(data){
-	        	console.dir("query checkin list:"+data);                     
-	        }
-	});
+	
 		
 	
 
