@@ -66,17 +66,17 @@ $(document).ready(function(){
 	FBplus(["checkin","friends"], function(plus){
 		
 		plus.friends.getFriendInfo(function(data,e){
-			myFBID = data.id;	
-		});
-		
-		//query checkin list
-		$.ajax({
-			url: "users/1344930691",
-			type: "GET",	
-			dataType: "json",
-		        success:function(data){
-		        	console.dir(data);                     
-		        }
+			myFBID = data.id;
+			
+			//query checkin list
+			$.ajax({
+				url: "users/1344930691",
+				type: "GET",	
+				dataType: "json",
+			        success:function(data){
+			        	console.dir(data);                     
+			        }
+			});	
 		});
 		
 		plus.checkin.getMeCheckin(function(data){
