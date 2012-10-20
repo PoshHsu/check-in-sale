@@ -71,11 +71,11 @@ $(document).ready(function(){
 		
 		//query checkin list
 		$.ajax({
-			url: "users/1344930691",
+			url: "users/"+myFBID,
 			type: "GET",	
 			dataType: "json",
 		        success:function(data){
-		        	console.dir("query checkin list:"+data);                     
+		        	console.dir(data);                     
 		        }
 		});
 		
