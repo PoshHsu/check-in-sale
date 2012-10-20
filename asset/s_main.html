@@ -26,7 +26,8 @@ body {
 
 var tmp,
 	myFBID,
-	updateFlag=false;
+	updateFlag=false,
+	originCheckInList;
 
 $(document).ready(function(){
 	//show all tooltip by bootstrap
@@ -76,14 +77,21 @@ $(document).ready(function(){
 				type: "GET",
 				dataType: "json",
 			        success:function(data){
-			        	//console.dir(data);
+			        	console.dir(data);
 			        	//data.rows[0].value['check-in-points'][0]
 			        	$("#place").html("<p>近期的打卡點,請勾選屬於您的打卡點</p>");
 			        	if(data.rows.length>0){
-			        		console.log("have data using Update");
-			        		for(var i=0,len=data.rows[0].value.checkInPoints.length;i<len;i++){
-								var cb = '<label class="checkbox"><input type="checkbox" checked value="'+data.rows[0].value.checkInPoints[i].fbPlaceId+'">'+data.rows[0].value.checkInPoints[i].name+'</label>';
+			        		
+			        		originCheckInList = data.rows[0].value; 
+			        		for(var i=0,len=data.rows[0].value.checkInList.length;i<len;i++){
+								var checkName = data.rows[0].value.checkInList[i].name, 							
+									checkId = data.rows[0].value.checkInList[i].fbPlaceId;			        			
+								var cb = '<label class="checkbox"><input type="checkbox" checked value="'+checkId+'">'+checkName+'</label>';
 								$("#place").append(cb);
+								
+								//actionPlace
+								var op = '<option value="'+checkId+'">'+checkName+'</option>';
+								$("#actionPlace").append(op);
 							}
 							updateFlag = true;
 			        	}else{
@@ -98,7 +106,7 @@ $(document).ready(function(){
 		});
 
 		plus.checkin.getMeCheckin(function(data){
-                  var places = _.uniq(data.data, false, function(place) { return place.place.id; });  
+			var places = _.uniq(data.data, false, function(place) { return place.place.id; });  
 			//$("#place").append("<p>近期的打卡點,請勾選屬於您的打卡點</p>");
 			for(var i=0,len=places.length;i<len;i++){
 				var cb = '<label class="checkbox"><input type="checkbox" value="'+places[i].place.id+'">'+places[i].place.name+'</label>';
@@ -117,23 +125,32 @@ $(document).ready(function(){
 				checkinpoints.push({ "name": $(this).parent().text(), "fbPlaceId": $(this).val() });
 			});
 
-			checkinlist = {
-		              "fbUserId": myFBID,
-		              "fbPlaceId": checkinpoints,
-		              "joined": [2012, 10, 20]
-		            };
 
+
+			
 			if(updateFlag){
+				
+				originCheckInList.checkInList = checkinpoints; 
+				
+
 				$.ajax({
 			            url: "users/update",
 			            type: "POST",
-			            data: checkinlist,
+			            data: originCheckInList,
 			            dataType: "json",
 			            success:function(data){
 			            	console.log(data);
 			            }
 			    });
 			}else{
+				
+				var checkinlist = {
+	              "fbUserId": myFBID,
+	              "checkInList": checkinpoints,
+	              "joined": [2012, 10, 20]
+	            };
+
+
 				$.ajax({
 			            url: "users/add",
 			            type: "POST",
@@ -315,7 +332,7 @@ google.setOnLoadCallback(drawChart2);
 					<div class="control-group">
 				    	<label class="control-label" for="contents">選擇地標</label>
 						<div class="controls">
-				      		<select id=""></select>
+				      		<select id="actionPlace"></select>
 				    	</div>
 				  	</div>
 
@@ -341,6 +358,15 @@ google.setOnLoadCallback(drawChart2);
 				  	</div>
 
 					<div class="control-group">
+				    	<label class="control-label" for="session">網站連結</label>
+						<div class="controls">							
+         						<input type="text" name="webTitle" placeholder="網站名稱: Yahoo! 奇摩">
+    							<input type="text" name="webURL" placeholder="網址: http://www.yahoo.com.tw" class="span6">
+				    	</div>
+				  	</div>
+
+
+					<div class="control-group">
 				    	<label class="control-label" for="session">活動照片</label>
 						<div class="controls">
 							<form method="post" enctype="multipart/form-data" action="/fileUpload">
@@ -349,6 +375,7 @@ google.setOnLoadCallback(drawChart2);
 				    	</div>
 				  	</div>
 
+				  	
 					<div class="control-group">
 
 						<div class="controls">
