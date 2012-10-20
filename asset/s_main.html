@@ -23,6 +23,11 @@ body {
     padding-bottom: 40px;
 }
 
+#qrcode {
+  position: absolute;
+  top: 121px;
+  left: 520px;
+}
 
 </style>
 
@@ -42,6 +47,10 @@ $(document).ready(function(){
   		//console.log($(this).tab('show'));
   		$(this).tab('show');
 	});
+
+        window.onhashchange = function() {
+          $('a[href="' + window.location.hash + '"]').tab('show');
+        };
 
 	$('.datepicker').datepicker({
 		formar:'mm/dd/yyyy'
@@ -68,6 +77,11 @@ $(document).ready(function(){
 	$("#login").append;
 	console.log("ready");
 
+        function setQrcodeUrl(promotionId) {
+          var checkinUrl = window.location.host + "/mobile/checkin/" + promotionId;
+
+          $("#qrcode").attr('src', 'http://chart.apis.google.com/chart?cht=qr&chl=' + encodeURIComponent(checkinUrl) + '&chs=270x270');
+        }
 
 	//get checkin list
 	FBplus(["checkin","friends"], function(plus){
@@ -81,11 +95,12 @@ $(document).ready(function(){
 				type: "GET",
 				dataType: "json",
 				success:function(data){
+                                        setQrcodeUrl(data.rows[0].value._id);
 					for(var i=0,len=data.rows.length;i<len;i++){
 						var id =data.rows[i].value._id;
 							slogan = data.rows[i].value.slogan,
 							op = '<option value="'+id+'">'+slogan+'</option>';
-							$("#editAction").append(op);								
+							$("#editAction").append(op);
 					}
 					//console.log(data.rows[1].value);	
 				}
@@ -93,7 +108,9 @@ $(document).ready(function(){
 
 			$("#editAction").live('change', function(event) {
 				var promotionsId = $("#editAction option:selected").val();
-				
+
+                                setQrcodeUrl(promotionsId);
+
 				$.ajax({
 					url: "/promotions/createdBy/"+myFBID,
 					type: "GET",
@@ -256,6 +273,7 @@ $(document).ready(function(){
 	            dataType: "json",
 	            success:function(data){
 	            	console.log(data);
+                        window.location.hash = "#editActions";
 	            }
 		    });
 		});
@@ -378,6 +396,9 @@ $(document).ready(function(){
          						<input type="file" name="uploadingFile">
     						</form>
 				    	</div>
+
+                                        <img id="qrcode" src="http://placehold.it/270x270&text=Loading..."></img>
+
 				  	</div>
 
 				  	
