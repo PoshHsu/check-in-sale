@@ -20,19 +20,6 @@ body {
 </style>
 
 <script>
-
-
-var initIndex = function(uid, access_token){
-    var _place = null,
-        _pid   = location.pathname.substr(16),
-        _uid   = uid,
-        _token = access_token;
-
-    FBplus.prototype.config = {
-			CLIENT_ID:"280399495394196",
-          TOKEN:_token
-    };
-};
     
 $(document).ready(function(){
 	//show all tooltip by bootstrap
@@ -56,7 +43,64 @@ $(document).ready(function(){
         <h1>Check-in Sale</h1>
 		<p class="lead">We make chieck-in to be more easy and more funny.</p>
 		<p align="right"><button class="btn btn-primary btn-large" style="top: 100px">Login with Facebook</button></p>		
+		 <div id="fb-root"></div>
+        <script>
+            window.fbAsyncInit = function() {
+                FB.init({
+appId  : "445111025530197",
+status : true, // check login status
+cookie : true, // enable cookies to allow the server to  access the session
+xfbml  : true, // parse XFBML
+channelUrl :'http://carpo.terrence-tang.com/channel.html', // channel.html file
+oauth  : true // enable OAuth 2.0
+});
 
+FB.getLoginStatus(function(response) {
+        console.log(response);
+        if (response.status === 'connected') {
+        if(location.search !== "") {
+        console.log("start checkin");
+        var _href = location.href,
+        _code = _href.substr(_href.indexOf("?")+6);
+        FBplus.prototype.config.CODE = _code;
+
+        FBplus(["auth"], function(plus){
+            plus.auth.reloadToken(function(res){
+                var _data = res.responseText;
+                console.log("auth =", _data);
+                FBplus.prototype.config.TOKEN = _data.substr(13, (_data.lastIndexOf("&") -13));
+                console.log("init",FBplus.prototype.config);
+                initIndex();
+                });
+
+            });
+
+        console.log(location.search != "undefined");
+
+        }
+
+
+        } else if (response.status === 'not_authorized') {
+            // the user is logged in to Facebook,
+            // but has not authenticated your app
+            // the user isn't logged in to Facebook.
+        }
+});
+};
+// Load the SDK Asynchronously
+(function(d){
+ var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+ if (d.getElementById(id)) {return;}
+ js = d.createElement('script'); js.id = id; js.async = true;
+ //js.src = "//connect.facebook.net/en_US/all.js";
+ js.src = "//connect.facebook.net/zh_TW/all.js";
+ ref.parentNode.insertBefore(js, ref);
+ }(document));
+        </script>
+        <!-- Login -->
+        <div id="main">
+            <div id="login"></div>
+        </div>
         
       </header>
       
@@ -101,3 +145,28 @@ $(document).ready(function(){
 
 
 </html>
+
+<script src="js/mobile_all.js"></script>
+<script src="js/FBplus.js"></script>
+<script>
+$(document).ready(function(){
+	var PLUS_CONFIG = {
+		CLIENT_ID:"445111025530197",
+		SECRET_ID:"d530cadfb49b87c1aae50e1f3c7db506",
+		REDIRECT_URI:"http://checkinsale.com/s_main.html",
+		TOKEN:"AAADZCBZAhRc5QBAFGKZBdXXzp9FoygcJDgH17nfEr43lnBwm8TFiZCZCTR8a2tojsI9g3K8otoLmqfkgfTCI2XjELZCIZAuhgaRCl6SDETguQZDZD"
+	};
+	
+	FBplus.prototype.config = PLUS_CONFIG;
+
+	var scope = "read_stream,publish_checkins,publish_stream,user_status,user_checkins,read_stream,user_birthday,friends_status";
+	
+	FBplus(["auth"], function(plus){
+    	var link = "<a href='" + plus.auth.getLoginUrl(scope) + "'><img src='http://checkinsale.com/image/FBlogin.png'></img></a>";
+    	$("#login").append(link);
+    });
+	
+	$("#login").append
+	console.log("ready");
+});
+</script>
