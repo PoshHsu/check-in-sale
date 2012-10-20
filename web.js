@@ -1,10 +1,13 @@
 var express  = require('express'),
     app = express.createServer(express.logger()),
-    DB_URL = "mongodb://heroku_app7984633:ljtiqmuc5so4cvc057vf98vvcq@ds039007.mongolab.com:39007/heroku_app7984633",
-    mongoose = require("mongoose"),
-    QRCODE_TABLE = "qrcode";
+    request = require('request'),
+    // DB_URL = "mongodb://heroku_app7984633:ljtiqmuc5so4cvc057vf98vvcq@ds039007.mongolab.com:39007/heroku_app7984633",
+    CLOUDANT_URL = process.env.CLOUDANT_URL || 'https://app7984633.heroku:GlU44jaUtuaGsGDyTJu5bR7x@app7984633.heroku.cloudant.com',
+    DB_URL = CLOUDANT_URL + '/check-in-sale';
+    // mongoose = require("mongoose"),
+    // QRCODE_TABLE = "qrcode";
 
-mongoose.connect(DB_URL);
+// mongoose.connect(DB_URL);
 
 app.use(express.static(__dirname + "/asset"));
 app.use(express.bodyParser());
@@ -63,10 +66,10 @@ app.get('/admin/qrcode', function(request, response) {
 });
 
 app.get('/db/insert/qrcode', function(request, response) {
-     mongoose.connection.db.collection(QRCODE_TABLE, function(err, collection) {
-       collection.insert(qrcode);
-       response.send(1);
-     });
+     // mongoose.connection.db.collection(QRCODE_TABLE, function(err, collection) {
+     //   collection.insert(qrcode);
+     //   response.send(1);
+     // });
 });
 
 
@@ -75,18 +78,18 @@ app.get('/website/yahoo', function(request, response) {
 });
 
 app.post('/db/insert/qrcode', function(request, response) {
-     mongoose.connection.db.collection(QRCODE_TABLE, function(err, collection) {
-       collection.insert(request.body);
-       response.send(1);
-     });
+     // mongoose.connection.db.collection(QRCODE_TABLE, function(err, collection) {
+     //   collection.insert(request.body);
+     //   response.send(1);
+     // });
 });
 
 app.post('/db/query/qrcode', function(request, response) {
-    mongoose.connection.db.collection(QRCODE_TABLE, function(err, collection) {
-       collection.findOne({pid:request.body.pid}, function(err,data){
-         response.send(data);
-       });
-    });
+    // mongoose.connection.db.collection(QRCODE_TABLE, function(err, collection) {
+    //    collection.findOne({pid:request.body.pid}, function(err,data){
+    //      response.send(data);
+    //    });
+    // });
 });
 
 app.get('/db/query/activity/*', function(request, response) {
@@ -104,6 +107,33 @@ response.send(_data);
 
 app.get('/channel.html', function(request, response) {
       response.sendfile(__dirname+'/pages/channel.html');
+});
+
+/**
+ Add a user by following json:
+
+ {
+   'fb-user-id': babababa,
+   'check-in-points': [
+     {
+       'name': 'foo', 'fb-place-id': balabala
+     },
+     {
+       'name': 'bar', 'fb-place-id': labalaba
+     }
+   ],
+   'joined-at': [2012, 10, 20]
+ }
+ */
+app.post('/users/add', function(req, res) {
+  request.post({ url: DB_URL, json: req.body }).pipe(res);
+});
+
+/**
+ Get a user by fb-user-id
+ */
+app.get('/users/:fbid', function(req, res) {
+  request.get({ url: DB_URL + '/_design/demo/_view/users?key=' + req.params.fbid }).pipe(res);
 });
 
 var port = process.env.PORT || 3000;

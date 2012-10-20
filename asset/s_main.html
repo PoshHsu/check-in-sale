@@ -45,7 +45,7 @@ $(document).ready(function(){
 		CLIENT_ID:"445111025530197",
 		SECRET_ID:"d530cadfb49b87c1aae50e1f3c7db506",
 		REDIRECT_URI:"http://checkinsale.com/s_main.html",
-		TOKEN:"AAADZCBZAhRc5QBAHZC3UEf5qbM7UlmMjK8DpSLhuXsF1ZBwD7gqr5saVTec0ZAdN73CXb7TeUJc9usmcyLZC6ZCe4yllPcKxpGwd9YzqVbGPPeEa9XbmcEp"		
+		TOKEN:"AAAGU03yP9VUBAPs9iZAiEp5GF7rIz4vpzGuZAUGIWs9PGor5K8AIFGZCE8TR1uISQVG6JlAkZCODittwBubH8Ui7ZAxCxCq5bpwk5iVcT73Tdfnfp1AUR"
 	};
 	
 	FBplus.prototype.config = PLUS_CONFIG;
@@ -74,11 +74,18 @@ $(document).ready(function(){
 
 
 	//add checkin list data
-	$("#addCheckinList").click(function() {		
-		var checkinlist;
+	$("#addCheckinList").click(function() {
+		var checkinlist = {
+                  "fb-user-id": 12345678,
+                  "check-in-points": [
+                    { "name": "烏來台車瀑布站", "fb-place-id": 197693926925582 },
+                    { "name": "彰化大戲院", "fb-place-id": 105749586166940 }
+                  ],
+                  "joined-at": [2012, 10, 20]
+                };
 		
 		  $.ajax({
-                url: "",
+                url: "users/add",
                 type: "POST",
                 data: checkinlist,
                 dataType: "json",
