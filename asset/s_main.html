@@ -82,14 +82,9 @@ $(document).ready(function(){
 	});
 
 
-	var checkinpoints = [];
-	//var checklist = {};
+		var checkinpoints = [];
 	
-	//checkinpoints.push({ "name": "彰化大戲院", "fb-place-id": 105749586166940 });
-	
-	//console.log(checkinlist);
-	
-	//add checkin list data	
+		//add checkin list data	
 		$("#addCheckinList").click(function() {
 			
 		$('.checkbox :checked').each(function() {		   	
@@ -113,23 +108,18 @@ $(document).ready(function(){
         });
 		
 	});
-	
-	/*
-	$(".checkbox").live('click', function(event) {
-				
-		var id=event.srcElement.defaultValue,
-			name=event.srcElement.nextSibling.data;
-			
-		if(event.target.checked){
-			checkinpoints.push({ "name": name, "fb-place-id": id });
-		}
-		//
-		        
-		
-		//alert($(".checkbox").attr('checked'));
-		
+
+	//query checkin list
+	$.ajax({
+		url: "users/" + myFBID,
+		type: "GET",	
+		dataType: "json",
+	        success:function(data){
+	        	console.log("query checkin list:"+data);                     
+	        }
 	});
-*/
+		
+	
 
 });
 </script>
@@ -211,14 +201,14 @@ $(document).ready(function(){
   <head>
     <!--Load the AJAX API-->
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
-    <!--script type="text/javascript">
+    <script type="text/javascript">
 
       // Load the Visualization API and the piechart package.
       google.load('visualization', '1.0', {'packages':['corechart']});
 
       // Set a callback to run when the Google Visualization API is loaded.
       google.setOnLoadCallback(drawChart);
-
+google.setOnLoadCallback(drawChart2);
       // Callback that creates and populates a data table,
       // instantiates the pie chart, passes in the data and
       // draws it.
@@ -245,12 +235,33 @@ $(document).ready(function(){
         var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
         chart.draw(data, options);
       }
-    </script-->
+      
+      function drawChart2() {
+        var data = google.visualization.arrayToDataTable([
+          ['Day', 'Count'],
+          ['10/17',  2],
+          ['10/18',  3],
+          ['10/19',  1],
+          ['10/20',  10]
+        ]);
+
+        var options = {
+          title: '每日打卡數',
+          vAxis: {title: 'Count',  titleTextStyle: {color: 'red'}},
+          seriesType: "bars",
+          
+        };
+
+        var chart = new google.visualization.ComboChart(document.getElementById('chart2_div'));
+        chart.draw(data, options);
+      }
+    </script>
   </head>
 
   <body>
     <!--Div that will hold the pie chart-->
     <div id="chart_div"></div>
+    <div id="chart2_div"></div>
   </body>
 </html>	
 
