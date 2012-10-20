@@ -109,6 +109,12 @@ app.get('/channel.html', function(request, response) {
       response.sendfile(__dirname+'/pages/channel.html');
 });
 
+var db_helper = {
+  'post_doc': function(req, res) {
+    request.post({ url: DB_URL, json: req.body }).pipe(res);
+  }
+};
+
 /**
  Add a user by following json:
 
@@ -126,14 +132,36 @@ app.get('/channel.html', function(request, response) {
  }
  */
 app.post('/users/add', function(req, res) {
-  request.post({ url: DB_URL, json: req.body }).pipe(res);
+  db_helper.post_doc(req, res);
+});
+
+app.post('/users/update', function(req, res) {
+  request.put({ url: DB_URL + '/' + req.body._id, json: req.body }).pipe(res);
 });
 
 /**
  Get a user by fb-user-id
  */
+// FIXME: looks like \" and \" are workarounds
 app.get('/users/:fbid', function(req, res) {
-  request.get({ url: DB_URL + '/_design/demo/_view/users?key=' + req.params.fbid }).pipe(res);
+  request.get({ url: DB_URL + '/_design/demo/_view/users?key=\"' + req.params.fbid + '\"'}).pipe(res);
+});
+
+/**
+ {
+   'fb-place-id':
+   'creator': fb-user-id
+   'description'
+   'slogan'
+   'session': {
+     'start':
+     'end':
+   }
+ }
+ */
+// TODO
+app.post('/promotions/add', function(req, res) {
+  request.post({url: DB_URL, json: req.body }).pipe(res);
 });
 
 var port = process.env.PORT || 3000;
