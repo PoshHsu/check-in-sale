@@ -2,8 +2,14 @@
 <html>
 <head>
 <meta charset="utf-8" />
-<title>Canvas Example</title>
+<title>小瑪麗</title>
 <script src="js/jquery-1.8.2.min.js"></script>
+<!-- include bootstrap library -->
+<script src="js/bootstrap.min.js"></script>
+<script src="js/bootstrap-datepicker.js"></script>
+<link href="css/bootstrap.css" rel="stylesheet">
+<link href="css/bootstrap-responsive.min.css" rel="stylesheet">
+
 <script>
 window.onload = function() {
     var canvas = document.getElementById("myCanvas");
@@ -56,13 +62,16 @@ $(document).ready(function(){
 		console.log("gift:"+giftid);
 		alert(gifts[giftid].name);
 		clearTimeout(t);
+		x=0;
+		y=0;
+		speed=75;
 	}
 	
 	$("#start").click(function(){
 		init();
     	loop();
     	
-    	window.setTimeout(showGift, Math.floor((Math.random()*10)+1)*1000);
+    	window.setTimeout(showGift, Math.floor((Math.random()*5)+1)*1000);
 
 	});
 });
@@ -81,12 +90,10 @@ body {
 </style>
     </head>
     <body>
-        <canvas id="myCanvas" width="450" height="455" style="position: absolute;z-index:10"></canvas>
-        <div id="gifts" style="position: relative">        	
-        </div>        
-        <button id="start" style="z-index:10">Start</button>
-        <div id="log" style="position: relative"></div>
-        <div id="gift" style="position: relative"></div>
+    	
+    	    <canvas id="myCanvas" width="450" height="455" style="position: absolute;z-index:10"></canvas>
+	        <div id="gifts" style="position: relative"></div>        
+	        <button id="start" class="btn btn-danger btn-large" style="position: relative ; z-index:20;top:0px;width:450px">Start</button>
     </body>
 </html>
 
@@ -156,7 +163,7 @@ function update(){
     		break;
     		
     	case 2:
-    		y=y+speed+1.2;
+    		y=y+speed+1;
     		if(y>=canvas.height-rH-rH) type++;
     		break;
     	case 3:
@@ -164,20 +171,20 @@ function update(){
     		if(x<=0) type++;
     		break;
     	case 4:
-    		y=y-speed-1.2;
+    		y=y-speed-1;
     		if(y<=0) type=1;
     		break;
     }
     
     lastTime = time;
     
-    $("#log").html("x:"+Math.ceil(x/75)+"y:"+Math.ceil(y/75));
+    //$("#log").html("x:"+Math.ceil(x/75)+"y:"+Math.ceil(y/75));
     if(y!=0) 
     	giftid = Math.ceil(x/75) + 6*(Math.ceil(y/75)-1);
     else
     	giftid = Math.ceil(x/75) + 6*(Math.ceil(y/75)+1)+1;
 
-	$("#gift").text(giftid);    
+    
 }
 </script>
 
