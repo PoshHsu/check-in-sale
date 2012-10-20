@@ -92,7 +92,7 @@ app.post('/db/query/qrcode', function(request, response) {
 
 app.get('/db/query/activity/:aid', function(request, response) {
     var _aid = request.params.aid,
-        data;
+        _data;
     if(_aid == 1){
         _data = {
             pid:354651051295822,
