@@ -149,19 +149,31 @@ app.get('/users/:fbid', function(req, res) {
 
 /**
  {
-   'fb-place-id':
-   'creator': fb-user-id
+   'checkInPoint': {
+     'fbPlaceId':
+     'name':
+   },
+   'creator': fb-user-id,
    'description'
    'slogan'
    'session': {
      'start':
      'end':
-   }
+   },
+   'webTitle':
+   'webURL':
  }
  */
-// TODO
 app.post('/promotions/add', function(req, res) {
   request.post({url: DB_URL, json: req.body }).pipe(res);
+});
+
+app.get('/promotions/createdBy/:fbid', function(req, res) {
+  request.get({ url: DB_URL + '/_design/demo/_view/promotions?key=\"' + req.params.fbid + '\"'}).pipe(res);
+});
+
+app.post('/promotions/update', function(req, res) {
+  request.put({ url: DB_URL + '/' + req.body._id, json: req.body }).pipe(res);
 });
 
 var port = process.env.PORT || 3000;

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset='utf-8'> 
+<meta charset='utf-8'>
 <script src="js/jquery-v1.7.2.js"></script>
 
 <!-- include bootstrap library -->
@@ -11,7 +11,8 @@
 <link href="css/bootstrap-responsive.min.css" rel="stylesheet">
 <link href="css/datepicker.css" rel="stylesheet">
 <script src="js/FBplus.js"></script>
-    
+<script src="js/underscore-min.js"></script>
+
 <style type="text/css">
 body {
     padding-top: 60px;
@@ -24,20 +25,22 @@ body {
 <script>
 
 var tmp,
-	myFBID;
+	myFBID,
+	updateFlag=false,
+	originCheckInList;
 
 $(document).ready(function(){
 	//show all tooltip by bootstrap
 	$("[rel=tooltip]").tooltip();
-	
+
 	//$('#mymenu a:last').tab('show');
 	$('#mymenu a').click(function (e) {
   		//console.log($(this).tab('show'));
   		$(this).tab('show');
 	});
-	
+
 	$('.datepicker').datepicker({
-		formar:'mm/dd/yyyy'	
+		formar:'mm/dd/yyyy'
 	});
 
 
@@ -46,79 +49,123 @@ $(document).ready(function(){
 		CLIENT_ID:"445111025530197",
 		SECRET_ID:"d530cadfb49b87c1aae50e1f3c7db506",
 		REDIRECT_URI:"http://checkinsale.com/s_main.html",
-		TOKEN:"AAAGU03yP9VUBAOv0R4As17hsQyISvTQ3MyowAiUZCXHILPv92xHpMMuOJi6Lry2xkHFv32KZCh7qu174AqSOTl4bswa0TbmhQhYBhFZCgZDZD"		
+		TOKEN:"AAAGU03yP9VUBAOv0R4As17hsQyISvTQ3MyowAiUZCXHILPv92xHpMMuOJi6Lry2xkHFv32KZCh7qu174AqSOTl4bswa0TbmhQhYBhFZCgZDZD"
 	};
-	
+
 	FBplus.prototype.config = PLUS_CONFIG;
 
 	var scope = "read_stream,publish_checkins,publish_stream,user_status,user_checkins,read_stream,user_birthday,friends_status";
-	
+
 	FBplus(["auth"], function(plus){
     	var link = "<a href='" + plus.auth.getLoginUrl(scope) + "'><img src='http://checkinsale.com/image/FBlogin.png'></img></a>";
     	$("#login").append(link);
     });
-	
+
 	$("#login").append;
 	console.log("ready");
 
-	
+
 	//get checkin list
 	FBplus(["checkin","friends"], function(plus){
-		
+
 		plus.friends.getFriendInfo(function(data,e){
-			myFBID = data.id;	
+			myFBID = data.id;
+
+			//query checkin list
+			$.ajax({
+				url: "users/"+myFBID,
+				type: "GET",
+				dataType: "json",
+			        success:function(data){
+			        	console.dir(data);
+			        	//data.rows[0].value['check-in-points'][0]
+			        	$("#place").html("<p>近期的打卡點,請勾選屬於您的打卡點</p>");
+			        	if(data.rows.length>0){
+			        		
+			        		originCheckInList = data.rows[0].value; 
+			        		for(var i=0,len=data.rows[0].value.checkInList.length;i<len;i++){
+								var checkName = data.rows[0].value.checkInList[i].name, 							
+									checkId = data.rows[0].value.checkInList[i].fbPlaceId;			        			
+								var cb = '<label class="checkbox"><input type="checkbox" checked value="'+checkId+'">'+checkName+'</label>';
+								$("#place").append(cb);
+								
+								//actionPlace
+								var op = '<option value="'+checkId+'">'+checkName+'</option>';
+								$("#actionPlace").append(op);
+							}
+							updateFlag = true;
+			        	}else{
+			        		console.log('no data using Create');
+			        		updateFlag = false;
+			        	}
+
+
+
+			        }
+			});
 		});
-		
-		
+
 		plus.checkin.getMeCheckin(function(data){
-			
-			$("#place").html("<p>近期的打卡點,請勾選屬於您的打卡點</p>");
-			for(var i=0,len=data.data.length;i<len;i++){				
-				var cb = '<label class="checkbox"><input type="checkbox" value="'+data.data[i].place.id+'">'+data.data[i].place.name+'</label>';
-				$("#place").append(cb);				
-			}					
+			var places = _.uniq(data.data, false, function(place) { return place.place.id; });  
+			//$("#place").append("<p>近期的打卡點,請勾選屬於您的打卡點</p>");
+			for(var i=0,len=places.length;i<len;i++){
+				var cb = '<label class="checkbox"><input type="checkbox" value="'+places[i].place.id+'">'+places[i].place.name+'</label>';
+				$("#place").append(cb);
+			}
   		});
 	});
 
 
 		var checkinpoints = [];
-	
-		//add checkin list data	
-		$("#addCheckinList").click(function() {
-			
-		$('.checkbox :checked').each(function() {		   	
-			checkinpoints.push({ "name": $(this).parent().text(), "fb-place-id": $(this).val() });
-		});
-	 	
-		checkinlist = {
-                  "fb-user-id": myFBID,
-                  "check-in-points": checkinpoints,
-                  "joined-at": [2012, 10, 20]
-                };
-		
-		  $.ajax({
-                url: "users/add",
-                type: "POST",
-                data: checkinlist,
-                dataType: "json",
-                success:function(data){
-                	console.log(data);                     
-                }
-        });
-		
-	});
 
-	//query checkin list
-	$.ajax({
-		url: "users/" + myFBID,
-		type: "GET",	
-		dataType: "json",
-	        success:function(data){
-	        	console.dir("query checkin list:"+data);                     
-	        }
-	});
-		
-	
+		//add checkin list data
+		$("#addCheckinList").click(function() {
+
+			$('.checkbox :checked').each(function() {
+				checkinpoints.push({ "name": $(this).parent().text(), "fbPlaceId": $(this).val() });
+			});
+
+
+
+			
+			if(updateFlag){
+				
+				originCheckInList.checkInList = checkinpoints; 
+				
+
+				$.ajax({
+			            url: "users/update",
+			            type: "POST",
+			            data: originCheckInList,
+			            dataType: "json",
+			            success:function(data){
+			            	console.log(data);
+			            }
+			    });
+			}else{
+				
+				var checkinlist = {
+	              "fbUserId": myFBID,
+	              "checkInList": checkinpoints,
+	              "joined": [2012, 10, 20]
+	            };
+
+
+				$.ajax({
+			            url: "users/add",
+			            type: "POST",
+			            data: checkinlist,
+			            dataType: "json",
+			            success:function(data){
+			            	console.log(data);
+			            }
+			    });
+			}
+		});
+
+
+
+
 
 });
 </script>
@@ -128,7 +175,7 @@ $(document).ready(function(){
 
 <!-- fb login start-->
 <div id="fb-root"></div>
-   
+
         <!-- Login -->
 
  <div class="navbar navbar-inverse navbar-fixed-top" id="mymenu">
@@ -142,29 +189,29 @@ $(document).ready(function(){
           <a class="brand" href="#home">輕鬆打 Check-in Sale</a>
           <div class="nav-collapse collapse">
             <ul class="nav">
-				<li><a href="#chart" class="dropdown-toggle" title="檢視報表資訊" rel="tooltip">報表</a></li>				 
-				<li><a href="#description" rel="tooltip" title="瀏覽既有的活動及報表" data-placement="bottom">活動管理</a></li>              
+				<li><a href="#chart" class="dropdown-toggle" title="檢視報表資訊" rel="tooltip">報表</a></li>
+				<li><a href="#description" rel="tooltip" title="瀏覽既有的活動及報表" data-placement="bottom">活動管理</a></li>
 				<li><a href="#newactions" rel="tooltip" title="建立新的促銷活動" data-placement="bottom">建立新活動</a></li>
-				<li><a href="#profile" class="dropdown-toggle" title="設定基本資訊" rel="tooltip">基本資料</a></li>                                          
+				<li><a href="#profile" class="dropdown-toggle" title="設定基本資訊" rel="tooltip">基本資料</a></li>
 			</ul>
-            
-            
-            
+
+
+
           </div><!--/.nav-collapse -->
         </div>
       </div>
     </div>
 
-	
+
     <div class="container">
 
       <!-- Main hero unit for a primary marketing message or call to action -->
     	<div class="tab-content">
-			  
+
 			<div class="tab-pane fade" id="home">
 				首頁不知道要擺啥
 			</div>
-			
+
 			<div class="tab-pane fade" id="profile">
 				<h2>Profile</h2>
 				<div class="form-actions">
@@ -172,13 +219,13 @@ $(document).ready(function(){
 						<label class="checkbox">
   							Loading...
 						</label>
-					</div>					
+					</div>
 					<button type="submit" id="addCheckinList" class="btn btn-primary">Save changes</button>
 				  	<button type="button" class="btn">Cancel</button>
 				</div>
-				
+
 			</div>
-			
+
 			<div class="tab-pane fade in active" id="description">
 				<div><select class="span2">
 					<option>全部</option>
@@ -186,13 +233,13 @@ $(document).ready(function(){
   					<option>活動二</option>
 				</select>
 				</div>
-				
-				<ul class="breadcrumb">					
+
+				<ul class="breadcrumb">
   					<li class="active"><a href="#today">今日</a> <span class="divider">/</span></li>
   					<li><a href="#lastday">昨日</a> <span class="divider">/</span></li>
   					<li><a href="#lastweek">上週</a> <span class="divider">/</span></li>
 				</ul>
-				
+
 				<div id="metadata">
 					<div class="row-fluid show-grid">
 						<div class="span4">
@@ -234,7 +281,7 @@ google.setOnLoadCallback(drawChart2);
         var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
         chart.draw(data, options);
       }
-      
+
       function drawChart2() {
         var data = google.visualization.arrayToDataTable([
           ['Day', 'Count'],
@@ -248,7 +295,7 @@ google.setOnLoadCallback(drawChart2);
           title: '每日打卡數',
           vAxis: {title: 'Count',  titleTextStyle: {color: 'red'}},
           seriesType: "bars",
-          
+
         };
 
         var chart = new google.visualization.ComboChart(document.getElementById('chart2_div'));
@@ -262,7 +309,7 @@ google.setOnLoadCallback(drawChart2);
     <div id="chart_div"></div>
     <div id="chart2_div"></div>
   </body>
-</html>	
+</html>
 
 						</div>
 						<div class="span8">每日打卡人數</div>
@@ -272,15 +319,22 @@ google.setOnLoadCallback(drawChart2);
 						<div class="span6">平均累積按讚的次數</div>
 						<div class="span6">各時間點的平均打卡數</div>
 					</div>
-					
+
 				</div>
 			</div>
-			
-			
-			
+
+
+
 			<div class="tab-pane fade" id="newactions">
 				<form class="form-horizontal" action="">
 					<legend>建立新的促銷活動</legend>
+
+					<div class="control-group">
+				    	<label class="control-label" for="contents">選擇地標</label>
+						<div class="controls">
+				      		<select id="actionPlace"></select>
+				    	</div>
+				  	</div>
 
 					<div class="control-group">
 				    	<label class="control-label" for="contents">促銷內容</label>
@@ -288,45 +342,55 @@ google.setOnLoadCallback(drawChart2);
 				      		<textarea rows="4" placeholder="請輸入促銷內容，例：現在打卡即享有9.5折優惠"></textarea>
 				    	</div>
 				  	</div>
-				
+
 					<div class="control-group">
 				    	<label class="control-label" for="solgon">活動標語</label>
 						<div class="controls">
 				      		<input type="text" class="input-large" placeholder="請輸入活動標語，例：我愛薑母鴨">
 				    	</div>
 				  	</div>
-				  	
+
 				  	<div class="control-group">
 				    	<label class="control-label" for="session">活動期間</label>
 						<div class="controls">
 				      		<input type="text" class="datepicker" id="start_date" placeholder="開始時間">~<input type="text" class="datepicker" id="end_date" placeholder="結束時間">
 				    	</div>
 				  	</div>
-				
+
+					<div class="control-group">
+				    	<label class="control-label" for="session">網站連結</label>
+						<div class="controls">							
+         						<input type="text" name="webTitle" placeholder="網站名稱: Yahoo! 奇摩">
+    							<input type="text" name="webURL" placeholder="網址: http://www.yahoo.com.tw" class="span6">
+				    	</div>
+				  	</div>
+
+
 					<div class="control-group">
 				    	<label class="control-label" for="session">活動照片</label>
 						<div class="controls">
 							<form method="post" enctype="multipart/form-data" action="/fileUpload">
-         						<input type="file" name="uploadingFile">         						 
-    						</form>				      		
+         						<input type="file" name="uploadingFile">
+    						</form>
 				    	</div>
 				  	</div>
+
 				  	
 					<div class="control-group">
-						
+
 						<div class="controls">
-						<button type="submit" class="btn btn-primary">新增</button>  						
+						<button type="submit" class="btn btn-primary">新增</button>
   						</div>
 					</div>
 				</form>
-			</div>	
-					
-		</div>	
-          
-          
-		
+			</div>
 
-	<hr>    
+		</div>
+
+
+
+
+	<hr>
 
 	<div class="navbar navbar-fixed-bottom">
 		<div class="navbar-inner">
