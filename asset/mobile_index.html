@@ -5,12 +5,14 @@
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <title></title>
-        <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/jquery.mobile/1.1.1/jquery.mobile-1.1.1.min.css"></link>
+        <!-- <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/jquery.mobile/1.1.1/jquery.mobile-1.1.1.min.css"></link> -->
+        <link rel="stylesheet" href="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.css"></link>
         <style>
             /* App custom styles */
         </style>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-        <script src="https://ajax.aspnetcdn.com/ajax/jquery.mobile/1.1.1/jquery.mobile-1.1.1.min.js"></script>
+        <!--<script src="https://ajax.aspnetcdn.com/ajax/jquery.mobile/1.1.1/jquery.mobile-1.1.1.min.js"></script>-->
+        <script src="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.js"></script>
         <style type="text/css">
         </style>
     </head>
@@ -97,8 +99,25 @@ FB.getLoginStatus(function(response) {
                 <a id="btn-friends" data-role="button" data-theme="b" href="#page1">
                     Friends
                 </a>
+                <a href="foo.html" data-rel="dialog" data-transition="pop">Open dialog</a>
             </div>
         </div>
+        <div data-role="dialog" id="dialog">
+            <div data-theme="b" data-role="header">
+                <h5>輕鬆打</h5>
+            </div>
+            <div data-theme="b" data-role="content" id="text" style="text-align:center">
+                <h1>Your checkin is success.</h1>
+                <a id="btn-lucky-draw" data-role="button" data-theme="b" href="#page1">
+                    Lucky Draw
+                </a>
+                 <a id="btn-close" data-role="button" data-theme="b" href="#page1">
+                    Close
+                </a>
+
+            </div>
+        </div>
+
     </body>
     <script src="../../js/mobile_all.js"></script>
     <script src="../../js/FBplus.js"></script>

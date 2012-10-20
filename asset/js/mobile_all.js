@@ -47,9 +47,25 @@ var initLayout = function(layout_data){
 
 };
 
+var showLoding = function(){
+    $.mobile.loading( 'show', {
+        text: 'loading',
+        textVisible: true,
+        theme: 'b'
+    });
+};
+
+var closeLoding = function(){
+    $.mobile.loading( 'hide');
+};
+
 var initEvent = function(event_data){
     console.log("event data",event_data);
+    #("#btn-close").bind("click", function(event, ui){
+        this.close();
+    });
     $("#btn-checkin").click(function(){
+        showLoding();
         var _message = $("#message").val();
         /*
          FBplus(["checkin","config"], function(plus){
@@ -84,7 +100,9 @@ var initEvent = function(event_data){
                 };
 
                 console.log(_data);
-                plus.wall.insert(_data);
+                plus.wall.insert(_data, function(){
+                    closeLoding();
+                });
 
             });
         });
