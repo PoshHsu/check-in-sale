@@ -35,12 +35,12 @@ var initLayout = function(layout_data){
 
 
     //do login pic
-    if (_logined) {
-        $("#page1").css("display","block");
-    }
-    else {
+    //if (_logined) {
+     //   $("#page1").css("display","block");
+   // }
+    //else {
 
-    }
+    //}
 
     $("#place").html(_place_name);
     $("#slogan").html(_slogan);
@@ -133,7 +133,7 @@ var initLoginPage = function(){
      var scope = "read_stream,publish_checkins,publish_stream,user_status,user_checkins,read_stream,user_birthday,friends_status";
     FBplus(["auth"], function(plus){
         var link = plus.auth.getLoginUrl(scope);
-        $("#login").append(link);
+        $("#btn-login").attr("href", link)
     });
 }
 
@@ -157,6 +157,7 @@ var init = function(res) {
         });
     }
     initIndex();
+    $.mobile.changePage("#CheckinPage");
 };
 
 var writeUserIntoDb = function(result){

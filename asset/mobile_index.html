@@ -60,21 +60,21 @@ FB.getLoginStatus(function(response) {
             <div id="login"></div>
         </div>
 
-        <div data-role="page" id="loing">
+        <div data-role="page" id="LoginPage">
             <div data-theme="b" data-role="header">
                 <h5>Login</h5>
             </div>
             <div data-role="content">
                 <div style=" text-align:center">
-                    <img src="../../image/128_128_logo.png" ></img>
+                    <img src="../../image/250_250_logo.png" ></img>
                 </div>
-                <div style=" text-align:center">
-                    <a href='' id="login"><img src='http://checkinsale.com/image/FBlogin.png'></img></a>;
-                </div>
+                <a id="btn-login" data-role="button" data-theme="b">
+                    Login width Facebook
+                </a>
             </div>
         </div>
         <!-- Home -->
-        <div data-role="page" id="page1">
+        <div data-role="page" id="CheckinPage">
             <div data-theme="b" data-role="header">
                 <h5>輕鬆打</h5>
             </div>
@@ -103,16 +103,21 @@ FB.getLoginStatus(function(response) {
     <script src="../../js/mobile_all.js"></script>
     <script src="../../js/FBplus.js"></script>
     <script>
-        $(document).ready(function(){
-
-
-                var PLUS_CONFIG = {
+         var PLUS_CONFIG = {
 CLIENT_ID:"445111025530197",
 SECRET_ID:"d530cadfb49b87c1aae50e1f3c7db506",
 REDIRECT_URI:"http://checkinsale.com/mobile/checkin/" + getAid(),
 TOKEN:"AAADZCBZAhRc5QBAALSAnZBKOQGoDeUMXXoA5gm32ViMW4vrZCqIeh9qsvxq3Iewko7pC2cQ3mbOzAckvYBZAPdghDUAPYBNQZBXePvJf4zxEeA0QSzxwkV"
 };
 FBplus.prototype.config = PLUS_CONFIG;
+
+        $("#LoginPage").live("pageinit", function(event){
+             console.log("pageinit", event);
+             initLoginPage();
+        });
+        $(document).ready(function(){
+
+
 
 console.log("ready");
 //initIndex(123,"AAADZCBZAhRc5QBAIAfOKkVK0lf7Hha7pGroAFMnXJTPJj2szOgFaoPhUwfS6rIZArpib992mXj5MCKTxMsA2dsZBPKs0xZA4C1LX1ZARgYtvIq9J0MPSCY");
