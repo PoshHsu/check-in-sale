@@ -132,11 +132,37 @@ FBplus.modules.auth = function(box){
 FBplus.modules.friends = function(box){
     box.friends = box.friends || {};
     box.friends.getFriendList = function(params, scallback, fcallback){
-        var link = box.LINK.FB_SERVER + "me/friends/";
+        var link = box.LINK.FB_SERVER + "me/friends/",
+            _scallback = "undefined",
+            _fcallback = "undefined";
+        if(typeof params ==="function") {
+                 _scallback = params;
+                 _fcallback = scallback;
+         }
+         else if(typeof scallback) {
+             _scallback = scallback;
+             _fcallback = fcallback;
+         }
         box.send("get", link, params, scallback, fcallback);
     };
     box.friends.getFriendInfo = function(fid, params, scallback, fcallback){
          var _fid  = (typeof fid == "string") ? fid :  "me",
+             _params = (typeof fid !== "object") ? ((typeof params !== "object") ? "undefined" : params) : fid,
+             _scallback = "undefined",
+             _fcallback = "undefined",
+             link;
+             if(typeof fid === "function"){
+                 _scallback = fid;
+                 _fcallback = params;
+             }
+             else if(typeof params ==="function") {
+                 _scallback = params;
+                 _fcallback = scallback;
+             }
+             else if(typeof scallback) {
+                 _scallback = scallback;
+                 _fcallback = fcallback;
+             }
              link = box.LINK.FB_SERVER + _fid;
         box.send("get",link, params, scallback, fcallback);
     }
