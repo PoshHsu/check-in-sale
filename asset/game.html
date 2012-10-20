@@ -14,29 +14,31 @@ var edge = 6,
 	edge2 = Math.sqrt((edge-2)*(edge-2)),
 	giftid=0; 
 
-var gifts = new Array(edge*edge);
+var gifts = {
+	0:{'name':'藍色小鴨','img':'http://farm9.staticflickr.com/8328/8106634175_4c3e2c2133_s.jpg'},
+	1:{'name':'Yahoo! 抱枕毛毯組','img':'http://farm9.staticflickr.com/8187/8106633225_1972d10d82_s.jpg'},
+	2:{'name':'Yahoo 貼紙','img':'http://farm9.staticflickr.com/8476/8106644284_5777205291_s.jpg'},
+	3:{'name':'Yahoo 購物袋','img':'http://farm9.staticflickr.com/8186/8106641688_282331b0c3_s.jpg'},
+	4:{'name':'Yahoo 貼紙','img':'http://farm9.staticflickr.com/8476/8106644284_5777205291_s.jpg'},
+	5:{'name':'HTC 恰恰','img':'http://farm9.staticflickr.com/8470/8106642802_a2a2b5471a_s.jpg'},
+	6:{'name':'Yahoo 購物袋','img':'http://farm9.staticflickr.com/8186/8106641688_282331b0c3_s.jpg'},
+	11:{'name':'Yahoo 貼紙','img':'http://farm9.staticflickr.com/8476/8106644284_5777205291_s.jpg'},
+	12:{'name':'Yahoo 貼紙','img':'http://farm9.staticflickr.com/8476/8106644284_5777205291_s.jpg'},
+	17:{'name':'Yahoo 貼紙','img':'http://farm9.staticflickr.com/8476/8106644284_5777205291_s.jpg'},
+	18:{'name':'藍色小鴨','img':'http://farm9.staticflickr.com/8328/8106634175_4c3e2c2133_s.jpg'},
+	23:{'name':'Yahoo 貼紙','img':'http://farm9.staticflickr.com/8476/8106644284_5777205291_s.jpg'},
+	24:{'name':'Beats 耳機','img':'http://farm9.staticflickr.com/8327/8106632299_3f6c6ec764_s.jpg'},
+	29:{'name':'藍色小鴨','img':'http://farm9.staticflickr.com/8328/8106634175_4c3e2c2133_s.jpg'},
+	30:{'name':'Yahoo 貼紙','img':'http://farm9.staticflickr.com/8476/8106644284_5777205291_s.jpg'},
+	31:{'name':'HTC One X','img':'http://farm9.staticflickr.com/8335/8106643278_d2ec110744_s.jpg'},
+	32:{'name':'Yahoo 貼紙','img':'http://farm9.staticflickr.com/8476/8106644284_5777205291_s.jpg'},
+	33:{'name':'Yahoo 貼紙','img':'http://farm9.staticflickr.com/8476/8106644284_5777205291_s.jpg'},
+	34:{'name':'藍色小鴨','img':'http://farm9.staticflickr.com/8328/8106634175_4c3e2c2133_s.jpg'},
+	35:{'name':'Yahoo 貼紙','img':'http://farm9.staticflickr.com/8476/8106644284_5777205291_s.jpg'},
+	36:{'name':'Yahoo 貼紙','img':'http://farm9.staticflickr.com/8476/8106644284_5777205291_s.jpg'}		
+};
 
-gifts[0] = '藍色小鴨';
-gifts[1] = '藍色小鴨';
-gifts[2] = '藍色小鴨';
-gifts[3] = '藍色小鴨';
-gifts[4] = '藍色小鴨';
-gifts[5] = '藍色小鴨';
-gifts[6] = '藍色小鴨';
-gifts[11] = '藍色小鴨';
-gifts[12] = '藍色小鴨';
-gifts[17] = '藍色小鴨';
-gifts[18] = '藍色小鴨';
-gifts[23] = '藍色小鴨';
-gifts[24] = '藍色小鴨';
-gifts[29] = '藍色小鴨';
-gifts[30] = '藍色小鴨';
-gifts[31] = '藍色小鴨';
-gifts[32] = '藍色小鴨';
-gifts[33] = '藍色小鴨';
-gifts[34] = '藍色小鴨';
-gifts[35] = '藍色小鴨';
-gifts[36] = '藍色小鴨';
+
 
 $(document).ready(function(){
 	
@@ -44,7 +46,7 @@ $(document).ready(function(){
 		if((i%edge)<=edge2 && (i)%edge>0 && i>edge && i<edge*(edge-1)){
 			$("#gifts").append('<img src="http://farm5.staticflickr.com/4114/4892837745_d08c1de0cc_s.jpg">');
 		}else{		
-			$("#gifts").append('<img src="http://farm6.staticflickr.com/5291/5437866454_84a29f7343_s.jpg">');
+			$("#gifts").append('<img src="'+gifts[i].img+'">');
 		}
 	}
 
@@ -52,7 +54,7 @@ $(document).ready(function(){
 		
 	function showGift(){
 		console.log("gift:"+giftid);
-		alert(gifts[giftid]);
+		alert(gifts[giftid].name);
 		clearTimeout(t);
 	}
 	
@@ -60,7 +62,7 @@ $(document).ready(function(){
 		init();
     	loop();
     	
-    	window.setTimeout(showGift, Math.floor((Math.random()*5)+1)*1000);
+    	window.setTimeout(showGift, Math.floor((Math.random()*10)+1)*1000);
 
 	});
 });
