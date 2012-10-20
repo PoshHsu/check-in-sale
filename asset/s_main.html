@@ -83,28 +83,31 @@ $(document).ready(function(){
           $("#qrcode").attr('src', 'http://chart.apis.google.com/chart?cht=qr&chl=' + encodeURIComponent(checkinUrl) + '&chs=270x270');
         }
 
+        function updatePromotionList() {
+          $.ajax({
+            url: "/promotions/createdBy/"+myFBID,
+            type: "GET",
+	    dataType: "json",
+	    success:function(data){
+              setQrcodeUrl(data.rows[0].value._id);
+              $("#editAction").empty();
+	      for(var i=0,len=data.rows.length;i<len;i++){
+	        var id =data.rows[i].value._id,
+		    slogan = data.rows[i].value.slogan,
+		    op = '<option value="'+id+'">'+slogan+'</option>';
+		    $("#editAction").append(op);
+		}
+	      }
+	    });
+        }
+
 	//get checkin list
 	FBplus(["checkin","friends"], function(plus){
 
 		plus.friends.getFriendInfo(function(data,e){
 			myFBID = data.id;
 
-			//query user promotion.
-			$.ajax({
-				url: "/promotions/createdBy/"+myFBID,
-				type: "GET",
-				dataType: "json",
-				success:function(data){
-                                        setQrcodeUrl(data.rows[0].value._id);
-					for(var i=0,len=data.rows.length;i<len;i++){
-						var id =data.rows[i].value._id;
-							slogan = data.rows[i].value.slogan,
-							op = '<option value="'+id+'">'+slogan+'</option>';
-							$("#editAction").append(op);
-					}
-					//console.log(data.rows[1].value);	
-				}
-			});
+                        updatePromotionList();
 
 			$("#editAction").live('change', function(event) {
 				var promotionsId = $("#editAction option:selected").val();
@@ -274,6 +277,9 @@ $(document).ready(function(){
 	            success:function(data){
 	            	console.log(data);
                         window.location.hash = "#editActions";
+                        updatePromotionList();
+                        // TODO: seems not work
+                        $('#editAction option[value="' + data.id + '"]').attr("selected", "selected");
 	            }
 		    });
 		});
