@@ -21,7 +21,7 @@ body {
 #counter {
 	  position:relative; 
       top:15px; 
-      left:430px; 
+      left:425px; 
 }
 .cntSeparator {	
 	font-size: 54px;
@@ -34,7 +34,7 @@ body {
 .desc div {
 	position:relative; 
     top:15px; 
-    left:430px; 
+    left:425px; 
 	float: left;
 	font-family: Arial;
 	width: 70px;
@@ -68,7 +68,7 @@ var dateTime=new Date(),
     week=dateTime.getDay();
 		  
     var date1 =new Date(2012,MM,dd,hh,mm,ss);		//目前TIME
-    var date2 = new Date(2012,10,21,12,00,00);  		//END TIME	
+    var date2 = new Date(2012,10,21,10,00,00);  		//END TIME	
     var date3 = date2.getTime() - date1.getTime()  		//計算相差的天數
     var days = Math.floor(date3 / (24 * 3600 * 1000))   	//計算相差天數
 	days ="0"+days ;
