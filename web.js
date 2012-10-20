@@ -91,7 +91,7 @@ app.post('/db/query/qrcode', function(request, response) {
 });
 
 app.get('/db/query/activity/:aid', function(request, response) {
-    var _aid = req.params.aid,
+    var _aid = request.params.aid,
         data;
     if(_aid == 1){
         _data = {
