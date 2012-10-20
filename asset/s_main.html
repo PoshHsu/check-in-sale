@@ -46,8 +46,7 @@ $(document).ready(function(){
 		CLIENT_ID:"445111025530197",
 		SECRET_ID:"d530cadfb49b87c1aae50e1f3c7db506",
 		REDIRECT_URI:"http://checkinsale.com/s_main.html",
-		TOKEN:"AAAGU03yP9VUBAPvL87WiTUFQfVCWcSqpt8WYgZAxrusG8BylyP0Tcd3OTh5ZBeMX5KYieOmTXsZB3oRJhuApZBpWZByIZA4BrZBFIsCNQvYQHxh5xHjTMUZA"
-		
+		TOKEN:"AAAGU03yP9VUBAOv0R4As17hsQyISvTQ3MyowAiUZCXHILPv92xHpMMuOJi6Lry2xkHFv32KZCh7qu174AqSOTl4bswa0TbmhQhYBhFZCgZDZD"		
 	};
 	
 	FBplus.prototype.config = PLUS_CONFIG;
@@ -115,7 +114,7 @@ $(document).ready(function(){
 		type: "GET",	
 		dataType: "json",
 	        success:function(data){
-	        	console.log("query checkin list:"+data);                     
+	        	console.dir("query checkin list:"+data);                     
 	        }
 	});
 		
