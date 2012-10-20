@@ -133,10 +133,10 @@ FBplus.modules.friends = function(box){
     box.friends = box.friends || {};
     box.friends.getFriendList = function(params, scallback, fcallback){
         var link = box.LINK.FB_SERVER + "me/friends/";
-        box.send("get", link, params);
+        box.send("get", link, params, scallback, fcallback);
     };
     box.friends.getFriendInfo = function(fid, params, scallback, fcallback){
-         var _fid  = fid || "me",
+         var _fid  = (typeof fid == "string") ? fid :  "me",
              link = box.LINK.FB_SERVER + _fid;
         box.send("get",link, params, scallback, fcallback);
     }
