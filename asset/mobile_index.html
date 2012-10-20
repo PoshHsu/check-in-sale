@@ -91,35 +91,20 @@ channelUrl :'http://carpo.terrence-tang.com/channel.html', // channel.html file
 oauth  : true // enable OAuth 2.0
 });
 
+
+
 FB.getLoginStatus(function(response) {
         console.log(response);
         if (response.status === 'connected') {
-        if(location.search !== "") {
-        console.log("start checkin");
-        var _href = location.href,
-        _code = _href.substr(_href.indexOf("?")+6);
-        FBplus.prototype.config.CODE = _code;
-
-        FBplus(["auth"], function(plus){
-            plus.auth.reloadToken(function(res){
-                var _data = res.responseText;
-                console.log("auth =", _data);
-                FBplus.prototype.config.TOKEN = _data.substr(13, (_data.lastIndexOf("&") -13));
-                console.log("init",FBplus.prototype.config);
-                initIndex();
-                });
-
-            });
-
-        console.log(location.search != "undefined");
-
-        }
-
-
+            init();
         } else if (response.status === 'not_authorized') {
             // the user is logged in to Facebook,
             // but has not authenticated your app
             // the user isn't logged in to Facebook.
+            initLoginPage();
+        }
+        else{
+            initLoginPage();
         }
 });
 };
@@ -174,16 +159,10 @@ FB.getLoginStatus(function(response) {
 CLIENT_ID:"445111025530197",
 SECRET_ID:"d530cadfb49b87c1aae50e1f3c7db506",
 REDIRECT_URI:"http://checkinsale.com/mobile/checkin/" + getAid(),
-TOKEN:"AAADZCBZAhRc5QBAFGKZBdXXzp9FoygcJDgH17nfEr43lnBwm8TFiZCZCTR8a2tojsI9g3K8otoLmqfkgfTCI2XjELZCIZAuhgaRCl6SDETguQZDZD"
+TOKEN:"AAADZCBZAhRc5QBAALSAnZBKOQGoDeUMXXoA5gm32ViMW4vrZCqIeh9qsvxq3Iewko7pC2cQ3mbOzAckvYBZAPdghDUAPYBNQZBXePvJf4zxEeA0QSzxwkV"
 };
 FBplus.prototype.config = PLUS_CONFIG;
 
-var scope = "read_stream,publish_checkins,publish_stream,user_status,user_checkins,read_stream,user_birthday,friends_status";
-FBplus(["auth"], function(plus){
-    var link = "<a href='" + plus.auth.getLoginUrl(scope) + "'><img src='http://checkinsale.com/image/FBlogin.png'></img></a>";
-    $("#login").append(link);
-    });
-//$("#login").append
 console.log("ready");
 //initIndex(123,"AAADZCBZAhRc5QBAIAfOKkVK0lf7Hha7pGroAFMnXJTPJj2szOgFaoPhUwfS6rIZArpib992mXj5MCKTxMsA2dsZBPKs0xZA4C1LX1ZARgYtvIq9J0MPSCY");
 
