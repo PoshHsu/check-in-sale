@@ -197,7 +197,7 @@ FBplus.modules.wall = function(box){
            console.log("scallback", _scallback);
            console.log("fcallback", _fcallback);
 
-       box.send("post", link, _params);
+       box.send("post", link, _params, _scallback, _fcallback);
     };
 
     box.wall.home = function(params){
