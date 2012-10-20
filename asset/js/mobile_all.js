@@ -19,7 +19,7 @@ var queryQRcode = function(pid, scallback, fcallback){
     var _host = (location.hostname != 'localhost') ? "http://checkinsale.com" : "http://localhost:5000",
         _query = "/db/query/activity/",
         _config = {
-            url:_host + _query,
+            url:_host + _query + (location.pathname.substr("mobile/checkin/".length + 1)),
             data:pid,
             dataType:"json",
             type:"get"
