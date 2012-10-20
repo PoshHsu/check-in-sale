@@ -109,7 +109,7 @@ app.get('/db/query/activity/:aid', function(request, response) {
         _data = {
             pid:354651051295822,
             name:"2012 Yahoo! Taiwan Open Hack ",
-            pic_link:"http://checkinsale.com/image/yahoo_dm2.png",
+            pic_link:"http://checkinsale.com/image/yahoo_dm2.jpeg",
             slogan:"YAHOO! 產品開發中心全球菁英募集中。",
             web_link:"http://tw.info.yahoo.com/careers/",
             link_name:"Yahoo! 徵才網站"
