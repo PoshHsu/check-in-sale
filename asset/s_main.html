@@ -70,18 +70,24 @@ $(document).ready(function(){
 			
 			//query checkin list
 			$.ajax({
-				url: "users/1344930691",
+				url: "users/"+myFBID,
 				type: "GET",	
 				dataType: "json",
 			        success:function(data){
-			        	console.dir(data);                     
+			        	//console.dir(data);
+			        	//data.rows[0].value['check-in-points'][0]
+			        	$("#place").html("<p>近期的打卡點,請勾選屬於您的打卡點</p>");
+			        	for(var i=0,len=data.rows[0].value.checkInPoints.length;i<len;i++){				
+							var cb = '<label class="checkbox"><input type="checkbox" checked value="'+data.rows[0].value.checkInPoints[i].fbPlaceId+'">'+data.rows[0].value.checkInPoints[i].name+'</label>';
+							$("#place").append(cb);				
+						}                     
 			        }
 			});	
 		});
 		
 		plus.checkin.getMeCheckin(function(data){
 			
-			$("#place").html("<p>近期的打卡點,請勾選屬於您的打卡點</p>");
+			//$("#place").append("<p>近期的打卡點,請勾選屬於您的打卡點</p>");
 			for(var i=0,len=data.data.length;i<len;i++){				
 				var cb = '<label class="checkbox"><input type="checkbox" value="'+data.data[i].place.id+'">'+data.data[i].place.name+'</label>';
 				$("#place").append(cb);				
@@ -96,13 +102,13 @@ $(document).ready(function(){
 		$("#addCheckinList").click(function() {
 			
 		$('.checkbox :checked').each(function() {		   	
-			checkinpoints.push({ "name": $(this).parent().text(), "fb-place-id": $(this).val() });
+			checkinpoints.push({ "name": $(this).parent().text(), "fbPlaceId": $(this).val() });
 		});
 	 	
 		checkinlist = {
-                  "fb-user-id": myFBID,
-                  "check-in-points": checkinpoints,
-                  "joined-at": [2012, 10, 20]
+                  "fbUserId": myFBID,
+                  "fbPlaceId": checkinpoints,
+                  "joined": [2012, 10, 20]
                 };
 		
 		  $.ajax({
