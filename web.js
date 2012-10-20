@@ -60,8 +60,6 @@ app.get('/mobile/checkin/*', function(request, response) {
 });
 
 app.get('/admin/qrcode', function(request, response) {
-      console.log(response);
-      console.log(request);
       response.sendfile(__dirname+'/asset/admin_qrcode.html');
 });
 
@@ -93,27 +91,31 @@ app.post('/db/query/qrcode', function(request, response) {
 });
 
 app.get('/db/query/activity/:aid', function(request, response) {
-    var _aid = req.params.aid;
+    var _aid = req.params.aid,
+        data;
     if(_aid == 1){
-        var _data = { pid:354651051295822,
-        lat:"25.07698687147",
-        long:"121.23201566872",
-        name:"2012 Yahoo! Taiwan Open Hack ",
-        pic_link:"http://checkinsale.com/image/yahoo_dm.png",
-        slogan:"Yahoo Open Hack 號召絕頂高手，一戰成名",
-        web_link:"http://checkinsale.com/website/yahoo",
-        link_name:"Yahoo Open Hack官方網站"
+        _data = {
+            pid:354651051295822,
+            lat:"25.07698687147",
+            long:"121.23201566872",
+            name:"2012 Yahoo! Taiwan Open Hack ",
+            pic_link:"http://checkinsale.com/image/yahoo_dm.png",
+            slogan:"Yahoo Open Hack 號召絕頂高手，一戰成名",
+            web_link:"http://checkinsale.com/website/yahoo",
+            link_name:"Yahoo Open Hack官方網站"
+        }
     }
     else if (_aid == 2){
-        var _data = { pid:354651051295822,
-        name:"2012 Yahoo! Taiwan Open Hack ",
-        pic_link:"http://checkinsale.com/image/yahoo_dm2.png",
-        slogan:"YAHOO! 產品開發中心全球菁英募集中。",
-        web_link:"http://tw.info.yahoo.com/careers/",
-        link_name:"Yahoo! 徵才網站"
-    }
-};
-response.send(_data);
+        _data = {
+            pid:354651051295822,
+            name:"2012 Yahoo! Taiwan Open Hack ",
+            pic_link:"http://checkinsale.com/image/yahoo_dm2.png",
+            slogan:"YAHOO! 產品開發中心全球菁英募集中。",
+            web_link:"http://tw.info.yahoo.com/careers/",
+            link_name:"Yahoo! 徵才網站"
+        }
+    };
+    response.send(_data);
 });
 
 app.get('/channel.html', function(request, response) {
