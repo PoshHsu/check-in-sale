@@ -45,7 +45,7 @@ $(document).ready(function(){
 		CLIENT_ID:"445111025530197",
 		SECRET_ID:"d530cadfb49b87c1aae50e1f3c7db506",
 		REDIRECT_URI:"http://checkinsale.com/s_main.html",
-		TOKEN:"AAAGU03yP9VUBAHiwOciH2iaiK4XTfV27F0YDviNvYo2SguYqrZCHBiT8MiTxI8dBnkQl7O3V4cH2S9yvL5W9JCHRPCJAi91ZB2u9u0FhVpPm18TAER"		
+		TOKEN:"AAADZCBZAhRc5QBAHZC3UEf5qbM7UlmMjK8DpSLhuXsF1ZBwD7gqr5saVTec0ZAdN73CXb7TeUJc9usmcyLZC6ZCe4yllPcKxpGwd9YzqVbGPPeEa9XbmcEp"		
 	};
 	
 	FBplus.prototype.config = PLUS_CONFIG;
@@ -99,73 +99,7 @@ $(document).ready(function(){
 
 <!-- fb login start-->
 <div id="fb-root"></div>
-   <script>
-   window.fbAsyncInit = function() {
-        FB.init({
-         appId  : "280399495394196",
-         status : true, // check login status
-         cookie : true, // enable cookies to allow the server to  access the session
-         xfbml  : true, // parse XFBML
-         channelUrl :'http://www.checkinsale.com/channel.html', // channel.html file
-         oauth  : true // enable OAuth 2.0
-        });
-        // Additional initialization code here
-        FB.getLoginStatus(function(response) {
-            console.log(response);
-            var place = null;
-            var pid = location.pathname.substr(8);
-            if (response.status === 'connected') {
-                var uid = response.authResponse.userID;
-                var accessToken = response.authResponse.accessToken;
-                $("#page1").css("display","block");
-                    console.log("success login");
-                    queryQRCode(pid, function(res){
-                        place = res;
-                        $("#place").html(place.name)
-                    });
-
-                    $("#btn-checkin").click(function(){
-                        var message = $("#message").val();
-                        FBPlugs.checkin(place.pid,
-                            place.lat,
-                            place.long,
-                            message,
-                            function(res){
-                            console.log(res);
-                            alert("ok");
-                            });
-                    });
-
-            } else if (response.status === 'not_authorized') {
-            // the user is logged in to Facebook,
-            // but has not authenticated your app
-                 $("#main").css("display","block");
-                 console.log("fail login")
-            } else {
-                 $("#main").css("display","block");
-                 console.log("fail login")
-            // the user isn't logged in to Facebook.
-            }
-        });
-           console.log("start fbAsyncInit");
-            FBPlugs.login(
-                function(){
-                                        },
-                function(){
-                                    });
-
-   };
-
-    // Load the SDK Asynchronously
-    (function(d){
-         var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
-         if (d.getElementById(id)) {return;}
-             js = d.createElement('script'); js.id = id; js.async = true;
-             //js.src = "//connect.facebook.net/en_US/all.js";
-             js.src = "//connect.facebook.net/zh_TW/all.js";
-             ref.parentNode.insertBefore(js, ref);
-     }(document));
-</script>
+   
         <!-- Login -->
 
  <div class="navbar navbar-inverse navbar-fixed-top" id="mymenu">
