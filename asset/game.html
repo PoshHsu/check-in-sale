@@ -11,7 +11,32 @@ window.onload = function() {
 };
 
 var edge = 6,
-	edge2 = Math.sqrt((edge-2)*(edge-2)); 
+	edge2 = Math.sqrt((edge-2)*(edge-2)),
+	giftid=0; 
+
+var gifts = new Array(edge*edge);
+
+gifts[0] = '藍色小鴨';
+gifts[1] = '藍色小鴨';
+gifts[2] = '藍色小鴨';
+gifts[3] = '藍色小鴨';
+gifts[4] = '藍色小鴨';
+gifts[5] = '藍色小鴨';
+gifts[6] = '藍色小鴨';
+gifts[11] = '藍色小鴨';
+gifts[12] = '藍色小鴨';
+gifts[17] = '藍色小鴨';
+gifts[18] = '藍色小鴨';
+gifts[23] = '藍色小鴨';
+gifts[24] = '藍色小鴨';
+gifts[29] = '藍色小鴨';
+gifts[30] = '藍色小鴨';
+gifts[31] = '藍色小鴨';
+gifts[32] = '藍色小鴨';
+gifts[33] = '藍色小鴨';
+gifts[34] = '藍色小鴨';
+gifts[35] = '藍色小鴨';
+gifts[36] = '藍色小鴨';
 
 $(document).ready(function(){
 	
@@ -24,41 +49,56 @@ $(document).ready(function(){
 	}
 
 	$("#gifts").width(edge*80);
-	
-	$("#stop").click(function() {
+		
+	function showGift(){
+		console.log("gift:"+giftid);
+		alert(gifts[giftid]);
 		clearTimeout(t);
-		console.log("x:"+x+"y:"+y);
+	}
+	
+	$("#start").click(function(){
+		init();
+    	loop();
+    	
+    	window.setTimeout(showGift, Math.floor((Math.random()*5)+1)*1000);
+
 	});
 });
 </script>
 <style>
+body {
+  margin: 0;
+}
 #gifts{
 	position: absolute;
 	word-wrap:break-word;
 	width:400px;
 	overflow:auto;
+	margin:0px;
 }
 </style>
     </head>
     <body>
         <canvas id="myCanvas" width="450" height="455" style="position: absolute;z-index:10"></canvas>
-        <div id="gifts">        	
-        </div>
-        <button id="stop" style="position: absolute;z-index:10">Stop</button>
+        <div id="gifts" style="position: relative">        	
+        </div>        
+        <button id="start" style="z-index:10">Start</button>
+        <div id="log" style="position: relative"></div>
+        <div id="gift" style="position: relative"></div>
     </body>
 </html>
 
 <script>
 var t;
-window.requestAnimFrame = (function(callback) {	
+window.requestAnimFrame = (function(callback) {		
     return function(callback) {    	
-               t = window.setTimeout(callback, 1000/60);        		
+               t = window.setTimeout(callback, 1000/6);        		
            };
 })();
 
 window.onload = function() {
-    init();
-    loop();
+    //init();
+    //loop();
 };
 
 var canvas, context;
@@ -100,30 +140,42 @@ function draw() {
 }
 
 //計算
+var type = 1;
 function update(){
     var time = new Date().getTime();
-    var diff = time - lastTime;    
+    var diff = time - lastTime;
+        
     //var distFrame = speed * diff / 1000;
     
-    //console.log("X:"+x+"y:"+y);
-    
-    if(y==0 && x<canvas.width-rH){
-    	
-    	x += speed;
-    	
-    }else if(y>=0 && y<=(canvas.height - rH) && x!=0){
-    	
-    	y +=speed;
-    	
-    }else if(y >= (canvas.height - rH) && x<=canvas.width-rH && x>0){
-    	
-    	x-=speed;
-    	
-    }else if(y >= 0 && x==0){    	
-    	y-=speed;    	
-    }   	
+    switch(type){
+    	case 1:
+    		x+=speed;
+    		if(x>=375) type++;    		
+    		break;
+    		
+    	case 2:
+    		y=y+speed+1.2;
+    		if(y>=canvas.height-rH-rH) type++;
+    		break;
+    	case 3:
+    		x-=speed;
+    		if(x<=0) type++;
+    		break;
+    	case 4:
+    		y=y-speed-1.2;
+    		if(y<=0) type=1;
+    		break;
+    }
     
     lastTime = time;
+    
+    $("#log").html("x:"+Math.ceil(x/75)+"y:"+Math.ceil(y/75));
+    if(y!=0) 
+    	giftid = Math.ceil(x/75) + 6*(Math.ceil(y/75)-1);
+    else
+    	giftid = Math.ceil(x/75) + 6*(Math.ceil(y/75)+1)+1;
+
+	$("#gift").text(giftid);    
 }
 </script>
 
