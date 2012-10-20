@@ -24,6 +24,11 @@ $(document).ready(function(){
 	}
 
 	$("#gifts").width(edge*80);
+	
+	$("#stop").click(function() {
+		clearTimeout(t);
+		console.log("x:"+x+"y:"+y);
+	});
 });
 </script>
 <style>
@@ -37,21 +42,17 @@ $(document).ready(function(){
     </head>
     <body>
         <canvas id="myCanvas" width="450" height="455" style="position: absolute;z-index:10"></canvas>
-        <div id="gifts">
-        	
+        <div id="gifts">        	
         </div>
+        <button id="stop" style="position: absolute;z-index:10">Stop</button>
     </body>
 </html>
 
 <script>
-window.requestAnimFrame = (function(callback) {
-    return window.requestAnimationFrame || 
-           window.webkitRequestAnimationFrame || 
-           window.mozRequestAnimationFrame || 
-           window.oRequestAnimationFrame || 
-           window.msRequestAnimationFrame ||
-           function(callback) {
-               window.setTimeout(callback, 1000/60);
+var t;
+window.requestAnimFrame = (function(callback) {	
+    return function(callback) {    	
+               t = window.setTimeout(callback, 1000/60);        		
            };
 })();
 
@@ -101,12 +102,13 @@ function draw() {
 //計算
 function update(){
     var time = new Date().getTime();
-    var diff = time - lastTime;
+    var diff = time - lastTime;    
     //var distFrame = speed * diff / 1000;
     
     //console.log("X:"+x+"y:"+y);
     
     if(y==0 && x<canvas.width-rH){
+    	
     	x += speed;
     	
     }else if(y>=0 && y<=(canvas.height - rH) && x!=0){

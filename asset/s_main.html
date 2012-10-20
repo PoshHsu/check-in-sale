@@ -74,14 +74,14 @@ $(document).ready(function(){
 
 
 	//add checkin list data
-	$("#addCheckinList").click(function() {
+	$("#addCheckinList").click(function() {		
 		var checkinlist;
 		
 		  $.ajax({
-                url: "http://posh.iriscouch.com/checkinsale",
+                url: "",
                 type: "POST",
                 data: checkinlist,
-                dataType: "jsonp",
+                dataType: "json",
                 success:function(data){
                 	console.log(data);                     
                 }
