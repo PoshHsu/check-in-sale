@@ -50,7 +50,7 @@ var initLayout = function(layout_data){
 var showLoding = function(){
     $.mobile.loading( 'show', {
         text: 'loading',
-        textVisible: true,
+        textVisible: false,
         theme: 'b'
     });
 };
@@ -99,10 +99,17 @@ var initEvent = function(event_data){
                 tags:[]
                 };
 
-                console.log(_data);
-                plus.wall.insert(_data, function(){
-                    closeLoding();
-                });
+                console.log("before insert", _data);
+                plus.wall.insert(_data,
+                    function(result){
+                        console.log("success insert into wall", result);
+                        closeLoding();
+                    },
+                    function(resule){
+                        console.log("fail insert into wall", result)
+                        closeLoding();
+                    }
+            );
 
             });
         });

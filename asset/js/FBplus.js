@@ -43,8 +43,8 @@ function FBplus() {
                 _params = params;
             }
             console.log(scallback);
-            _scallback = (scallback || typeof scallback == "function") ? scallback : this.SCALLBACK;
-            _fcallback = (fcallback || typeof fcallback == "function") ? fcallback : this.FCALLBACK;
+            _scallback = (scallback && typeof scallback == "function") ? scallback : this.SCALLBACK;
+            _fcallback = (fcallback && typeof fcallback == "function") ? fcallback : this.FCALLBACK;
         }
         else {
             _scallback = (params || typeof params == "function")    ? params    : this.SCALLBACK;
@@ -130,7 +130,7 @@ FBplus.modules.auth = function(box){
 };
 
 FBplus.modules.friends = function(box){
-    box.friends = box.friends || box;
+    box.friends = box.friends || {};
     box.friends.getFriendList = function(params, scallback, fcallback){
         var link = box.LINK.FB_SERVER + "me/friends/";
         box.send("get", link, params);
@@ -156,16 +156,21 @@ FBplus.modules.checkin = function(box){
        var _fid    = (typeof fid === "string") ? fid : "me",
            _params = (typeof fid === "object") ? fid : params,
            link = box.LINK.FB_SERVER + _fid + "/checkins/";
-       box.send("post", link, _params);
+           box.send("post", link, _params);
     };
 };
 
 FBplus.modules.wall = function(box){
     box.wall = box.wall || {};
-    box.wall.insert = function(fid, params){
+    box.wall.insert = function(fid, params, scallback, fcallback){
        var _fid    = (typeof fid === "string") ? fid : "me",
            _params = (typeof fid === "object") ? fid : params,
+           _scallback = (typeof params === "function") ? params : scallback,
+           _fcallback = (typeof params === "function") ? scallback : fcallback,
            link = box.LINK.FB_SERVER + _fid + "/feed/";
+           console.log("scallback", _scallback);
+           console.log("fcallback", _fcallback);
+
        box.send("post", link, _params);
     };
 
