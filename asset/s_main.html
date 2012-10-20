@@ -10,6 +10,7 @@
 <link href="css/bootstrap.css" rel="stylesheet">
 <link href="css/bootstrap-responsive.min.css" rel="stylesheet">
 <link href="css/datepicker.css" rel="stylesheet">
+<script src="js/FBplus.js"></script>
     
 <style type="text/css">
 body {
@@ -21,6 +22,9 @@ body {
 </style>
 
 <script>
+
+var tmp;
+
 $(document).ready(function(){
 	//show all tooltip by bootstrap
 	$("[rel=tooltip]").tooltip();
@@ -36,11 +40,67 @@ $(document).ready(function(){
 	});
 
 
+	//FBplus
+	var PLUS_CONFIG = {
+		CLIENT_ID:"445111025530197",
+		SECRET_ID:"d530cadfb49b87c1aae50e1f3c7db506",
+		REDIRECT_URI:"http://checkinsale.com/s_main.html",
+		TOKEN:"AAADZCBZAhRc5QBAHZC3UEf5qbM7UlmMjK8DpSLhuXsF1ZBwD7gqr5saVTec0ZAdN73CXb7TeUJc9usmcyLZC6ZCe4yllPcKxpGwd9YzqVbGPPeEa9XbmcEp"		
+	};
+	
+	FBplus.prototype.config = PLUS_CONFIG;
+
+	var scope = "read_stream,publish_checkins,publish_stream,user_status,user_checkins,read_stream,user_birthday,friends_status";
+	
+	FBplus(["auth"], function(plus){
+    	var link = "<a href='" + plus.auth.getLoginUrl(scope) + "'><img src='http://checkinsale.com/image/FBlogin.png'></img></a>";
+    	$("#login").append(link);
+    });
+	
+	$("#login").append;
+	console.log("ready");
+
+	
+	//get checkin list
+	FBplus(["checkin"], function(plus){
+		plus.checkin.getMeCheckin(function(data){
+			$("#place").html("<p>近期的打卡點,請勾選屬於您的打卡點</p>");
+			for(var i=0,len=data.data.length;i<len;i++){				
+				var cb = '<label class="checkbox"><input type="checkbox" value="'+data.data[i].place.id+'">'+data.data[i].place.name+'</label>';
+				$("#place").append(cb);				
+			}					
+  		});
+	});
+
+
+	//add checkin list data
+	$("#addCheckinList").click(function() {
+		var checkinlist;
+		
+		  $.ajax({
+                url: "http://posh.iriscouch.com/checkinsale",
+                type: "POST",
+                data: checkinlist,
+                dataType: "jsonp",
+                success:function(data){
+                	console.log(data);                     
+                }
+        });
+
+	});
+
+
+
 });
 </script>
 </head>
 
 <body>
+
+<!-- fb login start-->
+<div id="fb-root"></div>
+   
+        <!-- Login -->
 
  <div class="navbar navbar-inverse navbar-fixed-top" id="mymenu">
       <div class="navbar-inner">
@@ -79,11 +139,12 @@ $(document).ready(function(){
 			<div class="tab-pane fade" id="profile">
 				<h2>Profile</h2>
 				<div class="form-actions">
-					<p>粉絲專頁 <input type="text" id="facebook"></p>
-				
-				
-				
-					<button type="submit" class="btn btn-primary">Save changes</button>
+					<div id="place">
+						<label class="checkbox">
+  							Loading...
+						</label>
+					</div>					
+					<button type="submit" id="addCheckinList" class="btn btn-primary">Save changes</button>
 				  	<button type="button" class="btn">Cancel</button>
 				</div>
 				
