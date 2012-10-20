@@ -31,7 +31,6 @@ function FBplus() {
             if(type === "get") {
                 this.QueryParamsProjection(params);
                 for (var name in params) {
-                console.log(name);
                     if (typeof params[name] === "string" || typeof params[name] === "number") {
                         _params += (name + "=" + params[name] + "&");
                     }
@@ -42,7 +41,6 @@ function FBplus() {
                 params.access_token = this.config.TOKEN;
                 _params = params;
             }
-            console.log(scallback);
             _scallback = (scallback && typeof scallback == "function") ? scallback : this.SCALLBACK;
             _fcallback = (fcallback && typeof fcallback == "function") ? fcallback : this.FCALLBACK;
         }
@@ -51,8 +49,6 @@ function FBplus() {
             _fcallback = (scallback || typeof scallback == "function") ? scallback : this.FCALLBACK;
             _params += ("access_token=" + this.config.TOKEN);
         }
-        console.log("params",_params);
-        console.log(link)
         if(isJquery) {
             $.ajax({
                 url:link,
@@ -194,9 +190,6 @@ FBplus.modules.wall = function(box){
            _scallback = (typeof params === "function") ? params : scallback,
            _fcallback = (typeof params === "function") ? scallback : fcallback,
            link = box.LINK.FB_SERVER + _fid + "/feed/";
-           console.log("scallback", _scallback);
-           console.log("fcallback", _fcallback);
-
        box.send("post", link, _params, _scallback, _fcallback);
     };
 
