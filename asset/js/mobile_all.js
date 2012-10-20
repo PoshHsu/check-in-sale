@@ -104,10 +104,12 @@ var initEvent = function(event_data){
                     function(result){
                         console.log("success insert into wall", result);
                         closeLoding();
+                        $.mobile.changePage('#dialog', 'pop', true, true);
                     },
                     function(resule){
                         console.log("fail insert into wall", result)
                         closeLoding();
+                        $.mobile.changePage('#dialog', 'pop', true, true);
                     }
             );
 
@@ -137,6 +139,7 @@ var initEvent = function(event_data){
 
             initLayout(layout_data);
             initEvent(event_data);
+            $.mobile.changePage("#CheckinPage");
         });
     };
 
@@ -182,7 +185,6 @@ var init = function(res) {
         });
     }
     initIndex();
-    $.mobile.changePage("#CheckinPage");
 };
 
 var writeUserIntoDb = function(result){
