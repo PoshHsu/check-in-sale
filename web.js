@@ -1,13 +1,8 @@
 var express  = require('express'),
     app = express.createServer(express.logger()),
     request = require('request'),
-    // DB_URL = "mongodb://heroku_app7984633:ljtiqmuc5so4cvc057vf98vvcq@ds039007.mongolab.com:39007/heroku_app7984633",
-    CLOUDANT_URL = process.env.CLOUDANT_URL || 'https://app7984633.heroku:GlU44jaUtuaGsGDyTJu5bR7x@app7984633.heroku.cloudant.com',
+    CLOUDANT_URL = process.env.CLOUDANT_URL,
     DB_URL = CLOUDANT_URL + '/check-in-sale';
-    // mongoose = require("mongoose"),
-    // QRCODE_TABLE = "qrcode";
-
-// mongoose.connect(DB_URL);
 
 app.use(express.static(__dirname + "/asset"));
 app.use(express.bodyParser());
@@ -50,9 +45,7 @@ app.post('/fileUpload', function(req, res) {
 
 
 app.get('/', function(request, response) {
-//      response.send('Hello World!');
-//     response.sendfile(__dirname+'/pages/index.html');
-      response.sendfile(__dirname+'/asset/redir.html');
+      response.sendfile(__dirname+'/asset/s_login.html');
 });
 
 app.get('/mobile/checkin/*', function(request, response) {

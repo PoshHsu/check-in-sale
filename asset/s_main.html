@@ -12,6 +12,7 @@
 <link href="css/datepicker.css" rel="stylesheet">
 <script src="js/FBplus.js"></script>
 <script src="js/underscore-min.js"></script>
+<script src="http://malsup.github.com/jquery.blockUI.js"></script>
 
 <!--google chart api-->
 <script type="text/javascript" src="https://www.google.com/jsapi"></script>
@@ -25,7 +26,7 @@ body {
 
 #qrcode {
   position: absolute;
-  top: 121px;
+  top: 95px;
   left: 520px;
 }
 
@@ -203,7 +204,8 @@ $(document).ready(function(){
 
 		//add checkin list data
 		$("#addCheckinList").click(function() {
-
+			$.blockUI({ message: '<h1>儲存中</h1>', css: { width: '275px' } });
+			
 			$('.checkbox :checked').each(function() {
 				checkinpoints.push({ "name": $(this).parent().text(), "fbPlaceId": $(this).val() });
 			});
@@ -223,6 +225,7 @@ $(document).ready(function(){
 			            dataType: "json",
 			            success:function(data){
 			            	console.log(data);
+			            	$.unblockUI(); 
 			            }
 			    });
 			}else{
@@ -241,6 +244,7 @@ $(document).ready(function(){
 			            dataType: "json",
 			            success:function(data){
 			            	console.log(data);
+			            	$.unblockUI(); 
 			            }
 			    });
 			}
@@ -269,6 +273,8 @@ $(document).ready(function(){
    				'webURL':$("#webURL").val()
 			};
 			
+			$.blockUI({ message: '<h1>新增資料中</h1>', css: { width: '275px' } });
+			
 			$.ajax({
 	            url: "promotions/add",
 	            type: "POST",
@@ -280,6 +286,7 @@ $(document).ready(function(){
                         updatePromotionList();
                         // TODO: seems not work
                         $('#editAction option[value="' + data.id + '"]').attr("selected", "selected");
+                        $.unblockUI(); 
 	            }
 		    });
 		});
@@ -304,7 +311,7 @@ $(document).ready(function(){
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </a>
-          <a class="brand" href="#home">輕鬆打 Check-in Sale</a>
+          <a class="brand">輕鬆打 Check-in Sale</a>
           <div class="nav-collapse collapse">
             <ul class="nav">
 				<li><a href="#chart" title="檢視報表資訊" rel="tooltip" data-placement="bottom">報表</a></li>
@@ -434,18 +441,10 @@ $(document).ready(function(){
 				<div id="metadata">
 					<div class="row-fluid show-grid">
 						<div class="span4">
-						
-  
-      
-
-  
-    					<!--Div that will hold the pie chart-->
-  					  <div id="chart_div"></div>
-    					<div id="chart2_div"></div>
-  
-
-						</div>
-						<div class="span8">每日打卡人數</div>
+	    					<!--Div that will hold the pie chart-->
+  						  <div id="chart_div"></div>
+    					</div>
+						<div class="span8"><div id="chart2_div"></div></div>
 					</div>
 					<hr>
 					<div class="row-fluid show-grid">
