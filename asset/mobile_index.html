@@ -64,14 +64,14 @@ FB.getLoginStatus(function(response) {
 
         <div data-role="page" id="LoginPage">
             <div data-theme="b" data-role="header">
-                <h5>Login</h5>
+                <h5>輕鬆打</h5>
             </div>
             <div data-role="content">
                 <div style=" text-align:center">
                     <img src="../../image/250_250_logo.png" ></img>
                 </div>
                 <a id="btn-login" data-role="button" data-theme="b">
-                    Login width Facebook
+                    Login with Facebook
                 </a>
             </div>
         </div>
@@ -105,12 +105,10 @@ FB.getLoginStatus(function(response) {
             </div>
             <div data-theme="b" data-role="content" id="text" style="text-align:center">
                 <h1>Checkin Success.</h1>
-                <a id="btn-lucky-draw" data-role="button" data-theme="b" href="mobile/game/">
+                <a id="btn-lucky-draw" data-role="button" data-theme="b" rel="external">
                     Lucky Draw
                 </a>
-                 <a id="btn-go-facebook" data-role="button" data-theme="b" href="#page1">
-                    Go to Checkin Page
-                </a>
+                <!-- <a id="btn-go-facebook" data-role="button" data-theme="b" href="#page1"> Go to Checkin Page  </a> -->
 
             </div>
         </div>
@@ -128,11 +126,12 @@ TOKEN:"AAADZCBZAhRc5QBAALSAnZBKOQGoDeUMXXoA5gm32ViMW4vrZCqIeh9qsvxq3Iewko7pC2cQ3
 FBplus.prototype.config = PLUS_CONFIG;
 
         $("#LoginPage").live("pageinit", function(event){
-             console.log("pageinit", event);
              initLoginPage();
         });
         $(document).ready(function(){
-
+            $("#btn-lucky-draw").click(function(){
+                top.location="../../game.html";
+            });
 
 
 console.log("ready");
