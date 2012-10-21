@@ -12,6 +12,7 @@
 <link href="css/datepicker.css" rel="stylesheet">
 <script src="js/FBplus.js"></script>
 <script src="js/underscore-min.js"></script>
+<script src="http://malsup.github.com/jquery.blockUI.js"></script>
 
 <!--google chart api-->
 <script type="text/javascript" src="https://www.google.com/jsapi"></script>
@@ -203,7 +204,8 @@ $(document).ready(function(){
 
 		//add checkin list data
 		$("#addCheckinList").click(function() {
-
+			$.blockUI({ message: '<h1>儲存中</h1>', css: { width: '275px' } });
+			
 			$('.checkbox :checked').each(function() {
 				checkinpoints.push({ "name": $(this).parent().text(), "fbPlaceId": $(this).val() });
 			});
@@ -223,6 +225,7 @@ $(document).ready(function(){
 			            dataType: "json",
 			            success:function(data){
 			            	console.log(data);
+			            	$.unblockUI(); 
 			            }
 			    });
 			}else{
@@ -241,6 +244,7 @@ $(document).ready(function(){
 			            dataType: "json",
 			            success:function(data){
 			            	console.log(data);
+			            	$.unblockUI(); 
 			            }
 			    });
 			}
@@ -269,6 +273,8 @@ $(document).ready(function(){
    				'webURL':$("#webURL").val()
 			};
 			
+			$.blockUI({ message: '<h1>新增資料中</h1>', css: { width: '275px' } });
+			
 			$.ajax({
 	            url: "promotions/add",
 	            type: "POST",
@@ -280,6 +286,7 @@ $(document).ready(function(){
                         updatePromotionList();
                         // TODO: seems not work
                         $('#editAction option[value="' + data.id + '"]').attr("selected", "selected");
+                        $.unblockUI(); 
 	            }
 		    });
 		});
