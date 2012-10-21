@@ -181,6 +181,10 @@ app.post('/promotions/add', function(req, res) {
   request.post({url: DB_URL, json: req.body }).pipe(res);
 });
 
+app.get('/promotions/:id', function(req, res) {
+  request.get({ url: DB_URL + '/_design/demo/_view/promotions-by-id?key=\"' + req.params.id + '\"'}).pipe(res);
+});
+
 app.get('/promotions/createdBy/:fbid', function(req, res) {
   request.get({ url: DB_URL + '/_design/demo/_view/promotions?key=\"' + req.params.fbid + '\"'}).pipe(res);
 });
