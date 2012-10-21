@@ -52,7 +52,8 @@ app.post('/fileUpload', function(req, res) {
 app.get('/', function(request, response) {
 //      response.send('Hello World!');
 //     response.sendfile(__dirname+'/pages/index.html');
-      response.sendfile(__dirname+'/asset/redir.html');
+      // response.sendfile(__dirname+'/asset/redir.html');
+      response.sendfile(__dirname+'/asset/s_login.html');
 });
 
 app.get('/mobile/checkin/*', function(request, response) {
