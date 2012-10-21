@@ -93,7 +93,7 @@ app.post('/db/query/qrcode', function(request, response) {
 app.get('/db/query/activity/:aid', function(request, response) {
     var _aid = request.params.aid,
         _data;
-    if(_aid == 1){
+    if(_aid == 2){
         _data = {
             pid:354651051295822,
             lat:"25.07698687147",
@@ -105,7 +105,7 @@ app.get('/db/query/activity/:aid', function(request, response) {
             link_name:"Yahoo Open Hack官方網站"
         }
     }
-    else if (_aid == 2){
+    else if (_aid == 1){
         _data = {
             pid:354651051295822,
             name:"2012 Yahoo! Taiwan Open Hack ",
