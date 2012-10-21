@@ -2,7 +2,6 @@
 <html>
 <head>
 <meta charset="utf-8" />
-<meta name = "viewport" content= "user-scalable = no" />
 <title>小瑪麗</title>
 
 <script src="js/jquery-1.8.2.min.js"></script>
@@ -70,6 +69,7 @@ $(document).ready(function(){
 	}
 	
 	$("#start").click(function(){
+		$("#start").attr("disabled", true);
 		init();
     	loop();
     	
