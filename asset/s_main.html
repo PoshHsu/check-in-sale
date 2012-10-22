@@ -225,6 +225,7 @@ $(document).ready(function(){
 			            dataType: "json",
 			            success:function(data){
 			            	console.log(data);
+                                        originCheckInList._rev = data._rev;
 			            	$.unblockUI(); 
 			            }
 			    });
